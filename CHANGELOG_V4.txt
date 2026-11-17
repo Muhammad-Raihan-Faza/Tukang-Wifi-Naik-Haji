@@ -1,0 +1,14 @@
+TUKANG WIFI NAIK HAJI - V4 FINAL
+
+1. Ganti 4 background ilustrasi dengan aset terbaru dari paket kelompok dan crossfade antar kawasan.
+2. Ganti maskot menjadi teknisi WiFi profesional, menggunakan beberapa pose baru untuk idle, lari, lompat.
+3. Desain ulang beranda agar elemen tidak terpotong pada layar laptop.
+4. Desain ulang seluruh panel misi: galeri visual, pemutar audio aktif, kartu bacaan, formulir teks, dan meja kerja drag-and-drop.
+5. Revisi HUD tabungan haji, ikon kontrol, misi, energi, landmark dan koin.
+6. Optimasi gambar WebP untuk muat lebih cepat di ponsel.
+7. Tata letak adaptif laptop, tablet, ponsel; tombol layar sentuh.
+8. Perhitungan 16 misi campuran (4 tiap V, A, R, K) dan unduh hasil JPG/PNG tetap dipertahankan.
+9. Audio perangkat MP3 tetap ada dan dapat diputar ulang.
+10. Build statis untuk Vercel; tidak menggunakan React maupun Canva.
+
+CATATAN: hasil penilaian menunjukkan performa dalam bentuk aktivitas game, bukan diagnosis gaya belajar permanen. Fitur refleksi saat ini bersifat lokal, belum percakapan antarpemain secara realtime.

@@ -3,7 +3,7 @@ import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const required=['index.html','styles.css','src/app.js','assets/teknisi-hero.png','assets/technician-avatar.svg','assets/kampung.svg','assets/oasis.svg','assets/kota.svg','assets/gerbang.svg','assets/01_post_beep_simulasi.mp3','assets/02_ups_alarm_simulasi.mp3','assets/03_konektor_rj45_klik_simulasi.mp3','assets/04_notifikasi_koneksi_putus_simulasi.mp3'];
+const required=['index.html','styles.css','styles-v4.css','src/app.js',...['idle','run','jump','repair','win','cheer'].map(n=>`assets/tech-${n}.webp`),...['kampung','oasis','kota','gerbang'].map(n=>`assets/bg-${n}.webp`),'assets/01_post_beep_simulasi.mp3','assets/02_ups_alarm_simulasi.mp3','assets/03_konektor_rj45_klik_simulasi.mp3','assets/04_notifikasi_koneksi_putus_simulasi.mp3'];
 for(const name of required){const file=path.join(root,name);if(!fs.existsSync(file)||fs.statSync(file).size<10)throw Error(`Berkas hilang/kosong: ${name}`);}
 execFileSync(process.execPath,['--check',path.join(root,'src/app.js')],{stdio:'inherit'});
 const content=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
