@@ -1,0 +1,11 @@
+{
+  "name": "tukang-wifi-naik-haji-v3",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Game edukasi jaringan satu-layar dengan evaluasi empat jenis aktivitas VARK.",
+  "scripts": {
+    "dev": "node tools/dev-server.mjs",
+    "build": "node tools/build.mjs",
+    "test": "node tools/check.mjs"
+  }
+}

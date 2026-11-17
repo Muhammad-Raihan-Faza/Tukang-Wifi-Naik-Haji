@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b2538" />
+  <meta name="description" content="Tukang WiFi Naik Haji: petualangan teknisi jaringan dengan 16 tantangan interaktif dan profil aktivitas VARK." />
+  <title>Tukang WiFi Naik Haji | Petualangan Jaringan</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preload" href="assets/teknisi-hero.png" as="image" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="src/app.js"></script>
+</head>
+<body>
+<div class="shell" id="shell">
+  <header class="topbar">
+    <button class="brand" id="go-home" aria-label="Kembali ke beranda">
+      <span class="brand-icon">⌁<span>◈</span></span>
+      <span><strong>TUKANG <em>WIFI</em></strong><small>NAIK HAJI <b>•</b> NETWORK ADVENTURE</small></span>
+    </button>
+    <div class="top-stats" id="stats" aria-live="polite">
+      <div class="top-stat"><span>💰</span><div><small>TABUNGAN MISI</small><strong id="money-stat">Rp 0</strong></div></div>
+      <div class="top-stat"><span>⚑</span><div><small>PEKERJAAN</small><strong id="mission-stat">0 / 16</strong></div></div>
+      <div class="top-stat"><span>♥</span><div><small>ENERGI</small><strong id="health-stat">♥ ♥ ♥</strong></div></div>
+    </div>
+    <div class="toolbar">
+      <button class="icon-btn" id="sound-toggle" title="Aktifkan/matikan suara" aria-label="Aktifkan/matikan suara">♫</button>
+      <button class="icon-btn" id="open-guide" title="Panduan" aria-label="Buka panduan">?</button>
+      <button class="icon-btn" id="pause-toggle" title="Jeda" aria-label="Jeda permainan">Ⅱ</button>
+    </div>
+  </header>
+  <div class="subbar" id="subbar">
+    <div class="area-pill"><span class="pulse-dot"></span><span id="area-name">POS TEKNISI • START</span></div>
+    <div class="mission-tip" id="mission-tip">Bantu warga, kumpulkan upah, wujudkan mimpi berangkat haji.</div>
+    <div class="progress-wrap"><span id="progress-number">0%</span><div class="track"><span id="progress-fill"></span></div></div>
+  </div>
+  <main class="stage" id="stage">
+    <div class="world" id="world" aria-hidden="true"></div>
+    <div class="player" id="player" aria-hidden="true"><img src="assets/technician-avatar.svg" alt="" draggable="false" /></div>
+    <div class="corner-caption" id="corner-caption">TAP / PANAH UNTUK BERGERAK</div>
+    <div class="toast" id="toast" aria-live="polite"></div>
+    <section class="welcome" id="home-screen" aria-label="Beranda">
+      <div class="welcome-inner">
+        <div class="home-copy">
+          <span class="eyebrow">🎮 MEDIA PEMBELAJARAN JARINGAN KOMPUTER</span>
+          <h1>SAMBUNGKAN <span>JARINGAN.</span><br/><i>WUJUDKAN</i> IMPIAN.</h1>
+          <p>Jadilah teknisi WiFi yang membantu warga. Selesaikan pekerjaan, kumpulkan upah, dan bangun tabungan untuk perjalanan naik haji.</p>
+          <div class="mini-highlights"><span>⚡ 16 pekerjaan singkat</span><span>🎧 Bunyi perangkat</span><span>🛠 Interaksi langsung</span></div>
+          <div class="start-form"><label for="player-name">NAMA TEKNISI</label><input id="player-name" maxlength="32" placeholder="Tulis namamu di sini..." autocomplete="off" /><button id="start-btn" class="btn btn-accent">Mulai perjalanan <span>↗</span></button></div>
+          <div class="home-links"><button data-info="tujuan">Tujuan belajar</button><button data-info="peta">Peta konsep</button><button data-info="siswa">Cara bermain</button><button data-info="guru">Panduan guru</button><button data-info="referensi">Sumber</button></div>
+        </div>
+        <div class="hero-art"><div class="hero-ring"></div><div class="hero-glow"></div><img src="assets/teknisi-hero.png" alt="Ilustrasi maskot manusia teknisi jaringan profesional" /><div class="hero-bubble">“Satu sambungan lagi, satu langkah menuju cita-cita!”</div><div class="hero-label"><b>TECHNICIAN ID • 001</b><span>CONNECTED FOR A DREAM</span></div></div>
+      </div>
+      <div class="welcome-footer">16 tantangan acak <span>·</span> Tidak perlu login <span>·</span> Hasil bisa diunduh PNG/JPG <span>·</span> Data disimpan di browser <span>·</span> Pengembang: Kelompok Praktikum Multimedia</div>
+    </section>
+    <section class="result-screen hidden" id="result-screen" aria-label="Hasil akhir"></section>
+    <div class="dialog-layer hidden" id="dialog-layer" role="presentation"><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Informasi permainan"></div></div>
+    <div class="mission-layer hidden" id="mission-layer" role="presentation"><div class="mission-card" id="mission-card" role="dialog" aria-modal="true" aria-label="Pekerjaan jaringan"></div></div>
+    <div class="game-over hidden" id="game-over"><div class="game-over-card"><span class="game-over-icon">↻</span><h2>Istirahat sebentar!</h2><p>Energi teknisi habis. Semua pekerjaan yang telah dikerjakan tetap tersimpan.</p><button class="btn btn-accent" id="retry-btn">Lanjut dari pos terakhir</button></div></div>
+  </main>
+  <footer class="bottom-bar">
+    <div class="controller"><span class="controls-label">KENDALI</span><button id="left-btn" class="ctrl" aria-label="Jalan ke kiri">←</button><button id="right-btn" class="ctrl" aria-label="Jalan ke kanan">→</button><button id="jump-btn" class="ctrl jump" aria-label="Lompat">↑ <small>LOMPAT</small></button></div>
+    <div class="footer-note"><b>← → / A D</b> untuk bergerak <span>•</span> <b>SPASI</b> untuk melompat <span>•</span> lepaskan tombol untuk berhenti</div>
+    <button class="secondary-action" id="discussion-btn">✦ Refleksi & tanya guru</button>
+  </footer>
+</div>
+</body>
+</html>

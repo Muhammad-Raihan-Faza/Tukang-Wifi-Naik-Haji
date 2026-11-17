@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 260" role="img" aria-label="Teknisi jaringan profesional">
+<defs>
+ <linearGradient id="vest" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#214f71"/><stop offset="1" stop-color="#112f4a"/></linearGradient>
+ <linearGradient id="arm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4c3a5"/><stop offset="1" stop-color="#ce8a68"/></linearGradient>
+ <linearGradient id="pant" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#304962"/><stop offset="1" stop-color="#182a3d"/></linearGradient>
+</defs>
+<ellipse cx="77" cy="251" rx="65" ry="7" fill="#0e2e41" opacity=".25"/>
+<!-- walking cargo pants and boots -->
+<path d="M68 156 Q65 180 55 207 L46 231 L25 234" fill="none" stroke="url(#pant)" stroke-width="26" stroke-linecap="round"/>
+<path d="M90 155 Q94 187 103 218 L121 234" fill="none" stroke="url(#pant)" stroke-width="28" stroke-linecap="round"/>
+<path d="M30 225 L49 229 L42 244 Q33 253 12 248 Q8 244 13 237Z" fill="#202d3b" stroke="#97acb9" stroke-width="2"/>
+<path d="M111 226 L125 225 Q140 232 146 245 Q146 252 126 252 L102 243Z" fill="#202d3b" stroke="#97acb9" stroke-width="2"/>
+<path d="M45 215 L52 217 M107 217 L117 220" stroke="#7cabb8" stroke-width="3"/>
+<!-- tool belt and lower uniform -->
+<path d="M48 143 Q81 157 106 139 L110 170 Q77 182 47 167Z" fill="url(#pant)"/>
+<path d="M48 150 Q79 160 105 150" fill="none" stroke="#efaa47" stroke-width="9"/>
+<rect x="77" y="150" width="12" height="10" rx="2" fill="#d1dce2"/>
+<rect x="98" y="142" width="22" height="30" rx="4" fill="#394958" stroke="#102d3e" stroke-width="2"/>
+<path d="M103 150 H114 M103 157 H114 M103 164 H110" stroke="#93d8db" stroke-width="2"/>
+<!-- arms -->
+<path d="M48 91 Q24 105 19 128 L28 139 L53 112" fill="#e3b58b" stroke="#d49674" stroke-width="2"/>
+<path d="M95 96 Q122 103 130 126 L119 139 L91 112" fill="#e6b48f" stroke="#cf946f" stroke-width="2"/>
+<ellipse cx="24" cy="138" rx="9" ry="11" fill="url(#arm)"/>
+<ellipse cx="122" cy="139" rx="9" ry="11" fill="url(#arm)"/>
+<!-- shirt, technical vest -->
+<path d="M47 89 Q75 81 98 91 L103 148 Q76 162 49 148Z" fill="#efe1cf" stroke="#bc9a79" stroke-width="2"/>
+<path d="M52 91 L72 105 L69 154 L47 149 L42 102Z" fill="url(#vest)" stroke="#0f2b43" stroke-width="2"/>
+<path d="M95 91 L75 105 L76 156 L105 147 L109 105Z" fill="url(#vest)" stroke="#0f2b43" stroke-width="2"/>
+<path d="M58 95 L68 111 L66 150 M89 97 L80 110 L82 149" stroke="#50bcd1" stroke-width="5" fill="none"/>
+<rect x="82" y="123" width="22" height="18" rx="3" fill="#276f87"/>
+<path d="M88 128 Q93 123 99 129 M89 133 Q93 129 97 133" fill="none" stroke="#e4fbf8" stroke-width="2"/>
+<path d="M43 103 L33 110 L42 124" fill="#114c68"/>
+<!-- crossbody cable bag -->
+<path d="M91 94 Q69 115 52 140" stroke="#17283b" stroke-width="8" fill="none"/>
+<path d="M92 94 Q69 115 52 140" stroke="#6b7a7b" stroke-width="2" fill="none"/>
+<rect x="19" y="135" width="41" height="39" rx="8" fill="#25374b" stroke="#0e2137" stroke-width="3"/>
+<path d="M29 150 Q39 140 48 150 M32 157 Q39 151 45 157" fill="none" stroke="#78d7dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="39" cy="163" r="2" fill="#8edbcb"/>
+<!-- neck and adult face -->
+<path d="M65 80 L64 97 Q76 105 90 96 L88 79Z" fill="url(#arm)"/>
+<path d="M52 52 Q50 25 74 20 Q99 18 104 50 L99 73 Q94 89 77 92 Q60 89 55 75Z" fill="url(#arm)" stroke="#a76556" stroke-width="2"/>
+<path d="M51 53 Q51 20 76 19 Q107 17 107 57 Q103 46 97 42 Q82 47 61 44 L54 61" fill="#202d35"/>
+<path d="M62 56 Q70 51 76 56 M84 56 Q92 53 97 57" fill="none" stroke="#293743" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="69" cy="63" rx="2.8" ry="3.5" fill="#203346"/><ellipse cx="89" cy="63" rx="2.8" ry="3.5" fill="#203346"/>
+<path d="M77 64 L75 73 L81 74" fill="none" stroke="#ad6b55" stroke-width="2"/>
+<path d="M70 81 Q80 85 90 78" fill="none" stroke="#92473f" stroke-width="2.5" stroke-linecap="round"/>
+<!-- patterned kufi: visual travel identity -->
+<path d="M50 37 Q52 10 76 8 Q100 8 105 34 L105 39 Q78 43 50 39Z" fill="#f6f2e9" stroke="#879ba5" stroke-width="2"/>
+<path d="M54 29 Q78 23 101 29 M55 34 Q78 31 102 34" fill="none" stroke="#6a8999" stroke-width="2"/>
+<path d="M58 20 l7 7 7-7 7 7 7-7 7 7" fill="none" stroke="#89a5af" stroke-width="2"/>
+<!-- compact network tester -->
+<rect x="118" y="128" width="21" height="29" rx="4" fill="#f1a835" stroke="#81572f" stroke-width="2"/>
+<rect x="122" y="133" width="13" height="12" rx="2" fill="#255365"/>
+<circle cx="128" cy="150" r="2" fill="#ccecb9"/>
+</svg>
