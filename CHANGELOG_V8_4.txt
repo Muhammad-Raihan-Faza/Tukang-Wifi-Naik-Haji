@@ -1,0 +1,1 @@
+V8.4: scene Ka'bah terakhir kembali menggunakan ilustrasi latar orisinal tanpa gambar Ka'bah besar tambahan. Aset Ka'bah baru hanya digunakan pada scene penerbangan sebelumnya. Pesawat pada adegan keberangkatan diposisikan lebih kecil dan jauh dari maskot. Seluruh fitur sebelumnya dipertahankan.
