@@ -1,0 +1,88 @@
+/* V7.6 Ka'bah epilogue — shown after the final checkpoint, before VARK results. */
+.shell.is-finale .subbar,.shell.is-finale .bottom-bar{display:none!important}
+.shell.is-finale .stage{flex:1;min-height:0}
+.finale-screen{position:absolute;inset:0;z-index:32;isolation:isolate;overflow:hidden;background:#234b58;color:#fff}
+.finale-screen.hidden{display:none!important}
+.finale-scene-bg{position:absolute;inset:0;z-index:-3;background:url('assets/finale-kabah.webp') center center/cover no-repeat;transform:scale(1.06);filter:saturate(1.05)}
+.finale-screen.finale-animate .finale-scene-bg{animation:finaleCamera 8s ease-out both}
+@keyframes finaleCamera{from{transform:scale(1.13)}to{transform:scale(1.01)}}
+.finale-screen:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(4,27,43,.93) 0%,rgba(7,38,53,.84) 26%,rgba(13,45,53,.50) 43%,rgba(10,29,34,.09) 72%)}
+.finale-screen:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(0deg,rgba(5,32,45,.6) 0%,transparent 28%)}
+.finale-story{position:absolute;left:clamp(18px,5vw,80px);top:50%;transform:translateY(-50%);width:min(480px,45vw);max-height:calc(100% - 42px);overflow-y:auto;overscroll-behavior:contain;padding:clamp(10px,2vh,24px) 0;scrollbar-width:none;z-index:3}
+.finale-story::-webkit-scrollbar{display:none}
+.finale-chapter{display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid rgba(162,232,215,.5);border-radius:40px;background:rgba(25,120,117,.33);font:800 10px 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.13em;color:#c5fff0}
+.finale-chapter-dot{width:8px;height:8px;flex-shrink:0;border-radius:50%;background:#4bf3bd;box-shadow:0 0 0 4px #4bf3bd33}
+.finale-story h2{font:800 clamp(26px,3.7vw,55px)/1.13 'Sora',system-ui,sans-serif;letter-spacing:-.05em;margin:17px 0 12px;color:#fffdf5;text-wrap:balance;overflow-wrap:break-word}
+.finale-story h2 em{color:#ffe1a3;font-style:normal}
+.finale-story>p{font-size:clamp(11px,1.08vw,15px);line-height:1.65;color:#e3f0ef;max-width:430px;margin:0 0 18px}
+.finale-balance{background:rgba(8,43,53,.8);border:1px solid rgba(207,236,211,.45);border-radius:16px;padding:13px 15px;backdrop-filter:blur(8px);box-shadow:0 10px 24px rgba(8,25,30,.14)}
+.finale-balance>span{display:block;font-size:10px;font-weight:800;letter-spacing:.10em;color:#b9e8e1}
+.finale-balance strong{display:block;margin:3px 0 1px;font:800 clamp(19px,2.4vw,30px) 'Sora',system-ui,sans-serif;color:#ffde95;letter-spacing:-.035em;overflow-wrap:anywhere}
+.finale-balance small{display:block;font-size:10px;font-weight:600;color:#c7e3e3}
+.finale-money-track{height:7px;border-radius:10px;background:rgba(245,252,241,.18);margin-top:11px;overflow:hidden}
+.finale-money-track span{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,#35cbb7,#f9cf76);width:0;transition:width 1s ease .45s}
+.finale-actions{display:flex;align-items:stretch;flex-wrap:wrap;gap:9px;margin-top:15px}
+.finale-actions button{font:800 12px 'Sora',system-ui,sans-serif;min-height:44px;border-radius:12px;line-height:1.25;cursor:pointer;padding:11px 14px;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.finale-main-btn{background:linear-gradient(130deg,#ffe2a0,#fbc366);color:#173d4c;border:1px solid #ffefc7;box-shadow:0 4px 0 #ad7934;flex:1}
+.finale-main-btn span{margin-left:7px}
+.finale-repeat-btn{background:rgba(15,66,79,.62);color:#e4f4f2;border:1px solid #78a7ad}
+.finale-actions button:active{transform:translateY(2px)}
+.finale-clarification{font-size:9px;line-height:1.5;color:#c7dcdb;max-width:440px;margin-top:13px}
+.finale-technician{position:absolute;z-index:2;bottom:1.7%;left:48%;height:min(73%,660px);max-width:31%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 15px 14px rgba(8,21,37,.54));pointer-events:none}
+.finale-screen.finale-animate .finale-technician{animation:finaleArrival 1.9s cubic-bezier(.1,.6,.27,1) both}
+@keyframes finaleArrival{0%{transform:translateX(-80%) translateY(9%);opacity:0}60%{opacity:1}100%{transform:translateX(0) translateY(0);opacity:1}}
+.finale-scene-label{position:absolute;right:14px;bottom:12px;z-index:3;padding:7px 9px;border-radius:9px;background:rgba(4,32,44,.62);font-size:9px;letter-spacing:.12em;color:#f9f2db;font-weight:800;max-width:40%;text-align:right}
+.finale-sparkles span{position:absolute;z-index:1;top:12%;left:60%;font-size:16px;color:#ffdb83;opacity:.6;pointer-events:none}
+.finale-sparkles span:nth-child(2){top:27%;left:73%;font-size:12px}.finale-sparkles span:nth-child(3){top:8%;left:84%;font-size:20px}.finale-sparkles span:nth-child(4){top:48%;left:56%;font-size:12px}.finale-sparkles span:nth-child(5){top:69%;left:77%;font-size:15px}.finale-sparkles span:nth-child(6){top:24%;left:52%;font-size:12px}
+.finale-screen.finale-animate .finale-sparkles span{animation:finaleTwinkle 2.3s ease-in-out infinite alternate}
+.finale-screen.finale-animate .finale-sparkles span:nth-child(2n){animation-delay:.8s}
+@keyframes finaleTwinkle{from{opacity:.15;transform:translateY(8px) scale(.85)}to{opacity:.8;transform:translateY(-6px) scale(1.06)}}
+.finale-result-rewatch{width:100%;border:1px solid #f0d6a2;background:linear-gradient(125deg,#fff9e6,#f5f9f4);border-radius:12px;color:#315f68;min-height:38px;font:800 11px 'Sora',system-ui,sans-serif;cursor:pointer;padding:8px;margin:8px 0 10px;white-space:normal;overflow-wrap:anywhere}
+.finale-result-rewatch:hover{background:#fff4cb}
+@media(max-width:850px){
+ .finale-story{width:min(440px,52vw);left:clamp(13px,3vw,26px)}
+ .finale-technician{left:55%;max-width:38%;height:66%}
+ .finale-screen:before{background:linear-gradient(90deg,rgba(4,27,43,.92),rgba(7,38,53,.76) 39%,rgba(10,29,34,.02) 93%)}
+}
+@media(max-width:740px){
+ .finale-scene-bg{background-position:65% center}
+ .finale-screen:before{background:linear-gradient(180deg,rgba(5,31,44,.83),rgba(5,31,44,.48) 53%,rgba(5,31,44,.15))}
+ .finale-story{left:16px;top:15px;transform:none;width:calc(100% - 32px);max-height:80%;padding:0;z-index:4}
+ .finale-story h2{font-size:clamp(25px,7vw,35px);max-width:86%;margin:10px 0 7px}
+ .finale-story>p{font-size:11px;line-height:1.4;margin-bottom:9px;max-width:92%}
+ .finale-chapter{padding:6px 10px;font-size:9px}
+ .finale-balance{padding:8px 10px;max-width:80%}
+ .finale-balance strong{font-size:17px}
+ .finale-money-track{margin-top:6px}
+ .finale-actions{margin-top:8px;max-width:85%;gap:6px}
+ .finale-actions button{min-height:39px;padding:8px 10px;font-size:10px}
+ .finale-clarification{font-size:8px;max-width:75%;margin-top:8px}
+ .finale-technician{left:auto;right:-2%;height:47%;max-width:47%;bottom:0}
+ .finale-scene-label{display:none}
+}
+@media(max-width:420px){
+ .finale-story h2{font-size:24px;max-width:92%}
+ .finale-story>p{font-size:10px;max-width:95%}
+ .finale-balance{max-width:90%}
+ .finale-actions{max-width:91%}
+ .finale-technician{height:44%;opacity:.88;max-width:49%}
+}
+@media(max-height:620px) and (min-width:741px){
+ .finale-story{max-height:calc(100% - 20px)}
+ .finale-story h2{font-size:clamp(25px,3vw,39px);margin:9px 0}
+ .finale-story>p{margin-bottom:9px;font-size:11px}
+ .finale-balance{padding:8px 11px}
+ .finale-actions{margin-top:8px}
+ .finale-technician{height:69%}
+}
+@media(max-height:560px) and (max-width:740px){
+ .finale-story{max-height:100%;overflow:auto;top:8px}
+ .finale-story h2{font-size:19px;margin:5px 0}
+ .finale-story>p{font-size:9px;margin-bottom:5px}
+ .finale-chapter{font-size:8px;padding:4px 8px}
+ .finale-balance{padding:5px 8px}
+ .finale-balance strong{font-size:15px}
+ .finale-actions button{min-height:32px;padding:5px 7px}
+ .finale-clarification{margin-top:4px}
+}
+@media(prefers-reduced-motion:reduce){.finale-screen.finale-animate .finale-technician,.finale-screen.finale-animate .finale-scene-bg,.finale-screen.finale-animate .finale-sparkles span{animation:none}}

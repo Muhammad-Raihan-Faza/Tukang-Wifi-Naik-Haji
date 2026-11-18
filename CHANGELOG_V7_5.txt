@@ -1,0 +1,7 @@
+Tukang WiFi Naik Haji V7.5 — Popup Jawaban dan Tabungan Haji Rp100 Juta
+
+- Popup hasil jawaban benar/salah tampil menonjol di tengah area game, berisi penjelasan dan tombol lanjut.
+- Upah tiap misi Rp5.000.000, bonus benar Rp1.000.000, koin Rp250.000; maksimum Rp100.000.000.
+- Target Rp100.000.000 ditampilkan dalam HUD, popup, dan kartu hasil. Seluruh nominal hanya simulasi permainan.
+- Penyimpanan progres dari versi lama dimigrasikan ke aturan ekonomi baru tanpa menghilangkan jawaban siswa.
+- 16 misi dan penilaian VARK tidak berubah.

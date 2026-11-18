@@ -1,0 +1,55 @@
+/* V7.5 — result popup and 100 juta target. The card floats ABOVE the mission card, but within stage bounds. */
+.savings-goal{display:block;font-size:9px;line-height:1.25;color:#b9e4e1;font-weight:700;white-space:normal;margin-top:2px}
+.stage .answer-layer{position:absolute;inset:0;z-index:55;display:grid;place-items:center;padding:clamp(8px,1.4vh,18px);background:rgba(5,24,36,.69);backdrop-filter:blur(6px);overflow:hidden}
+.stage .answer-layer.hidden{display:none!important}
+.answer-card{box-sizing:border-box;width:min(520px,100%);max-height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;border-radius:24px;background:linear-gradient(175deg,#fffefd,#f4fbf8);border:1px solid #d3e9e7;box-shadow:0 28px 80px rgba(3,19,31,.45);padding:clamp(15px,2.2vh,27px);color:#123b4f;text-align:center;animation:answerRise .26s ease-out both;scrollbar-gutter:stable}
+@keyframes answerRise{from{opacity:.5;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.answer-result-symbol{width:63px;height:63px;margin:0 auto 9px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(155deg,#d5f7ea,#5bd7ab);color:#09674f;border:2px solid #94e0c0;box-shadow:0 7px 0 #237e6452;font:bold 40px 'Sora',sans-serif}
+.answer-card.is-wrong .answer-result-symbol{background:linear-gradient(155deg,#fff0d7,#ffcb81);color:#91551b;border-color:#ffda9f;box-shadow:0 7px 0 #c88d4652}
+.answer-result-kicker{font:800 11px 'Plus Jakarta Sans',sans-serif;letter-spacing:.17em;color:#12977e;margin-bottom:5px}
+.answer-card.is-wrong .answer-result-kicker{color:#a36d2f}
+.answer-card h2{font:800 clamp(20px,2.3vw,28px) 'Sora',system-ui,sans-serif;color:#0c3548;line-height:1.2;letter-spacing:-.045em;margin:0 0 5px;overflow-wrap:anywhere}
+.answer-subtitle{font-size:12px;color:#6a8790;line-height:1.4;margin:0 0 13px;font-weight:650}
+.answer-explanation{text-align:left;border:1px solid #d6e8e7;background:#f6faf9;border-radius:15px;padding:12px 14px;margin:0 0 11px;min-width:0}
+.answer-explanation>span{display:block;font-size:10px;letter-spacing:.13em;color:#6c9395;font-weight:900;margin-bottom:6px}
+.answer-explanation p{font-size:12px;line-height:1.46;margin:0;color:#264f61;overflow-wrap:anywhere}
+.answer-correct-key{padding-top:9px;border-top:1px dashed #bbd6d1;margin-top:9px;color:#426374;font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+.answer-correct-key strong{color:#174c68}
+.answer-earnings{background:linear-gradient(130deg,#0c3550,#165e68);color:#fff;border:1px solid #328a89;border-radius:16px;padding:10px 15px;margin-bottom:11px}
+.answer-earnings-label{font-size:10px;letter-spacing:.13em;font-weight:800;color:#b9eadf}
+.answer-earnings strong{display:block;font:800 clamp(21px,3.3vw,30px) 'Sora',sans-serif;color:#ffda83;line-height:1.3;white-space:normal;overflow-wrap:anywhere;margin:2px 0}
+.answer-earnings-breakdown{font-size:11px;color:#c7e9e5;font-weight:600;line-height:1.35}
+.answer-savings{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;text-align:left;margin-bottom:5px}
+.answer-savings>div{min-width:0}
+.answer-savings span{font-size:10px;font-weight:800;color:#66838b;display:block}
+.answer-savings strong{font:800 15px 'Sora',sans-serif;color:#183e53;display:block;overflow-wrap:anywhere}
+.answer-savings small{font-size:10px;color:#8199a0;white-space:normal}
+.answer-savings>b{font:900 15px 'Sora',sans-serif;color:#168d7a}
+.answer-savings-track{height:8px;background:#e1eeeb;border-radius:10px;overflow:hidden;margin-bottom:13px}
+.answer-savings-track>span{display:block;background:linear-gradient(90deg,#15b697,#e3bd59);height:100%;border-radius:10px;transition:width .36s ease}
+.answer-next{width:100%;min-height:46px;border:1px solid #e3b46b;background:linear-gradient(120deg,#ffdf9e,#ffc466);color:#183e4f;border-radius:13px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 0 #ad7d36;font:800 13px 'Sora',sans-serif;cursor:pointer;white-space:normal;overflow-wrap:anywhere;line-height:1.4;padding:9px 12px}
+.answer-next:hover{filter:brightness(1.04)}.answer-next:active{transform:translateY(2px);box-shadow:0 2px 0 #ad7d36}
+.answer-note{font-size:9px;line-height:1.35;color:#80969d;margin:10px 0 0}
+.v75-goal-percent{display:block;font-size:11px;font-weight:800;color:#277c71;margin-top:3px}
+@media(max-width:740px){
+ .savings-goal{font-size:8px}
+ .stage .answer-layer{padding:5px}
+ .answer-card{width:100%;padding:12px 13px;border-radius:16px;scrollbar-gutter:auto}
+ .answer-result-symbol{width:47px;height:47px;border-radius:14px;font-size:29px;margin-bottom:6px}
+ .answer-result-kicker{font-size:9px;margin-bottom:3px}
+ .answer-card h2{font-size:19px}
+ .answer-subtitle{font-size:10px;margin-bottom:8px}
+ .answer-explanation{padding:9px 10px;margin-bottom:8px}
+ .answer-explanation>span{font-size:9px;margin-bottom:3px}
+ .answer-explanation p{font-size:11px;line-height:1.32}
+ .answer-correct-key{font-size:10px}
+ .answer-earnings{padding:7px 10px;border-radius:12px;margin-bottom:8px}
+ .answer-earnings strong{font-size:21px}
+ .answer-earnings-label,.answer-earnings-breakdown{font-size:9px}
+ .answer-savings strong{font-size:13px}
+ .answer-savings-track{margin-bottom:9px}
+ .answer-next{min-height:40px;font-size:11px;padding:7px 9px}
+ .answer-note{margin-top:7px;font-size:8px}
+}
+@media(max-height:550px){.answer-card{padding:8px 12px}.answer-result-symbol{width:36px;height:36px;font-size:23px;margin-bottom:4px}.answer-explanation{padding:6px 9px}.answer-earnings{padding:6px 10px}.answer-earnings strong{font-size:18px}.answer-note{display:none}}
+@media(prefers-reduced-motion:reduce){.answer-card{animation:none}.answer-savings-track>span{transition:none}}

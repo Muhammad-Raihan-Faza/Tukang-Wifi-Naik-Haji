@@ -1,8 +1,18 @@
-# Tukang WiFi Naik Haji — V7.3
+# Tukang WiFi Naik Haji — V7.6
 
 Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi jaringan. Satu perjalanan dengan **16 misi yang diacak**, masing-masing 4 kegiatan Visual, Auditory, Read/Write, dan Kinesthetic (label kategori disembunyikan ketika siswa bermain).
 
-## Perubahan V7.3
+## Perubahan V7.6
+
+- **Popup hasil jawaban** yang jelas untuk jawaban benar maupun salah, lengkap dengan penjelasan, nominal upah, progres tabungan, dan tombol **Lanjutkan perjalanan**. Popup tidak lagi lenyap secara otomatis.
+- **Tabungan haji maksimal Rp100.000.000 (simulasi permainan):** 16 × Rp5.000.000 upah dasar = Rp80 juta; 16 × Rp1.000.000 bonus jawaban benar = Rp16 juta; 16 × Rp250.000 koin = Rp4 juta. Total maksimal Rp100 juta.
+- **Adegan penutup di depan Ka'bah:** setelah seluruh 16 pekerjaan selesai dan teknisi melewati gerbang akhir, tampil scene ilustrasi Ka'bah dengan karakter kartun beranimasi, musik kemenangan, dan tombol menuju nilai VARK. Bisa diputar ulang dari kartu hasil.
+- **Perangkat dan soal** tetap menggunakan ilustrasi tanpa caption jawaban di soal gambar. Jawaban benar dijelaskan setelah dipilih.
+- **Skor VARK** tetap didasarkan pada 4 tugas setiap kategori; dominan dan persentasenya tampil dalam kartu hasil PNG/JPG.
+- **Responsif laptop/HP**, termasuk popup dan epilog; pengujian tetap disarankan di perangkat yang digunakan siswa.
+- Semua angka tabungan, perjalanan ke Ka'bah, dan capaian cerita merupakan **simulasi game**, bukan perkiraan biaya haji dunia nyata.
+
+## Perubahan sebelumnya
 
 - **Soal gambar tidak memperlihatkan nama perangkat** di bawah ilustrasi. Siswa hanya melihat tiga gambar bernomor. Kunci dijelaskan setelah jawaban dikirim.
 - Modal soal, panel upah, dan tombol direvisi agar teks tidak meluber dari emblem atau keluar panel.
@@ -14,7 +24,7 @@ Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi
 ## Menjalankan di Windows
 
 1. Ekstrak file ZIP.
-2. Buka folder `Tukang_WiFi_Naik_Haji_V7_3_Kartu_Hasil`.
+2. Buka folder `Tukang_WiFi_Naik_Haji_V7_6_Popup_Kabah_100Juta`.
 3. Klik dua kali `START_WINDOWS.bat`, atau jalankan `npm run dev` di VS Code.
 4. Buka alamat lokal yang ditampilkan (umumnya `http://localhost:3000`).
 
@@ -34,7 +44,7 @@ Konfigurasi `vercel.json` sudah disertakan. Folder `dist` otomatis dibuat saat p
 - Laptop: panah kiri/kanan atau `A`/`D` untuk bergerak, `Spasi` untuk melompat.
 - HP: tombol sentuh muncul saat permainan berlangsung.
 - Kunjungi pos warga untuk menjawab satu tantangan; jawaban salah tetap boleh lanjut.
-- Game memberikan umpan balik dan upah simulasi. Progres disimpan di browser.
+- Game menampilkan popup benar/salah serta upah simulasi. Klik **Lanjutkan perjalanan** untuk menyelesaikan popup. Progres disimpan di browser.
 - Backsound mulai diputar setelah interaksi pemain (mengikuti kebijakan browser).
 
 ## Interpretasi persentase VARK
@@ -47,8 +57,8 @@ Persentase tersebut adalah **performa berdasarkan aktivitas dalam game**, bukan 
 
 - `index.html` — halaman dan menu
 - `src/app.js` — gameplay, 16 misi, suara, VARK dan ekspor kartu hasil
-- `styles.css`, `styles-v4.css`, `styles-v6.css`, `styles-v7-2.css`, `styles-v7-3.css` — UI
-- `assets/` — karakter, gambar soal, latar kawasan, MP3 simulasi, backsound
+- `styles.css` dan `styles-v*.css` — UI permainan, popup, serta adegan penutup
+- `assets/` — karakter, gambar soal, latar kawasan, ilustrasi Ka'bah, MP3 simulasi, backsound
 - `tools/` — server lokal, build, pemeriksaan statis
 - `vercel.json` — hosting Vercel
 

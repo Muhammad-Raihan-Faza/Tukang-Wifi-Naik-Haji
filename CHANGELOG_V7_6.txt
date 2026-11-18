@@ -1,0 +1,10 @@
+Tukang WiFi Naik Haji V7.6 — Popup Jawaban, Rp100 Juta, dan Scene Ka'bah
+
+- Popup benar/salah tampil jelas dan meminta siswa mengklik Lanjutkan perjalanan, tidak menghilang sendiri.
+- Upah dasar setiap misi Rp5.000.000, bonus benar Rp1.000.000, koin Rp250.000.
+- Nilai maksimal tabungan simulasi Rp100.000.000 jika seluruh 16 jawaban benar dan 16 koin terkumpul.
+- Scene akhir ilustrasi Ka'bah tampil setelah semua misi dikerjakan dan karakter sampai ke gerbang akhir.
+- Maskot kartun hadir dengan animasi masuk pada adegan akhir. Tombol Lihat hasil VARK dan Ulangi adegan.
+- Tombol untuk menonton ulang adegan akhir tersedia di halaman hasil.
+- Desain responsif laptop/HP; skala VARK tetap 4 tugas per kategori.
+- Semua perhitungan uang adalah simulasi permainan, bukan estimasi biaya haji yang nyata.

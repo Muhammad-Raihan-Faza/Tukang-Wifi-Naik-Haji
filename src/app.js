@@ -31,7 +31,7 @@ const SOUND_FILES={post:'assets/01_post_beep_simulasi.mp3',ups:'assets/02_ups_al
 const CATS={V:{name:'Visual',color:'#1693d3',desc:'pengamatan gambar'},A:{name:'Auditory',color:'#8c74d9',desc:'mendengarkan bunyi'},R:{name:'Read / Write',color:'#d88f3d',desc:'membaca dan menulis'},K:{name:'Kinesthetic',color:'#19a988',desc:'menyusun objek'}};
 const REGIONS=[{title:'Kampung Koneksi',small:'KAMPUNG KONEKSI',image:'bg-kampung.webp',emoji:'🏘️'},{title:'Oasis Digital',small:'OASIS DIGITAL',image:'bg-oasis.webp',emoji:'🌴'},{title:'Kota Jaringan',small:'KOTA JARINGAN',image:'bg-kota.webp',emoji:'🏙️'},{title:'Gerbang Harapan',small:'GERBANG HARAPAN',image:'bg-gerbang.webp',emoji:'🕌'}];
 const FLAG_START=340,FLAG_GAP=370,REGION_WIDTH=1650,WORLD_WIDTH=REGION_WIDTH*4+80,FINISH_X=FLAG_START+16*FLAG_GAP+130,SAVE_KEY='tw-naik-haji-v4-progress';
-const PAY_PER_JOB=125000,BONUS_CORRECT=25000,COIN_MONEY=10000,TARGET=PAY_PER_JOB*JOBS.length;
+const PAY_PER_JOB=5000000,BONUS_CORRECT=1000000,COIN_MONEY=250000,TARGET=100000000;
 const $=(s)=>document.querySelector(s);
 const el=(tag,cls,html)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;};
 const sanitize=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -45,10 +45,10 @@ const checkTyped=(value,accepted)=>{const t=normalize(value);return t.length>0&&
 const DOMINANT_HELP={V:'Kamu paling kuat saat memahami gambar, ikon, dan tampilan perangkat jaringan.',A:'Kamu paling kuat saat menyimak penjelasan lisan atau contoh bunyi perangkat.',R:'Kamu paling kuat saat membaca informasi singkat dan menuliskan kembali jawaban.',K:'Kamu paling kuat saat praktik langsung, mencoba, dan menyusun komponen.'};
 function dominantText(best){if(!best.length)return 'Belum terlihat kecenderungan dominan karena semua skor masih 0.';const names=best.map(k=>CATS[k].name);const title=best.length===1?`Dominan ${names[0]}`:`Dominan campuran: ${names.join(' & ')}`;const detail=best.map(k=>DOMINANT_HELP[k]).join(' ');return `${title}. ${detail}`;}
 
-const ui={world:$('#world'),player:$('#player'),stage:$('#stage'),home:$('#home-screen'),result:$('#result-screen'),modal:$('#dialog-layer'),modalContent:$('#dialog'),mission:$('#mission-layer'),missionCard:$('#mission-card'),gameover:$('#game-over'),toast:$('#toast')};
+const ui={world:$('#world'),player:$('#player'),stage:$('#stage'),home:$('#home-screen'),result:$('#result-screen'),modal:$('#dialog-layer'),modalContent:$('#dialog'),mission:$('#mission-layer'),missionCard:$('#mission-card'),answerLayer:$('#answer-layer'),answerCard:$('#answer-card'),finale:$('#finale-screen'),gameover:$('#game-over'),toast:$('#toast')};
 const state={mode:'home',name:'',order:[],results:[],money:0,health:3,coins:new Set(),x:60,y:0,vy:0,invulnerable:0,camera:0,paused:false,jobActive:false,modalActive:false,muted:false,volume:.55,done:false,sceneWidth:1280,sceneHeight:600,facing:1};
 const input={left:false,right:false,jump:false};
-let stageHazards=[],stageCoins=[],flags=[],audioContext=null,musicTimer=null,lastFrame=0,soundPlaying=null,feedbackTimer=0,toastTimer=0,bgMusic=null;
+let stageHazards=[],stageCoins=[],flags=[],audioContext=null,musicTimer=null,lastFrame=0,soundPlaying=null,feedbackTimer=0,toastTimer=0,bgMusic=null,answerOverlayOpen=false;
 let currentTask=null,taskSubmitted=false,chosenToken=null,dragInfo=null;
 
 function svgDevice(type){
@@ -79,16 +79,16 @@ const OBJECT_SYMBOLS={router:'router',switch:'switch',pc:'pc',komputer:'pc',RJ45
 function tokenVisual(name){const key=String(name).toLowerCase();return key.includes('lan')?svgDevice('ethernet'):key.includes('router')?svgDevice('router'):key.includes('switch')?svgDevice('switch'):key.includes('komputer')?svgDevice('pc'):key.includes('hdmi')?svgDevice('hdmi'):key.includes('usb')?svgDevice('usb'):key.includes('rj45')?svgDevice('rj45'):'';}
 function stationSymbol(kind){const shapes={visual:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',audio:'<path d="M4 10v4h4l5 4V6l-5 4H4ZM16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/>',read:'<path d="M12 6c-3-2-7-2-10-1v14c3-1 7-1 10 1 3-2 7-2 10-1V5c-3-1-7-1-10 1ZM12 6v14"/>',type:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M11 9h.01M15 9h.01M7 12h10M8 16h8"/>',practice:'<path d="M8 3 3 8l4 4 5-5-4-4ZM16 12l-5 5 5 5 5-5-5-5ZM11 11l3 3"/>'};return `<svg viewBox="0 0 24 24" class="job-icon-svg" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[kind]||shapes.visual}</svg>`;}
 function showToast(message){clearTimeout(toastTimer);ui.toast.textContent=message;ui.toast.classList.add('visible');toastTimer=setTimeout(()=>ui.toast.classList.remove('visible'),1800);}
-function safelySave(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({version:3,name:state.name,order:state.order,results:state.results,money:state.money,health:state.health,coins:[...state.coins],x:state.x,y:state.y,mode:state.mode==='home'&&state.results.length>0?'game':state.mode}));}catch(err){console.warn('Penyimpanan lokal tidak tersedia:',err);}}
-function tryRestore(){try{const p=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(p&&p.version===3&&Array.isArray(p.order)&&p.order.length===16&&new Set(p.order).size===16&&p.order.every(id=>CODE_INDEX.has(id))&&Array.isArray(p.results)&&p.results.length<=16&&p.mode!=='home'){
- state.name=String(p.name||'Teknisi');state.order=p.order;state.results=p.results.filter(r=>CODE_INDEX.has(r.id));state.money=Number(p.money)||0;state.health=clamp(Number(p.health)||3,1,3);state.coins=new Set(Array.isArray(p.coins)?p.coins:[]);state.x=clamp(Number(p.x)||60,60,WORLD_WIDTH-80);state.y=0;
- const resume=el('button','btn btn-ghost','↻ Lanjutkan progres');resume.addEventListener('click',()=>{state.mode=state.results.length===16&&p.mode==='result'?'result':'game';hideHome();renderWorld();updateHUD();if(state.mode==='result')showResults();else{state.x=Math.min(state.x,FLAG_START+state.results.length*FLAG_GAP-66);showToast('Progres dilanjutkan. Cari pos pekerjaan berikutnya!');}});$('.start-form').append(resume);$('#player-name').value=state.name;
+function safelySave(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({version:4,name:state.name,order:state.order,results:state.results,money:state.money,health:state.health,coins:[...state.coins],x:state.x,y:state.y,mode:state.mode==='home'&&state.results.length>0?'game':state.mode}));}catch(err){console.warn('Penyimpanan lokal tidak tersedia:',err);}}
+function tryRestore(){try{const p=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(p&&[3,4].includes(p.version)&&Array.isArray(p.order)&&p.order.length===16&&new Set(p.order).size===16&&p.order.every(id=>CODE_INDEX.has(id))&&Array.isArray(p.results)&&p.results.length<=16&&p.mode!=='home'){
+ state.name=String(p.name||'Teknisi');state.order=p.order;state.results=p.results.filter(r=>CODE_INDEX.has(r.id));state.health=clamp(Number(p.health)||3,1,3);state.coins=new Set((Array.isArray(p.coins)?p.coins:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<16));state.money=p.version===3?Math.min(TARGET,state.results.reduce((sum,r)=>sum+PAY_PER_JOB+(r.correct?BONUS_CORRECT:0),0)+state.coins.size*COIN_MONEY):clamp(Number(p.money)||0,0,TARGET);state.x=clamp(Number(p.x)||60,60,WORLD_WIDTH-80);state.y=0;
+ const resume=el('button','btn btn-ghost','↻ Lanjutkan progres');resume.addEventListener('click',()=>{const resumeType=state.results.length===16&&(p.mode==='result'||p.mode==='finale')?p.mode:'game';state.mode='game';hideHome();renderWorld();updateHUD();if(resumeType==='result')showResults(true);else if(resumeType==='finale')showFinale();else{state.x=Math.min(state.x,FLAG_START+state.results.length*FLAG_GAP-66);showToast('Progres dilanjutkan. Cari pos pekerjaan berikutnya!');}});$('.start-form').append(resume);$('#player-name').value=state.name;
  }}catch(err){console.warn('Save tidak terbaca:',err);}}
-function newGame(){$('#shell').classList.remove('is-result');state.mode='game';state.name=($('#player-name').value||'Teknisi WiFi').trim().slice(0,32);state.order=randomOrder();state.results=[];state.money=0;state.health=3;state.coins=new Set();state.x=65;state.y=0;state.vy=0;state.invulnerable=0;state.camera=0;state.paused=false;state.jobActive=false;state.modalActive=false;state.done=false;clearInput();renderWorld();hideHome();updateHUD();unlockAudio();soundEffect('start');showToast('Selamat bertugas! Cari bendera pekerjaan pertama.');safelySave();}
+function newGame(){hideAnswerOverlay();if(ui.finale)ui.finale.classList.add('hidden');$('#shell').classList.remove('is-result','is-finale');state.mode='game';state.name=($('#player-name').value||'Teknisi WiFi').trim().slice(0,32);state.order=randomOrder();state.results=[];state.money=0;state.health=3;state.coins=new Set();state.x=65;state.y=0;state.vy=0;state.invulnerable=0;state.camera=0;state.paused=false;state.jobActive=false;state.modalActive=false;state.done=false;clearInput();renderWorld();hideHome();updateHUD();unlockAudio();soundEffect('start');showToast('Selamat bertugas! Cari bendera pekerjaan pertama.');safelySave();}
 function hideHome(){$('#shell').classList.remove('is-home');ui.home.classList.add('hidden');ui.result.classList.add('hidden');ui.gameover.classList.add('hidden');$('#pause-toggle').innerHTML=ICON_PAUSE;}
-function home(){$('#shell').classList.add('is-home');$('#shell').classList.remove('is-result');state.mode='home';state.jobActive=false;state.paused=false;clearInput();ui.home.classList.remove('hidden');ui.result.classList.add('hidden');ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.modal.classList.add('hidden');if(!state.muted)syncBgMusic();}
+function home(){hideAnswerOverlay();if(ui.finale)ui.finale.classList.add('hidden');$('#shell').classList.add('is-home');$('#shell').classList.remove('is-result','is-finale');state.mode='home';state.jobActive=false;state.paused=false;clearInput();ui.home.classList.remove('hidden');ui.result.classList.add('hidden');ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.modal.classList.add('hidden');if(!state.muted)syncBgMusic();}
 function clearInput(){input.left=false;input.right=false;input.jump=false;for(const s of ['#left-btn','#right-btn','#jump-btn'])$(s)?.classList.remove('pressed');}
-function updateHUD(){const finished=state.results.length;$('#money-stat').textContent=rupiah(state.money);$('#mission-stat').textContent=`${finished} / 16`;$('#health-stat').textContent='♥ '.repeat(state.health).trim();const region=Math.min(3,Math.floor(state.x/REGION_WIDTH));$('#area-name').textContent=REGIONS[region].small;$('#progress-number').textContent=`${Math.round(finished/16*100)}%`;$('#progress-fill').style.width=`${finished/16*100}%`;$('#mission-tip').textContent=finished===16?'Pekerjaan selesai! Pergilah ke gerbang untuk melihat hasil belajar.':`Pekerjaan berikutnya: ${REGIONS[Math.min(3,Math.floor(finished/4))].title} • tabungan ${rupiah(state.money)}`;}
+function updateHUD(){const finished=state.results.length;$('#money-stat').textContent=rupiah(state.money);const goal=$('#savings-goal');if(goal)goal.textContent=`Target ${rupiah(TARGET)}`;$('#mission-stat').textContent=`${finished} / 16`;$('#health-stat').textContent='♥ '.repeat(state.health).trim();const region=Math.min(3,Math.floor(state.x/REGION_WIDTH));$('#area-name').textContent=REGIONS[region].small;$('#progress-number').textContent=`${Math.round(finished/16*100)}%`;$('#progress-fill').style.width=`${finished/16*100}%`;$('#mission-tip').textContent=finished===16?'Pekerjaan selesai! Pergilah ke gerbang untuk melihat hasil belajar.':`Pekerjaan berikutnya: ${REGIONS[Math.min(3,Math.floor(finished/4))].title} • tabungan ${rupiah(state.money)}`;}
 
 function renderWorld(){ui.world.innerHTML='';ui.world.style.width=`${WORLD_WIDTH}px`;stageHazards=[];stageCoins=[];flags=[];
  for(let i=0;i<4;i++){const section=el('div','world-region');section.style.left=`${i*REGION_WIDTH-(i?140:0)}px`;section.style.width=`${REGION_WIDTH+(i?140:0)}px`;if(i)section.classList.add("region-blend");section.style.backgroundImage=`url("assets/${REGIONS[i].image}")`;section.innerHTML=`<div class="world-zone-title">${REGIONS[i].small}</div>`;ui.world.append(section);}
@@ -142,12 +142,55 @@ function wirePractice(q){const placements=new Array(q.slots.length).fill(null);l
  ui.missionCard.querySelectorAll('[data-slot]').forEach(b=>{b.addEventListener('click',()=>{const i=Number(b.dataset.slot);if(activeToken)assign(i,activeToken);else if(placements[i]){placements[i]=null;redraw();}});b.addEventListener('dragover',e=>{e.preventDefault();});b.addEventListener('drop',e=>{e.preventDefault();assign(Number(b.dataset.slot),e.dataTransfer.getData('text/plain'));});});
  $('#submit-practice').addEventListener('click',()=>answerJob(q.expected.every((t,i)=>placements[i]===t)));
 }
-function answerJob(correct){if(taskSubmitted)return;taskSubmitted=true;const q=currentTask;if(!q)return;clearTimeout(feedbackTimer);
- state.results.push({id:q.id,correct:Boolean(correct)});state.money+=PAY_PER_JOB+(correct?BONUS_CORRECT:0);updateHUD();updateFlags();safelySave();soundEffect(correct?'success':'wrong');
+function hideAnswerOverlay(){
+ clearTimeout(feedbackTimer);
+ answerOverlayOpen=false;
+ if(ui.answerLayer)ui.answerLayer.classList.add('hidden');
+}
+function finishAnsweredJob(){
+ if(!answerOverlayOpen)return;
+ hideAnswerOverlay();
+ ui.mission.classList.add('hidden');
+ state.jobActive=false;
+ currentTask=null;
+ $('#corner-caption').textContent='TEMUKAN POS PEKERJAAN BERIKUTNYA';
+ if(state.results.length===16)showToast('16 pekerjaan selesai! Lanjutkan menuju gerbang hasil.');
+ else showToast(`Tabungan ${rupiah(state.money)} dari target ${rupiah(TARGET)}`);
+ safelySave();
+}
+function showAnswerOverlay(correct,task,earned){
+ answerOverlayOpen=true;
+ const answer=task.kind==='practice'?task.expected.join(' → '):task.answer;
+ const total=Math.round(state.money/TARGET*100);
+ ui.answerCard.className=`answer-card ${correct?'is-correct':'is-wrong'}`;
+ ui.answerCard.innerHTML=`
+  <div class="answer-result-symbol" aria-hidden="true">${correct?'✓':'!'}</div>
+  <div class="answer-result-kicker">${correct?'MISI BERHASIL':'MISI TETAP SELESAI'}</div>
+  <h2 id="answer-title">${correct?'Jawaban benar!':'Belum tepat, tetap semangat!'}</h2>
+  <p class="answer-subtitle">${correct?'Kamu berhasil membantu jaringan warga.':'Belajar dari kesalahan juga bagian dari perjalanan.'}</p>
+  <div class="answer-explanation"><span>KENAPA?</span><p>${sanitize(task.tip)}</p>${correct?'':`<div class="answer-correct-key">Jawaban yang tepat: <strong>${sanitize(answer)}</strong></div>`}</div>
+  <div class="answer-earnings"><div class="answer-earnings-label">UPAH PEKERJAAN</div><strong>+ ${rupiah(earned)}</strong><div class="answer-earnings-breakdown">Upah ${rupiah(PAY_PER_JOB)}${correct?` · Bonus benar ${rupiah(BONUS_CORRECT)}`:' · Tanpa bonus benar'}</div></div>
+  <div class="answer-savings"><div><span>Tabungan menuju haji</span><strong>${rupiah(state.money)} <small>/ ${rupiah(TARGET)}</small></strong></div><b>${total}%</b></div>
+  <div class="answer-savings-track"><span style="width:${total}%"></span></div>
+  <button class="answer-next" id="answer-continue" type="button">Lanjutkan perjalanan <span aria-hidden="true">→</span></button>
+  <p class="answer-note">Tabungan merupakan simulasi permainan, bukan biaya haji sebenarnya.</p>
+ `;
+ ui.answerLayer.classList.remove('hidden');
+ requestAnimationFrame(()=>ui.answerCard.querySelector('#answer-continue')?.focus({preventScroll:true}));
+}
+function answerJob(correct){
+ if(taskSubmitted)return;
+ const q=currentTask;
+ if(!q)return;
+ taskSubmitted=true;
+ const earned=PAY_PER_JOB+(correct?BONUS_CORRECT:0);
+ state.results.push({id:q.id,correct:Boolean(correct)});
+ state.money=Math.min(TARGET,state.money+earned);
+ updateHUD();updateFlags();safelySave();
+ soundEffect(correct?'success':'wrong');
  if(soundPlaying){soundPlaying.pause();soundPlaying.currentTime=0;}
  ui.missionCard.querySelectorAll('button,input').forEach(b=>b.disabled=true);
- $('#answer-feedback').innerHTML=`<div class="feedback ${correct?'':'wrong'}"><b>${correct?'✓ Tepat! Jaringan terbantu.':'✦ Belum tepat. Tidak masalah, tetap dapat upah.'}</b><small>${sanitize(q.tip)} ${correct?'':`Kunci: ${sanitize(q.kind==='practice'?q.expected.join(' → '):q.answer)}.`}</small></div>`;
- feedbackTimer=setTimeout(()=>{ui.mission.classList.add('hidden');state.jobActive=false;currentTask=null;$('#corner-caption').textContent='TEMUKAN POS PEKERJAAN BERIKUTNYA';if(state.results.length===16)showToast('Semua pekerjaan tuntas! Lanjutkan ke gerbang tujuan.');else showToast(`Tabungan bertambah ${rupiah(PAY_PER_JOB+(correct?BONUS_CORRECT:0))}`);safelySave();},1800);
+ showAnswerOverlay(correct,q,earned);
 }
 function pauseGame(){if(state.mode!=='game'||state.jobActive||state.modalActive)return;state.paused=!state.paused;clearInput();$('#pause-toggle').innerHTML=state.paused?ICON_PLAY:ICON_PAUSE;if(state.paused){if(bgMusic)bgMusic.pause();openInfo('jeda');}else{closeInfo();syncBgMusic();}}
 function hitHazard(){if(state.invulnerable>0||state.jobActive)return;state.health--;state.invulnerable=1.6;soundEffect('hit');updateHUD();if(state.health<=0){state.health=0;state.mode='game';ui.gameover.classList.remove('hidden');clearInput();}else{state.x=Math.max(65,FLAG_START+(state.results.length-1)*FLAG_GAP+66);state.y=0;state.vy=0;showToast('Awas gangguan jaringan! Energi -1.');}safelySave();}
@@ -159,10 +202,10 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
   if(input.jump&&state.y<.01){state.vy=720;input.jump=false;soundEffect('jump');}
   state.vy-=1950*delta;state.y=Math.max(0,state.y+state.vy*delta);if(state.y===0)state.vy=0;
   state.invulnerable=Math.max(0,state.invulnerable-delta);
-  for(const o of stageCoins){if(!state.coins.has(o.i)&&Math.abs(state.x-o.x)<27&&state.y<105){state.coins.add(o.i);o.node.style.display='none';state.money+=COIN_MONEY;soundEffect('coin');updateHUD();safelySave();}}
+  for(const o of stageCoins){if(!state.coins.has(o.i)&&Math.abs(state.x-o.x)<27&&state.y<105){state.coins.add(o.i);o.node.style.display='none';state.money=Math.min(TARGET,state.money+COIN_MONEY);soundEffect('coin');updateHUD();safelySave();}}
   for(const h of stageHazards){const hx=h.x+(h.kind==='mite'?Math.sin(time*.002+h.phase)*18:0);h.node.style.left=`${hx}px`;if(Math.abs(state.x-hx)<33&&state.y<43){hitHazard();break;}}
   const next=state.results.length;if(next<16&&Math.abs(state.x-(FLAG_START+next*FLAG_GAP))<27&&state.y<65)openJob();
-  if(next===16&&state.x>=FINISH_X-35)showResults();
+  if(next===16&&state.x>=FINISH_X-35)showFinale();
   if(Math.abs(prevX-state.x)>.05&&Math.floor(prevX/REGION_WIDTH)!==Math.floor(state.x/REGION_WIDTH)){updateHUD();showToast(`Memasuki ${REGIONS[Math.min(3,Math.floor(state.x/REGION_WIDTH))].title}`);}
   ui.player.classList.toggle('running',Math.abs(velocity)>0&&state.y===0);ui.player.classList.toggle('jumping',state.y>0);
   const pose=state.y>0?'jump':Math.abs(velocity)>0?'run':'idle';
@@ -178,6 +221,33 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
  requestAnimationFrame(tick);
 }
 
+function restartFinaleAnimation(){
+ if(!ui.finale)return;
+ ui.finale.classList.remove('finale-animate');
+ // Reading offsetWidth restarts entrance animations when the player replays the scene.
+ void ui.finale.offsetWidth;
+ ui.finale.classList.add('finale-animate');
+}
+function showFinale(){
+ if(state.results.length!==16)return;
+ clearInput();hideAnswerOverlay();
+ state.mode='finale';state.jobActive=false;state.paused=false;
+ ui.mission.classList.add('hidden');ui.result.classList.add('hidden');ui.home.classList.add('hidden');ui.gameover.classList.add('hidden');
+ $('#shell').classList.remove('is-home','is-result');$('#shell').classList.add('is-finale');
+ $('#finale-balance').textContent=rupiah(state.money);
+ const goalPct=Math.round(state.money/TARGET*100);
+ $('#finale-goal-text').textContent=state.money>=TARGET?'Target simulasi Rp100 juta tercapai!':`${goalPct}% dari target simulasi ${rupiah(TARGET)}`;
+ $('#finale-money-fill').style.width=`${goalPct}%`;
+ ui.finale.classList.remove('hidden');
+ restartFinaleAnimation();
+ if(!state.muted){unlockAudio();tone(523,.35,'sine',.06,0);tone(659,.35,'sine',.06,.18);tone(784,.56,'sine',.08,.36);}
+ safelySave();
+}
+function finishFinale(){
+ if(state.mode!=='finale')return;
+ ui.finale.classList.add('hidden');
+ showResults(true);
+}
 function scores(){const out={V:0,A:0,R:0,K:0};for(const r of state.results){const q=CODE_INDEX.get(r.id);if(q&&r.correct)out[q.cat]+=25;}return out;}
 function scoreProfile(){
  const scoresByCat=scores(),highest=Math.max(...Object.values(scoresByCat)),correct=state.results.filter(r=>r.correct).length;
@@ -186,10 +256,10 @@ function scoreProfile(){
  const description=leaders.length===0?'Belum ada jawaban benar. Coba lagi dan jelajahi semua bentuk aktivitas.':leaders.length===1?DOMINANT_HELP[leaders[0]]:`Skor tertinggi diperoleh secara setara pada ${leaders.map(k=>CATS[k].name).join(', ')}.`;
  return {scoresByCat,highest,leaders,correct,label,description};
 }
-function showResults(){
- if(state.done)return;
- $('#shell').classList.add('is-result');state.done=true;state.mode='result';clearInput();
- ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.result.classList.remove('hidden');
+function showResults(force=false){
+ if(state.done&&!force)return;
+ $('#shell').classList.add('is-result');$('#shell').classList.remove('is-finale');ui.finale.classList.add('hidden');state.done=true;state.mode='result';clearInput();
+ hideAnswerOverlay();ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.result.classList.remove('hidden');
  updateHUD();safelySave();soundEffect('success');
  const profile=scoreProfile(),highest=profile.highest,leaders=profile.leaders;
  const percentDescription=leaders.length>1?`Masing-masing ${highest}%`:`${highest}%`;
@@ -202,10 +272,10 @@ function showResults(){
    <div class="v73-meters">${Object.entries(CATS).map(([key,c])=>`<div class="v73-meter"><div class="v73-meter-line"><span class="v73-meter-name"><i style="background:${c.color}"></i>${sanitize(c.name)}</span><span class="v73-meter-meta"><small>${profile.scoresByCat[key]/25}/4 benar</small><strong>${profile.scoresByCat[key]}%</strong></span></div><div class="v73-meter-track"><div style="width:${profile.scoresByCat[key]}%;background:${c.color}"></div></div></div>`).join('')}</div>
    <div class="v73-summary"><span aria-hidden="true">✦</span><p><b>Perjalanan tuntas!</b> Semua aktivitas telah dicoba. Gunakan hasilnya untuk berdiskusi dengan guru tentang cara belajar yang paling membantu.</p></div><p class="v73-caveat">*Persentase menunjukkan performa menjawab pada game ini, bukan ukuran atau diagnosis gaya belajar yang permanen.</p>
   </section>
-  <aside class="result-side v73-side"><section class="result-panel v73-journey"><span class="v73-side-kicker">PENCAPAIAN PETUALANGAN</span><div class="v73-savings"><span class="v73-savings-icon" aria-hidden="true">✦</span><div><small>Tabungan simulasi</small><strong>${rupiah(state.money)}</strong></div></div><div class="v73-metric-grid"><div><b>${profile.correct}/16</b><span>Jawaban benar</span></div><div><b>16/16</b><span>Misi selesai</span></div><div><b>${Math.round(profile.correct/16*100)}%</b><span>Nilai keseluruhan</span></div><div><b>${percentDescription}</b><span>Aktivitas tertinggi</span></div></div><div class="v73-route"><span>01 Kampung</span><span>02 Oasis</span><span>03 Kota</span><span>04 Gerbang</span></div></section>
-   <section class="result-panel v73-download"><h2>Simpan kartu hasil</h2><p>Unduh sertifikat hasil untuk diberikan kepada guru atau disimpan.</p><div class="v73-actions"><button class="btn btn-dark" id="save-png">↓ Unduh PNG</button><button class="btn btn-dark" id="save-jpg">↓ Unduh JPG</button></div><div class="v73-actions v73-actions-secondary"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></section>
+  <aside class="result-side v73-side"><section class="result-panel v73-journey"><span class="v73-side-kicker">PENCAPAIAN PETUALANGAN</span><div class="v73-savings"><span class="v73-savings-icon" aria-hidden="true">✦</span><div><small>Tabungan simulasi · Target Rp100 juta</small><strong>${rupiah(state.money)}</strong><span class="v75-goal-percent">${Math.round(state.money/TARGET*100)}% target tercapai</span></div></div><div class="v73-metric-grid"><div><b>${profile.correct}/16</b><span>Jawaban benar</span></div><div><b>16/16</b><span>Misi selesai</span></div><div><b>${Math.round(profile.correct/16*100)}%</b><span>Nilai keseluruhan</span></div><div><b>${percentDescription}</b><span>Aktivitas tertinggi</span></div></div><div class="v73-route"><span>01 Kampung</span><span>02 Oasis</span><span>03 Kota</span><span>04 Gerbang</span></div></section>
+   <section class="result-panel v73-download"><h2>Simpan kartu hasil</h2><p>Unduh sertifikat hasil untuk diberikan kepada guru atau disimpan.</p><button class="finale-result-rewatch" id="revisit-finale" type="button">✧ Tonton lagi adegan Ka'bah</button><div class="v73-actions"><button class="btn btn-dark" id="save-png">↓ Unduh PNG</button><button class="btn btn-dark" id="save-jpg">↓ Unduh JPG</button></div><div class="v73-actions v73-actions-secondary"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></section>
   </aside></div></div>`;
- $('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));
+ $('#revisit-finale').addEventListener('click',showFinale);$('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));
  $('#back-home').addEventListener('click',home);$('#result-home').addEventListener('click',home);
  $('#replay').addEventListener('click',()=>{home();$('#player-name').value=state.name;newGame();});
 }
@@ -258,7 +328,7 @@ function downloadResult(format){
   ctx.textAlign='right';text(`${score}%`,1286,y,'bold 22px Arial','#173e4f',104);ctx.textAlign='left';
  });
  text('Skor tiap kategori: jumlah benar dari 4 tugas × 25%.',99,858,'17px Arial','#6d8890',980);
- text('TABUNGAN HAJI (SIMULASI)',74,916,'bold 18px Arial','#b0dbd7');
+ text('TABUNGAN HAJI (SIMULASI) · TARGET Rp100 JUTA',74,916,'bold 18px Arial','#b0dbd7');
  text(rupiah(state.money),74,951,'bold 32px Arial','#ffcf79',495);
  lines('Persentase ini hanya menunjukkan performa dalam permainan, bukan diagnosis gaya belajar permanen.',685,925,633,'17px Arial','#d2e7e6',23,2);
  canvas.toBlob(blob=>{
@@ -273,7 +343,7 @@ function infoHtml(kind){const common='<p>Gunakan menu ini untuk memahami cara be
  const pieces={
  tujuan:`<div class="mini-card"><b>Tujuan pembelajaran</b><p>Setelah bermain, siswa mampu mengenali gambar perangkat jaringan dasar, memahami fungsi utamanya, mengenali contoh bunyi terkait perangkat, membaca informasi singkat, dan menyusun koneksi sederhana.</p></div><div class="mini-card"><b>Ruang lingkup</b><p>Router, switch, kabel Ethernet, konektor RJ45, koneksi WiFi, perangkat komputer, dan simulasi bunyi dasar.</p></div><p>Media ini berfungsi sebagai pengenalan awal, bukan ujian sertifikasi teknisi.</p>`,
  peta:`<h3>Peta konsep materi</h3><div class="mini-card"><b>1. Kenali perangkat</b><p>Router • Switch • Komputer • Kabel LAN • RJ45</p></div><div class="mini-card"><b>2. Pahami koneksi</b><p>Perangkat terhubung menggunakan kabel Ethernet atau sinyal WiFi.</p></div><div class="mini-card"><b>3. Amati tanda kerja</b><p>Gambar perangkat • Status jaringan • Contoh bunyi komputer, UPS dan konektor.</p></div><div class="mini-card"><b>4. Berlatih dan mengevaluasi</b><p>Pilih, dengarkan, baca/tulis, lalu susun perangkat pada mini game.</p></div>`,
- siswa:`<h3>Petunjuk bermain</h3><p><b>Laptop:</b> A/D atau tombol ←/→ untuk berjalan, Spasi untuk melompat. Lepaskan tombol agar berhenti. <b>HP:</b> gunakan tiga tombol sentuh yang muncul saat permainan dimulai.</p><ol><li>Masukkan nama dan pilih <b>Mulai perjalanan</b>.</li><li>Gunakan <b>← / →</b> atau <b>A / D</b> untuk bergerak, dan <b>Spasi</b> untuk melompat. Pada HP, gunakan tombol di bawah.</li><li>Datangi bendera layanan. Panggilan kerja akan muncul otomatis.</li><li>Kerjakan tugas dengan memilih gambar, mendengarkan bunyi, membaca/menulis, atau menyeret benda.</li><li>Jawaban salah tidak mengunci perjalanan: kamu tetap mendapat penjelasan dan upah dasar.</li><li>Selesaikan 16 pekerjaan, lalu mencapai gerbang akhir untuk mengunduh hasil PNG/JPG.</li></ol><div class="guide-sound-setting"><label for="volume-slider">Volume suara permainan <b id="volume-indicator">55%</b></label><input id="volume-slider" type="range" min="0" max="100" step="5" value="55" aria-label="Volume suara permainan" /></div><p>Tips: kamu dapat mengulang bunyi perangkat kapan saja sebelum menjawab. Coba kembali jika terkena rintangan; progres tetap tersimpan.</p>`,
+ siswa:`<h3>Petunjuk bermain</h3><p><b>Laptop:</b> A/D atau tombol ←/→ untuk berjalan, Spasi untuk melompat. Lepaskan tombol agar berhenti. <b>HP:</b> gunakan tiga tombol sentuh yang muncul saat permainan dimulai.</p><ol><li>Masukkan nama dan pilih <b>Mulai perjalanan</b>.</li><li>Gunakan <b>← / →</b> atau <b>A / D</b> untuk bergerak, dan <b>Spasi</b> untuk melompat. Pada HP, gunakan tombol di bawah.</li><li>Datangi bendera layanan. Panggilan kerja akan muncul otomatis.</li><li>Kerjakan tugas dengan memilih gambar, mendengarkan bunyi, membaca/menulis, atau menyeret benda.</li><li>Jawaban benar/salah memunculkan penjelasan dan hadiah. Ketuk Lanjutkan perjalanan untuk melanjutkan; jawaban salah tetap mendapat upah dasar.</li><li>Kumpulkan tabungan simulasi menuju target Rp100 juta: upah Rp5 juta per misi, bonus benar Rp1 juta, dan koin Rp250 ribu.</li><li>Selesaikan 16 pekerjaan, lalu capai gerbang akhir untuk mengunduh hasil PNG/JPG.</li></ol><div class="guide-sound-setting"><label for="volume-slider">Volume suara permainan <b id="volume-indicator">55%</b></label><input id="volume-slider" type="range" min="0" max="100" step="5" value="55" aria-label="Volume suara permainan" /></div><p>Tips: kamu dapat mengulang bunyi perangkat kapan saja sebelum menjawab. Coba kembali jika terkena rintangan; progres tetap tersimpan.</p>`,
  guru:`<h3>Panduan guru</h3><ol><li>Perlihatkan tujuan dan peta konsep terlebih dahulu.</li><li>Berikan kesempatan kepada siswa bermain mandiri selama sekitar 15–25 menit sesuai kondisi kelas.</li><li>Biarkan siswa mencoba berbagai interaksi tanpa memberi tahu label tugas VARK pada setiap soal.</li><li>Arahkan siswa mengunduh hasil PNG/JPG dan membagikannya sebagai dokumentasi.</li><li>Diskusikan jawaban benar/salah dan perangkat yang sulit dikenali, bukan hanya skor.</li></ol><p>Nilai empat aktivitas dihitung dari 4 tugas per kategori (benar = 25 poin untuk kategorinya, salah = 0). Hasil tidak memastikan gaya belajar tetap siswa.</p><p>Data hanya disimpan di browser perangkat ini; belum ada database kelas atau leaderboard daring.</p>`,
  rangkuman:`<h3>Rangkuman materi</h3><div class="mini-card"><b>Router</b><p>Perangkat yang meneruskan data antarjaringan; router nirkabel dapat menyediakan akses WiFi.</p></div><div class="mini-card"><b>Switch</b><p>Menghubungkan beberapa perangkat dalam jaringan lokal melalui port Ethernet.</p></div><div class="mini-card"><b>Kabel LAN & RJ45</b><p>Kabel Ethernet menghubungkan perangkat secara kabel; RJ45 adalah nama umum konektornya.</p></div><div class="mini-card"><b>WiFi</b><p>Memungkinkan perangkat terhubung tanpa kabel langsung menggunakan gelombang radio.</p></div>`,
  referensi:`<h3>Referensi materi</h3><p><a target="_blank" rel="noopener noreferrer" href="https://www.netacad.com/courses/networking-basics/how-routers-work?courseLang=en-US">Cisco Networking Academy — How Routers Work</a></p><p><a target="_blank" rel="noopener noreferrer" href="https://www.cloudflare.com/learning/network-layer/what-is-a-router/">Cloudflare Learning — What Is a Router?</a></p><p><a target="_blank" rel="noopener noreferrer" href="https://www.netacad.id/course/CCNA-Introduction-to-Networks">Networking Academy Indonesia — Introduction to Networks</a></p><h3>Sumber aset</h3><p>Maskot dan latar kawasan: aset ilustrasi khusus proyek yang disiapkan bersama kelompok, dioptimalkan menjadi WebP. Gambar perangkat: ilustrasi SVG mandiri. Audio: empat file simulasi bunyi perangkat (tidak mengklaim berasal dari model perangkat tertentu). Musik antarmuka: nada sintetis orisinal dari Web Audio API.</p>`,
@@ -290,5 +360,5 @@ function openInfo(kind){if(state.jobActive)return;state.modalActive=true;clearIn
 }
 function closeInfo(){ui.modal.classList.add('hidden');state.modalActive=false;if(state.paused){state.paused=false;$('#pause-toggle').innerHTML=ICON_PAUSE;}if(!state.muted)syncBgMusic();}
 function attachControls(){document.addEventListener('keydown',e=>{const focused=document.activeElement;const isTyping=focused&&['INPUT','TEXTAREA'].includes(focused.tagName);if(isTyping||state.mode!=='game'||state.jobActive||state.modalActive)return;if(['ArrowLeft','ArrowRight','Space','ArrowUp','KeyA','KeyD','KeyW'].includes(e.code))e.preventDefault();if(e.code==='ArrowLeft'||e.code==='KeyA')input.left=true;else if(e.code==='ArrowRight'||e.code==='KeyD')input.right=true;else if(['Space','ArrowUp','KeyW'].includes(e.code)&&!e.repeat)input.jump=true;});document.addEventListener('keyup',e=>{if(['ArrowLeft','KeyA'].includes(e.code))input.left=false;if(['ArrowRight','KeyD'].includes(e.code))input.right=false;});window.addEventListener('blur',clearInput);document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput();});for(const [selector,key] of [['#left-btn','left'],['#right-btn','right'],['#jump-btn','jump']]){const b=$(selector);b.addEventListener('pointerdown',e=>{if(state.mode!=='game'||state.jobActive||state.modalActive||state.paused)return;e.preventDefault();b.setPointerCapture(e.pointerId);input[key]=true;b.classList.add('pressed');});const release=()=>{input[key]=false;b.classList.remove('pressed');};b.addEventListener('pointerup',release);b.addEventListener('pointercancel',release);b.addEventListener('lostpointercapture',release);}}
-function wireApp(){$('#start-btn').addEventListener('click',newGame);$('#go-home').addEventListener('click',()=>{if(state.jobActive)return;home();});$('#open-guide').addEventListener('click',()=>openInfo('siswa'));$('#sound-toggle').addEventListener('click',toggleSound);$('#pause-toggle').addEventListener('click',pauseGame);$('#discussion-btn').addEventListener('click',()=>openInfo('diskusi'));$('#retry-btn').addEventListener('click',retry);document.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',()=>openInfo(b.dataset.info)));ui.modal.addEventListener('click',e=>{if(e.target===ui.modal)closeInfo();});$('#player-name').addEventListener('keydown',e=>{if(e.key==='Enter')newGame();});attachControls();window.addEventListener('beforeunload',safelySave);setInterval(()=>{if(state.mode==='game'&&!state.jobActive&&!state.modalActive)safelySave();},3500);}
+function wireApp(){$('#finale-to-result').addEventListener('click',finishFinale);$('#finale-rewatch').addEventListener('click',restartFinaleAnimation);ui.answerLayer.addEventListener('click',e=>{if(e.target.closest('#answer-continue'))finishAnsweredJob();});ui.answerLayer.addEventListener('keydown',e=>{if(e.code==='Escape'&&answerOverlayOpen){e.preventDefault();finishAnsweredJob();}});$('#start-btn').addEventListener('click',newGame);$('#go-home').addEventListener('click',()=>{if(state.jobActive)return;home();});$('#open-guide').addEventListener('click',()=>openInfo('siswa'));$('#sound-toggle').addEventListener('click',toggleSound);$('#pause-toggle').addEventListener('click',pauseGame);$('#discussion-btn').addEventListener('click',()=>openInfo('diskusi'));$('#retry-btn').addEventListener('click',retry);document.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',()=>openInfo(b.dataset.info)));ui.modal.addEventListener('click',e=>{if(e.target===ui.modal)closeInfo();});$('#player-name').addEventListener('keydown',e=>{if(e.key==='Enter')newGame();});attachControls();window.addEventListener('beforeunload',safelySave);setInterval(()=>{if(state.mode==='game'&&!state.jobActive&&!state.modalActive)safelySave();},3500);}
 wireApp();renderWorld();updateHUD();tryRestore();requestAnimationFrame(tick);

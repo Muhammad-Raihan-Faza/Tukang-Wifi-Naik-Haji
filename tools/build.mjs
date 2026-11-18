@@ -5,7 +5,7 @@ import {execFileSync} from 'node:child_process';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 execFileSync(process.execPath,['tools/check.mjs'],{cwd:root,stdio:'inherit'});
 const dist=path.join(root,'dist');fs.rmSync(dist,{recursive:true,force:true});fs.mkdirSync(dist,{recursive:true});
-for(const file of ['index.html','styles.css','styles-v4.css','styles-v6.css','styles-v7-2.css','styles-v7-3.css','styles-v7-4.css'])fs.copyFileSync(path.join(root,file),path.join(dist,file));
+for(const file of ['index.html','styles.css','styles-v4.css','styles-v6.css','styles-v7-2.css','styles-v7-3.css','styles-v7-4.css','styles-v7-5.css','styles-v7-6.css'])fs.copyFileSync(path.join(root,file),path.join(dist,file));
 fs.cpSync(path.join(root,'src'),path.join(dist,'src'),{recursive:true});
 fs.cpSync(path.join(root,'assets'),path.join(dist,'assets'),{recursive:true});
 console.log('Build website statis selesai: dist/');

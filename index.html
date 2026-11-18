@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="styles-v7-2.css" />
   <link rel="stylesheet" href="styles-v7-3.css" />
   <link rel="stylesheet" href="styles-v7-4.css" />
+  <link rel="stylesheet" href="styles-v7-5.css" />
+  <link rel="stylesheet" href="styles-v7-6.css" />
   <script defer src="src/app.js"></script>
 </head>
 <body>
@@ -25,7 +27,7 @@
     </button>
     <nav class="primary-nav" aria-label="Menu informasi"><button type="button" data-info="siswa" class="nav-guide"><span class="nav-help-dot">?</span> Cara bermain</button><button type="button" data-info="tujuan" class="nav-secondary">Tujuan</button><button type="button" data-info="peta" class="nav-secondary">Materi</button><button type="button" data-info="guru" class="nav-secondary">Guru</button></nav>
     <div class="top-stats" id="stats" aria-live="polite">
-      <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-money.webp" alt="" /></span><div><small>TABUNGAN HAJI</small><strong id="money-stat">Rp 0</strong></div></div>
+      <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-money.webp" alt="" /></span><div><small>TABUNGAN HAJI</small><strong id="money-stat">Rp 0</strong><span class="savings-goal" id="savings-goal">Target Rp100.000.000</span></div></div>
       <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-flag.webp" alt="" /></span><div><small>MISI SELESAI</small><strong id="mission-stat">0 / 16</strong></div></div>
       <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-heart.webp" alt="" /></span><div><small>ENERGI</small><strong id="health-stat">♥ ♥ ♥</strong></div></div>
     </div>
@@ -57,8 +59,23 @@
         <div class="hero-art"><div class="hero-ring"></div><div class="hero-glow"></div><img src="assets/v6/tech-idle.webp" alt="Maskot teknisi jaringan profesional berseragam kerja" /></div>
       </div>
     </section>
+    <section class="finale-screen hidden" id="finale-screen" aria-label="Adegan penutup petualangan di Ka'bah">
+      <div class="finale-scene-bg" aria-hidden="true"></div>
+      <div class="finale-sparkles" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div>
+      <div class="finale-story">
+        <div class="finale-chapter"><span class="finale-chapter-dot"></span> EPILOG • MISI 16/16 TUNTAS</div>
+        <h2>Perjalanan penuh makna.<br/><em>Sampai di hadapan Ka'bah.</em></h2>
+        <p>Setelah membantu banyak warga, sang teknisi tiba di akhir petualangannya. Setiap pekerjaan membawanya selangkah lebih dekat pada cita-cita.</p>
+        <div class="finale-balance"><span>Tabungan haji dalam game</span><strong id="finale-balance">Rp 0</strong><small id="finale-goal-text">Target simulasi Rp100.000.000</small><div class="finale-money-track"><span id="finale-money-fill"></span></div></div>
+        <div class="finale-actions"><button id="finale-to-result" type="button" class="finale-main-btn">Lihat hasil VARK <span aria-hidden="true">→</span></button><button id="finale-rewatch" type="button" class="finale-repeat-btn">↻ Ulangi adegan</button></div>
+        <div class="finale-clarification">Ilustrasi penutup cerita fiksi • tabungan dan perjalanan ini merupakan simulasi pembelajaran.</div>
+      </div>
+      <img class="finale-technician" src="assets/v6/tech-cheer.webp" alt="Maskot teknisi WiFi kartun merayakan akhir petualangannya" draggable="false" />
+      <div class="finale-scene-label">TUKANG WIFI NAIK HAJI • AKHIR PETUALANGAN</div>
+    </section>
     <section class="result-screen hidden" id="result-screen" aria-label="Hasil akhir"></section>
     <div class="dialog-layer hidden" id="dialog-layer" role="presentation"><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Informasi permainan"></div></div>
+    <div class="answer-layer hidden" id="answer-layer" role="presentation"><section class="answer-card" id="answer-card" role="alertdialog" aria-modal="true" aria-labelledby="answer-title" aria-label="Hasil jawaban"></section></div>
     <div class="mission-layer hidden" id="mission-layer" role="presentation"><div class="mission-card" id="mission-card" role="dialog" aria-modal="true" aria-label="Pekerjaan jaringan"></div></div>
     <div class="game-over hidden" id="game-over"><div class="game-over-card"><span class="game-over-icon">↻</span><h2>Istirahat sebentar!</h2><p>Energi teknisi habis. Semua pekerjaan yang telah dikerjakan tetap tersimpan.</p><button class="btn btn-accent" id="retry-btn">Lanjut dari pos terakhir</button></div></div>
   </main>
