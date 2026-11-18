@@ -1,0 +1,71 @@
+/* V7.4 — modal is fully confined to the game stage; it never passes beneath the fixed status bar. */
+.stage{position:relative;min-height:0;overflow:hidden}
+.stage .mission-layer{
+  position:absolute!important;
+  inset:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr);
+  place-items:center;
+  min-height:0;
+  max-height:100%;
+  overflow:hidden!important;
+  padding:clamp(7px,1.5vh,14px)!important;
+  z-index:28;
+}
+.stage .mission-layer.hidden{display:none!important}
+.stage .mission-card{
+  width:min(1080px,100%)!important;
+  height:auto!important;
+  max-height:100%!important;
+  min-height:0!important;
+  min-width:0!important;
+  margin:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+  border-radius:clamp(13px,1.5vw,22px);
+  position:relative;
+  transform:none!important;
+  animation:none!important;
+  align-self:center;
+  justify-self:center;
+}
+/* Keep the mission's image banner readable, not behind the top HUD. */
+.stage .mission-vista{position:relative;min-height:66px;height:auto;padding:12px clamp(12px,1.7vw,24px);gap:12px;overflow:hidden}
+.stage .mission-vista-left{min-width:0;max-width:calc(100% - 70px)}
+.stage .mission-vista-tag{display:inline-flex;max-width:100%;align-items:center;white-space:normal;line-height:1.25}
+.stage .mission-vista-location{white-space:normal;overflow-wrap:break-word;line-height:1.32;max-width:100%}
+.stage .mission-vista-mark{flex-shrink:0;max-width:52px}
+.stage .mission-head{min-width:0;max-width:100%;gap:12px;padding:clamp(10px,1.5vh,15px) clamp(12px,1.8vw,24px)}
+.stage .mission-agent{min-width:0;flex:1 1 auto}
+.stage .mission-agent>div{min-width:0}
+.stage .mission-agent b,.stage .mission-agent small{overflow-wrap:anywhere}
+.stage .mission-head .job-reward{flex-shrink:0;max-width:35%;min-width:0}
+.stage .job-reward b{overflow-wrap:anywhere;white-space:normal!important}
+.stage .mission-body{min-width:0;max-width:100%;padding:clamp(12px,1.7vw,22px)!important}
+.stage .mission-body h2{overflow-wrap:break-word;text-wrap:pretty}
+.stage .mission-footer{min-width:0;flex-wrap:wrap}
+@media(max-width:740px){
+ .stage .mission-layer{padding:5px!important}
+ .stage .mission-card{width:100%!important;scrollbar-gutter:auto;border-radius:14px}
+ .stage .mission-vista{min-height:49px;padding:7px 10px;gap:8px}
+ .stage .mission-vista-left{max-width:calc(100% - 45px);gap:4px}
+ .stage .mission-vista-mark{width:38px;height:38px}
+ .stage .mission-head{gap:7px;padding:9px 10px}
+ .stage .mission-head .job-reward{max-width:38%;padding:7px!important}
+ .stage .mission-body{padding:10px 11px!important}
+}
+@media(max-width:360px){
+ .stage .mission-vista{min-height:43px;padding:6px 9px}
+ .stage .mission-vista-tag{font-size:9px}
+ .stage .mission-vista-location{font-size:9px}
+ .stage .mission-head{gap:5px;padding:7px}
+ .stage .mission-head .job-reward{max-width:37%;padding:6px!important}
+}
+@media(max-height:600px){
+ .stage .mission-vista{min-height:42px;padding:5px 11px}
+ .stage .mission-head{padding-block:6px}
+ .stage .mission-body{padding:9px 12px!important}
+}

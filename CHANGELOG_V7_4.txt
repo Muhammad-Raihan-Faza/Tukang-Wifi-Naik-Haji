@@ -1,0 +1,6 @@
+TUKANG WIFI NAIK HAJI — V7.4 POPUP RAPIH
+- Posisi kartu pertanyaan dibatasi di area game, tidak lagi menyelip ke balik HUD.
+- Perbaikan soal berikutnya: posisi scroll kartu selalu kembali ke awal.
+- Fokus otomatis pada jawaban teks tidak menggeser tampilan pertanyaan.
+- Header misi, lokasi, upah, dan area soal lebih aman untuk laptop maupun HP.
+- Semua fitur V7.3 termasuk soal tanpa caption, hasil dominan VARK persen, kartu PNG/JPG tetap dipertahankan.
