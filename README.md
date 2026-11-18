@@ -1,6 +1,16 @@
-# Tukang WiFi Naik Haji — V7.8
+# Tukang WiFi Naik Haji — V7.9
 
 Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi jaringan. Satu perjalanan dengan **16 misi yang diacak**, masing-masing 4 kegiatan Visual, Auditory, Read/Write, dan Kinesthetic (label kategori disembunyikan ketika siswa bermain).
+
+## Pembaruan V7.9 — Responsif HP diperbaiki
+
+- Memperbaiki input nama pada beranda yang sebelumnya menyempit dan tampak terpotong di layar HP.
+- Tombol Mulai bermain berukuran penuh di bawah kolom nama pada ponsel; ukuran font input mencegah zoom otomatis iOS.
+- Header, panel skor, dan tombol kendali tetap berada dalam lebar layar ponsel.
+- 16 popup soal, petunjuk, pilihan jawaban, praktik, serta feedback dibuat bisa digulir secara internal ketika HP terlalu pendek.
+- Menambahkan petunjuk gulir yang muncul hanya ketika bagian jawaban masih di bawah layar.
+- Halaman hasil VARK dan scene penutup Ka'bah disesuaikan pada layar portrait, lanskap, dan ponsel kecil.
+- Perbaikan bersifat tampilan; bank soal, nilai VARK, tabungan Rp100 juta, musik, dan aset logo V7.8 tetap dipertahankan.
 
 ## Pembaruan V7.8 — Identitas logo baru
 
@@ -34,7 +44,7 @@ Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi
 ## Menjalankan di Windows
 
 1. Ekstrak file ZIP.
-2. Buka folder `Tukang_WiFi_Naik_Haji_V7_8_Logo_Baru`.
+2. Buka folder `Tukang_WiFi_Naik_Haji_V7_9_Responsive_HP`.
 3. Klik dua kali `START_WINDOWS.bat`, atau jalankan `npm run dev` di VS Code.
 4. Buka alamat lokal yang ditampilkan (umumnya `http://localhost:3000`).
 

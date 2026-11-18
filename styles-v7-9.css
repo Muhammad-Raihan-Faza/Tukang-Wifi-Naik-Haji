@@ -1,0 +1,193 @@
+/* V7.9 Mobile-first repair — the last stylesheet deliberately overrides
+   legacy V4–V7.8 rules. Preserve the 16 game tasks and existing art. */
+html,body{max-width:100%;height:100%;margin:0;overflow:hidden}
+.shell{min-width:0;width:100%;max-width:100%;height:100vh;height:100dvh;overflow:hidden}
+.shell *{min-width:0}
+button,input,textarea{max-width:100%}
+button{overflow-wrap:anywhere}
+.stage{min-height:0}
+
+/* Prevent the name field from collapsing next to the primary CTA. */
+.shell.is-home .start-form,.shell.is-home .home-form-row{min-width:0!important;max-width:100%!important}
+.shell.is-home .home-form-row input{
+  flex:1 1 0!important;min-width:0!important;width:0!important;
+  font-size:16px!important;line-height:1.3;padding:0 14px!important;
+  text-overflow:ellipsis;
+}
+.shell.is-home .home-form-row .btn{flex:0 0 auto!important;max-width:50%!important;line-height:1.2!important}
+.shell.is-home .home-form-row .btn span{margin-left:4px}
+.shell.is-home .brand{max-width:calc(100% - 48px)}
+.shell.is-home .brand>span:last-child{overflow:hidden}
+.shell.is-home .brand small{overflow:hidden;text-overflow:ellipsis}
+.shell.is-home .welcome{overscroll-behavior:contain}
+
+/* Discrete controls, not a second logo or large decoration, in the game HUD. */
+.shell:not(.is-home) .topbar{min-width:0}
+.shell:not(.is-home) .top-stats,.shell:not(.is-home) .top-stat{min-width:0}
+.shell:not(.is-home) .top-stat>div{min-width:0}
+.shell:not(.is-home) .top-stat strong{overflow:hidden;text-overflow:ellipsis}
+.subbar .area-pill{min-width:0}
+
+/* Overlay content never extends past the stage. Internal scrolling is intentional
+   for small screens; do not scroll the whole game window. */
+.stage .mission-layer,.stage .answer-layer,.stage .dialog-layer,
+.stage .game-over{box-sizing:border-box;inset:0;max-width:100%;max-height:100%;overscroll-behavior:contain}
+.stage .mission-layer{align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:6px!important}
+.stage .mission-card{max-width:100%!important;max-height:100%!important;min-height:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain;scroll-behavior:auto;scrollbar-gutter:auto!important;touch-action:pan-y;}
+.stage .mission-card .mission-body,.stage .mission-card .mission-head{min-width:0}
+.mission-card h2,.mission-card p,.mission-card b,.mission-card small,.mission-card button{overflow-wrap:anywhere}
+.mission-card .choice-grid,.mission-card .choice-card,.mission-card .practice-workspace,.mission-card .practice-workspace-main{min-width:0}
+.stage .answer-card{width:min(520px,100%)!important;max-height:100%!important;overflow-y:auto!important;overscroll-behavior:contain;touch-action:pan-y}
+.stage .dialog{max-height:100%!important;overflow-y:auto!important;overscroll-behavior:contain}
+.result-screen{max-width:100%;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain}
+.result-top,.result-top>div,.result-ident,.result-columns,.result-panel{min-width:0}
+.result-top h1,.result-panel p,.result-panel b,.result-panel small,
+.result-panel button,.result-dominant strong{overflow-wrap:anywhere}
+.result-panel .v73-actions{min-width:0}
+.finale-story{min-width:0;overflow-wrap:anywhere}
+.finale-actions button{white-space:normal}
+
+@media(max-width:740px){
+  .shell.is-home .home-form-row{
+    flex-direction:column!important;align-items:stretch!important;gap:9px!important;
+  }
+  .shell.is-home .home-form-row input{
+    flex:0 0 auto!important;width:100%!important;min-width:0!important;
+    min-height:46px!important;height:46px!important;border-radius:13px!important;
+    font-size:16px!important;
+  }
+  .shell.is-home .home-form-row .btn{
+    flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+    height:46px!important;min-height:46px!important;white-space:normal!important;
+    font-size:12px!important;border-radius:13px!important;
+  }
+  .shell.is-home .start-form{width:min(400px,100%)!important;margin-inline:auto!important}
+  .shell.is-home .start-form label{font-size:10px;margin-bottom:6px}
+  .shell.is-home .home-copy{width:100%!important;max-width:100%!important;padding:0!important}
+  .shell.is-home .home-brand-logo{
+    width:min(520px,100%)!important;height:auto!important;
+    max-height:min(30dvh,225px)!important;margin:0 auto!important;
+  }
+  .shell.is-home .home-copy>p{margin-bottom:8px!important;font-size:11px!important;line-height:1.42!important}
+  .shell.is-home .home-small-note{max-width:95%;line-height:1.35!important;margin-top:9px!important}
+  .shell.is-home .welcome-inner{padding:8px 12px!important;min-height:100%!important;height:auto!important}
+  .shell.is-home .welcome{overflow-y:auto;scrollbar-width:none}
+  .shell.is-home .welcome::-webkit-scrollbar{display:none}
+  .shell:not(.is-home) .topbar{row-gap:5px;gap:5px;overflow:hidden}
+  .shell:not(.is-home) .top-stats{flex-shrink:0}
+  .shell:not(.is-home) .top-stat{overflow:hidden}
+  .shell:not(.is-home) .top-stat strong{white-space:nowrap}
+  .shell:not(.is-home) .top-stat .savings-goal{font-size:7px;line-height:1.15}
+  .shell:not(.is-home) .subbar .area-pill{max-width:65%;overflow:hidden;text-overflow:ellipsis}
+  .stage .mission-layer{padding:5px!important}
+  .stage .mission-card{border-radius:14px!important;box-shadow:0 12px 32px rgba(0,20,31,.38)!important}
+  .mission-vista{height:auto!important;min-height:42px!important;padding:5px 10px!important}
+  .mission-vista-left{gap:2px!important}
+  .mission-vista-location{font-size:9px!important;line-height:1.25!important}
+  .mission-vista-tag{font-size:9px!important;padding:3px 9px!important}
+  .mission-vista-mark{width:32px!important;height:32px!important;flex:0 0 32px!important}
+  .mission-head{min-height:45px!important;padding:7px 10px!important;gap:7px!important}
+  .mission-agent{gap:6px!important}
+  .mission-agent b{font-size:10px!important;line-height:1.27!important}
+  .mission-agent small{font-size:9px!important;line-height:1.3!important}
+  .job-reward{flex:0 0 auto;padding:6px 8px!important;border-radius:10px!important}
+  .job-reward small{font-size:8px!important}
+  .job-reward b{font-size:11px!important}
+  .mission-body{padding:9px 11px 11px!important}
+  .mission-body h2{font-size:clamp(15px,4.4vw,18px)!important;line-height:1.28!important;margin:0 0 7px!important}
+  .job-section-label{margin:2px 0 5px!important}
+  .choice-grid{gap:6px!important}
+  .choice-card{padding:5px 3px!important;min-height:94px!important}
+  .device-frame{height:62px!important;padding:2px!important}
+  .device-frame .device-img,.device-frame .device-svg{max-height:57px!important;height:57px!important}
+  .practice-hint{padding:6px 8px!important;font-size:9px!important;line-height:1.35!important;margin:0 0 5px!important}
+  .practice-art{height:48px!important;margin:0 0 4px!important}
+  .practice-device{height:42px!important}
+  .practice-device .device-img,.practice-device .device-svg{max-height:40px!important;height:40px!important}
+  .practice-workspace{margin:3px 0!important}
+  .token-box{gap:5px!important;margin:0 0 5px!important}
+  .token{min-height:38px!important;padding:4px 5px!important}
+  .slots{gap:5px!important;margin:0 0 5px!important}
+  .slot{min-height:46px!important;padding:4px!important}
+  .practice-submit{min-height:40px!important;white-space:normal!important}
+  .mission-footer{gap:5px!important;margin-top:7px!important}
+  .mission-footer .one-try-note{font-size:8px!important}
+  .hint-toggle{padding:6px 8px!important;font-size:9px!important}
+  .sound-player{margin-bottom:7px!important}
+  .reading-paper{margin-bottom:7px!important}
+  .typing-task-v4{gap:5px!important}
+  .typing-task-v4 .type-illustration{height:66px!important}
+  .typing-task-v4 .type-illustration .device-img,.typing-task-v4 .type-illustration .device-svg{height:58px!important}
+  .typing-row{gap:6px!important}
+  .typing-row input{font-size:16px!important;min-width:0!important}
+  .typing-row button{min-height:42px!important}
+  .result-screen{padding:10px!important}
+  .result-shell{height:auto!important;min-height:100%!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .result-top h1{font-size:clamp(20px,5.8vw,27px)!important;line-height:1.22!important}
+  .result-top p{line-height:1.42!important}
+  .result-columns{grid-template-columns:1fr!important;gap:10px!important}
+  .result-panel{padding:12px!important}
+  .result-panel h2{font-size:16px!important}
+  .result-ident{align-items:flex-start!important}
+  .v73-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .v73-actions button{flex:1 1 120px!important;min-width:0}
+  .finale-story{left:12px!important;top:10px!important;width:calc(100% - 24px)!important;max-height:calc(100% - 16px)!important;overflow-y:auto!important}
+  .finale-story h2{font-size:clamp(20px,6vw,29px)!important;line-height:1.2!important}
+  .finale-balance,.finale-actions{max-width:100%!important}
+  .finale-technician{height:35%!important;right:-9%!important;opacity:.6!important;pointer-events:none}
+  .dialog-layer .dialog{width:min(540px,100%)}
+}
+@media(max-width:400px){
+ .shell.is-home .home-brand-logo{max-height:min(27dvh,185px)!important}
+ .shell.is-home .home-small-note{font-size:8px!important}
+ .shell:not(.is-home) .top-stat .stat-symbol{display:none!important}
+ .shell:not(.is-home) .top-stat{padding:3px 5px!important}
+ .shell:not(.is-home) .top-stat strong{font-size:clamp(9px,2.65vw,11px)!important}
+ .shell:not(.is-home) .topbar{padding-inline:7px}
+ .shell:not(.is-home) .brand strong{font-size:12px}
+ .mission-head .client-avatar{width:28px!important;height:28px!important;flex:0 0 28px!important}
+ .mission-head .job-reward{max-width:37%}
+ .choice-card{min-height:88px!important}
+}
+@media(max-width:360px){
+ .shell.is-home .home-brand-logo{max-height:23dvh!important}
+ .shell.is-home .home-copy>p{display:none!important}
+ .shell.is-home .home-small-note{display:none!important}
+ .shell.is-home .home-form-row input,.shell.is-home .home-form-row .btn{height:43px!important;min-height:43px!important}
+ .mission-vista{min-height:38px!important}
+ .mission-head{min-height:42px!important}
+ .mission-body{padding:7px 9px 10px!important}
+ .mission-body h2{font-size:15px!important}
+}
+/* Landscape touch screen: retain movement controls even when width > 740px. */
+@media(pointer:coarse) and (max-height:550px) and (min-width:741px){
+ .shell:not(.is-home):not(.is-finale):not(.is-result) .bottom-bar{
+   display:flex!important;height:53px!important;flex-basis:53px!important;padding:3px 10px!important;
+ }
+ .shell:not(.is-home) .topbar{height:52px!important;flex-basis:52px!important;min-height:0!important}
+ .shell:not(.is-home) .subbar{height:29px!important;flex-basis:29px!important}
+ .bottom-bar .ctrl{height:45px;min-height:45px}
+ .stage .mission-card{max-height:100%!important}
+}
+/* Short screens: scrolling the information layer is safer than clipping controls. */
+@media(max-height:620px){
+ .shell.is-home .home-brand-logo{max-height:24dvh!important}
+ .shell.is-home .welcome{overflow-y:auto}
+ .shell.is-home .welcome-inner{min-height:100%!important;height:auto!important}
+ .stage .mission-card,.stage .answer-card{overflow-y:auto!important}
+ .finale-story{max-height:calc(100% - 16px)!important}
+}
+/* iPhone notch and home indicator */
+@supports(padding:env(safe-area-inset-bottom)){
+ @media(max-width:740px){
+  .shell:not(.is-home):not(.is-finale):not(.is-result) .bottom-bar{
+    padding-bottom:max(4px,env(safe-area-inset-bottom))!important;
+  }
+ }
+}
+
+/* Appears only when short phone screens hide the last answer control below the fold. */
+.stage .mission-scroll-hint{position:absolute;z-index:7;right:11px;bottom:11px;max-width:min(190px,65%);min-height:34px;padding:7px 11px;background:linear-gradient(135deg,#fff5d8,#fbd17c);color:#174459;border:1px solid #dbb464;border-radius:999px;box-shadow:0 5px 20px rgba(4,27,42,.30);font:800 10px 'Plus Jakarta Sans',system-ui,sans-serif;pointer-events:auto;white-space:normal}
+.stage .mission-scroll-hint:hover{filter:brightness(1.05)}
+.stage .mission-scroll-hint.hidden{display:none!important}

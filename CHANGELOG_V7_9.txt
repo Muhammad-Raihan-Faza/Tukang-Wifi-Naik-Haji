@@ -1,0 +1,1 @@
+V7.9 — Responsive HP: input nama tidak lagi menyempit, tombol Mulai satu baris penuh pada ponsel, popup 16 soal dapat digulir secara internal, ruang misi/praktik lebih ringkas, hasil dan adegan Ka’bah ditata ulang agar tombol tetap dapat dijangkau. Navbar dan HUD mengikuti layar sempit, dukungan landscape touch dan safe area. Fitur/gameplay serta aset V7.8 tetap dipertahankan.
