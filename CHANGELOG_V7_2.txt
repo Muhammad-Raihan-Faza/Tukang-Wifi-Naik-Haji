@@ -1,0 +1,22 @@
+TUKANG WIFI NAIK HAJI — V7.2 UI RAPiH
+
+DASAR: V7.1 dengan maskot semi-kartun, semua 16 misi, VARK, aset dan audio tetap.
+
+PENYEMPURNAAN
+- Navbar, ikon suara, statistik HUD dan teks angka diselaraskan dengan dimensi tombol.
+- Teks tombol panjang boleh membungkus secara rapi, tidak meluber ke tepi.
+- Form beranda, tombol mulai, label dan hero proporsional pada laptop dan HP.
+- Kotak soal visual, audio, baca/tulis, mengetik, dan praktik diberi layout aman dari overflow.
+- Tombol drag-and-drop dan label slot tetap masuk panel di layar kecil.
+- Menu panduan dan dialog dapat digulir di dalam panel jika konten terlalu panjang.
+- Hasil dominan VARK dan tombol unduh PNG/JPG dirapikan. Di desktop kartu hasil tetap satu layar; pada HP halaman hasil bergulir.
+- Tampilan landscape HP pada navbar diperbaiki agar tidak bergeser keluar bagian atas.
+
+PENGUJIAN
+- npm test dan npm run build.
+- Audit browser: laptop 1366×768, 1024×768, 900×600; tablet 768×1024;
+  HP 390×844, 375×667, 320×568; landscape HP 667×375.
+- Semua 16 misi diperiksa untuk overflow teks pada laptop, HP, dan HP kecil.
+- Tidak ada error JavaScript pada skenario browser yang diuji.
+
+Batasan: pada HP pendek kartu hasil dan petunjuk mempunyai area gulir agar seluruh isi dan tombol tetap dapat dijangkau.

@@ -1,0 +1,234 @@
+/* ================================================================
+   V6 • Clean entry, focused gameplay, responsive phone experience
+   No third-party assets required. V6 artwork packaged locally.
+   ================================================================ */
+:root{--v6-ink:#082538;--v6-blue:#0e3850;--v6-teal:#43d4bb;--v6-gold:#ffd58a}
+.shell{background:var(--v6-ink)}
+.topbar{height:68px;flex-basis:68px;gap:clamp(8px,1.5vw,22px);padding-inline:clamp(12px,2.3vw,35px);background:linear-gradient(115deg,#071c2d,#104057 90%)}
+.brand{min-width:0;gap:10px}.brand-icon{height:43px;width:43px;flex:0 0 43px}.brand-icon img{width:29px;height:29px;object-fit:contain;filter:drop-shadow(0 1px 2px #0007)}
+.brand strong{font-size:clamp(14px,1.25vw,19px);letter-spacing:-.015em}.brand small{font-size:8px;letter-spacing:.07em;overflow:hidden;text-overflow:ellipsis}
+.primary-nav{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0}
+.primary-nav button{appearance:none;cursor:pointer;border:1px solid transparent;background:transparent;color:#c6e2e9;font-weight:800;font-size:12px;padding:10px 12px;border-radius:12px;white-space:nowrap;transition:.15s}
+.primary-nav button:hover,.primary-nav button:focus-visible{background:#ffffff14;border-color:#b4f4e44d;color:white}
+.nav-help-dot{display:inline-grid;place-items:center;width:18px;height:18px;background:#4bdbba;color:#0d3548;border-radius:50%;margin-right:6px;font-size:11px}
+.top-stats{gap:7px}.top-stat{min-width:120px;min-height:48px;padding:6px 11px;gap:7px}
+.top-stat:first-child{min-width:160px}.top-stat .stat-symbol{flex:0 0 32px;width:32px;height:32px;padding:3px;background:#ffffff0c}.top-stat .stat-symbol img{max-height:29px;max-width:29px;width:100%;height:100%;object-fit:contain}
+.top-stat small{font-size:9px}.top-stat strong{font-size:13px}
+.toolbar{gap:7px}.icon-btn{width:41px;height:41px;padding:7px;display:grid;place-items:center}.icon-btn img{width:27px;height:27px;object-fit:contain}
+.subbar{height:39px;flex-basis:39px}
+/* Entry: remove ghosted game text / characters / world labels behind the mascot */
+.shell.is-home .world,.shell.is-home .player,.shell.is-home .corner-caption,.shell.is-home .toast,.shell.is-home .subbar,.shell.is-home .bottom-bar,.shell.is-home .top-stats,.shell.is-home #pause-toggle,.shell.is-home #open-guide{display:none!important}
+.shell.is-home .topbar{box-shadow:0 9px 40px rgba(0,14,29,.22)}
+.shell.is-home .toolbar{margin-left:auto}
+.shell:not(.is-home) .primary-nav{display:none}
+.shell:not(.is-home) .top-stats{margin-left:auto}
+/* Keyboard game controls on PC; touch pads only on phones */
+@media(min-width:741px){.shell:not(.is-home) .bottom-bar{display:none!important}}
+.shell.is-home .stage{background:#091c2f}
+.welcome{isolation:isolate;position:absolute;inset:0;background:linear-gradient(112deg,#07192bf5 0%,#092b40ed 53%,#16475acc 100%);overflow:hidden}
+.welcome::before{content:'';position:absolute;inset:0;z-index:-2;background:linear-gradient(100deg,#071b2af5 0%,#09283de8 52%,#0c374f90 100%),url('assets/bg-kampung.webp') center 65%/cover no-repeat;opacity:.68}
+.welcome::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 76% 45%,#47cdbb29,transparent 36%),linear-gradient(0deg,#041a2b77,transparent 28%)}
+.welcome-inner{height:100%;max-width:1620px;margin:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(16px,3vw,48px);padding:clamp(18px,4.3vh,50px) clamp(28px,6.1vw,118px)}
+.home-copy{max-width:650px;min-width:0;z-index:3;position:relative}
+.eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;letter-spacing:.16em;color:#bdf8e8;background:#12475ab7;border:1px solid #63beab69;display:inline-flex;align-items:center;width:max-content;max-width:100%;padding:9px 15px;border-radius:30px;box-shadow:inset 0 1px #ffffff12}
+.home-copy h1{max-width:none!important;margin:16px 0 15px!important;font-family:'Sora',sans-serif!important;font-size:clamp(46px,5vw,78px)!important;line-height:1.065!important;letter-spacing:-.058em!important;overflow:visible;text-wrap:balance;white-space:normal}
+.home-copy h1 span{display:block;color:#ffd382}
+.home-copy>p{font-size:clamp(13px,1.12vw,16px);line-height:1.6;max-width:550px;margin:0 0 25px;color:#dceef0}
+.start-form{width:100%;max-width:600px;display:block;margin-top:5px}
+.start-form label{display:block;margin:0 0 10px;color:#b7dce2;font-size:11px;font-weight:900;letter-spacing:.11em}
+.home-form-row{display:flex;gap:10px;align-items:stretch}
+.home-form-row input{flex:1;min-width:0;width:100%;height:52px;min-height:52px;border-radius:14px;border:1px solid #ffffffaf;color:#143c4f;background:#fafffe;padding:0 17px;outline-offset:3px}
+.home-form-row .btn{flex:0 0 auto;min-height:52px;height:52px;border-radius:14px;padding:0 22px;white-space:nowrap;font-size:13px;font-weight:900}
+.home-form-row .btn span{margin-left:7px}
+.home-small-note{display:flex;align-items:center;gap:9px;margin-top:15px;color:#adcfd7;font-size:11px;font-weight:700}
+.home-note-dot{width:7px;height:7px;border-radius:50%;background:#57dcb7;box-shadow:0 0 0 5px #57dcb72a;flex-shrink:0}
+.hero-art{height:100%;min-height:0;max-height:100%;position:relative;display:flex;justify-content:center;align-items:flex-end;overflow:visible;z-index:2}
+.hero-art>img{position:relative;display:block;max-height:95%;height:95%;width:auto;max-width:95%;object-fit:contain;object-position:center bottom;border-radius:0;mask-image:none;filter:drop-shadow(0 18px 29px #020e1a93);z-index:2}
+.hero-ring{position:absolute;top:13%;right:3%;width:min(94%,430px);height:auto;aspect-ratio:1;z-index:0;box-shadow:0 0 0 50px #56c3a309,0 0 0 100px #56c3a305;border-color:#6bd9bf30}
+.hero-glow{position:absolute;bottom:0;inset-inline:8%;height:45%;background:radial-gradient(ellipse,#42c2a62e,transparent 68%);z-index:0}
+.hero-journey-tag,.hero-label,.hero-bubble,.welcome-footer{display:none!important}
+/* Assets: real cutout images, never stretched SVGs */
+.device-img{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 7px 9px #0d314929)}
+.choice-card .device-frame{padding:10px 16px;background:linear-gradient(160deg,#f6fbfa,#edf6f6)}
+.type-illustration .device-img{height:100px;max-width:160px;margin:auto}
+.practice-device .device-img{max-height:100%;max-width:110px}
+.token-img .device-img{width:100%;height:100%;object-fit:contain}
+/* UI controls from user's asset pack, with accessible hit targets */
+.ctrl{padding:2px;border:none!important;background:transparent!important;box-shadow:none!important;min-width:62px;min-height:54px;filter:drop-shadow(0 4px 4px #02162475)}
+.ctrl img{width:59px;height:51px;object-fit:contain;display:block;pointer-events:none}
+.ctrl.jump{min-width:84px!important;padding:0!important;position:relative;display:grid;place-items:center}
+.ctrl.jump img{width:68px;height:53px}
+.ctrl.jump small{position:absolute;bottom:0;color:#fff9de;font-size:8px;letter-spacing:.1em;text-shadow:0 1px 2px #000a;pointer-events:none}
+.ctrl.pressed{filter:brightness(1.15) drop-shadow(0 1px 1px #02162475);transform:translateY(2px)}
+.pickup{background:none!important;border:0!important;box-shadow:none!important;width:44px;height:44px}
+.pickup .pickup-art{width:100%;height:100%;object-fit:contain}
+.hazard{background:none!important;border:0!important;box-shadow:none!important;overflow:visible}
+.hazard .hazard-art{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 5px 5px #0c294c66)}
+.hazard.mite{width:48px;height:44px;border-radius:0}.hazard.mite::before,.hazard.mite::after{content:none!important}
+.hazard.spark{width:42px;height:48px;filter:none}.hazard.puddle{width:70px;height:23px;bottom:69px;border-radius:0}
+.finish{width:160px;height:212px;background:none!important;border:none!important;box-shadow:none!important}
+.finish img{height:100%;width:100%;object-fit:contain}
+/* less intrusive captions inside the world */
+.world-zone-title{font-size:11px!important;letter-spacing:.07em;top:16px;left:4%;padding:7px 11px;border-color:#d1e5e266}
+.corner-caption{display:none!important}
+/* Phones: vertical menu header and game controls when active */
+@media(max-width:1090px){.top-stat{min-width:92px;padding:6px 7px}.top-stat:first-child{min-width:130px}.top-stat strong{font-size:11px}.top-stat small{font-size:7px}.primary-nav button{font-size:11px;padding:9px 8px}}
+@media(max-width:740px){
+ .topbar{min-height:62px;height:62px;flex-basis:62px;padding:6px 10px;gap:6px}
+ .brand{gap:6px}.brand-icon{width:35px;height:35px;flex-basis:35px}.brand-icon img{width:25px;height:25px}
+ .brand strong{font-size:12px}.brand small{font-size:7px}
+ .shell.is-home .topbar{height:101px;flex-basis:101px;flex-wrap:wrap;justify-content:space-between;align-content:center;row-gap:5px}
+ .shell.is-home .brand{order:0;flex:1 1 auto}
+ .shell.is-home .toolbar{order:1;margin-left:0}
+ .shell.is-home .primary-nav{order:2;flex:1 1 100%;justify-content:flex-start;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:2px}
+ .shell.is-home .primary-nav::-webkit-scrollbar{display:none}
+ .primary-nav button{font-size:10px;padding:7px 9px;border-radius:9px}
+ .nav-help-dot{height:16px;width:16px}
+ .shell:not(.is-home) .top-stats{gap:3px;margin-left:auto}
+ .shell:not(.is-home) .top-stat{padding:4px 5px;min-width:0;height:37px;gap:3px}
+ .shell:not(.is-home) .top-stat:first-child{min-width:0}
+ .shell:not(.is-home) .top-stat .stat-symbol{height:23px;width:23px;flex:0 0 23px}
+ .shell:not(.is-home) .top-stat small{display:none}.shell:not(.is-home) .top-stat strong{font-size:10px}
+ .shell:not(.is-home) .toolbar{gap:3px}.shell:not(.is-home) .toolbar .icon-btn{width:32px;height:33px;padding:4px}
+ .shell:not(.is-home) .toolbar .icon-btn img{width:22px;height:22px}
+ .shell:not(.is-home) .bottom-bar{height:68px;flex-basis:68px;padding:5px 10px}
+ .shell:not(.is-home) .controller{gap:9px}
+ .shell:not(.is-home) .ctrl{min-width:58px;height:53px}
+ .shell:not(.is-home) .secondary-action{min-height:41px}
+ .welcome-inner{display:block;padding:clamp(11px,2.6vh,22px) 19px 15px}
+ .home-copy{max-width:100%;width:100%;position:relative;z-index:4}
+ .eyebrow{font-size:8px;padding:7px 10px;letter-spacing:.09em}
+ .home-copy h1{font-size:clamp(31px,7.8vw,47px)!important;margin:10px 0 8px!important;max-width:73%!important;line-height:1.06!important}
+ .home-copy>p{font-size:11px;line-height:1.48;max-width:68%;margin-bottom:13px}
+ .start-form{position:relative;margin-top:13px;z-index:5}
+ .home-form-row{flex-direction:column;gap:8px}
+ .home-form-row input{height:42px;min-height:42px}
+ .home-form-row .btn{height:42px;min-height:42px;width:100%;font-size:12px}
+ .home-small-note{font-size:9px;margin-top:11px}
+ .hero-art{position:absolute;top:1%;right:0;width:44%;height:48%;pointer-events:none;z-index:2;justify-content:flex-end}
+ .hero-art>img{max-height:100%;height:100%;max-width:100%;object-fit:contain;object-position:bottom right}
+ .hero-ring,.hero-glow{display:none}
+ .device-frame{height:75px!important}.device-frame .device-img{height:100%;max-height:67px}
+ .type-illustration .device-img{height:68px}
+ .practice-device .device-img{max-height:45px}
+}
+@media(max-width:420px){
+ .shell.is-home .topbar{height:97px;flex-basis:97px}
+ .home-copy h1{font-size:clamp(27px,8vw,34px)!important;max-width:74%!important}
+ .home-copy>p{font-size:10px;max-width:71%}
+ .hero-art{width:43%;height:44%;opacity:.96}
+ .home-small-note{font-size:8px}
+ .shell:not(.is-home) .brand small{display:none}.shell:not(.is-home) .top-stat:nth-child(3){display:none}
+ .shell:not(.is-home) .toolbar #open-guide{display:none}
+}
+@media(max-height:700px) and (max-width:740px){
+ .shell.is-home .topbar{height:91px;flex-basis:91px}
+ .welcome-inner{padding-top:9px}
+ .eyebrow{font-size:7px;padding:5px 8px}
+ .home-copy h1{font-size:clamp(25px,7vw,31px)!important;margin:6px 0!important}
+ .home-copy>p{font-size:10px;line-height:1.34;margin-bottom:7px}
+ .start-form label{font-size:9px;margin-bottom:5px}
+ .home-form-row input{height:36px;min-height:36px}
+ .home-form-row .btn{height:36px;min-height:36px}
+ .home-small-note{margin-top:7px}
+ .hero-art{height:36%}
+}
+@media(max-height:490px) and (max-width:740px){
+ .shell.is-home .topbar{height:62px;flex-basis:62px;flex-wrap:nowrap}
+ .shell.is-home .primary-nav{display:none}
+ .hero-art{display:none}
+ .home-copy h1{max-width:none!important;font-size:25px!important}
+ .home-copy>p{max-width:none;font-size:10px}
+ .home-form-row{flex-direction:row}.home-form-row .btn{width:auto}
+ .home-small-note{display:none}
+}
+@media(prefers-reduced-motion:reduce){.hero-art img,.choice-card,.icon-btn{transition:none!important}}
+
+/* Remove the legacy CONNECTING DREAMS lettering from the hero decoration. */
+.hero-ring::before,.hero-ring::after{content:none!important;display:none!important}
+
+/* Center entry content on phones, so the first screen does not feel top-heavy. */
+@media(max-width:740px) and (min-height:491px){
+ .welcome-inner{display:block;align-items:initial;justify-content:initial;padding-block:12px 15px}
+ .home-copy{transform:translateY(clamp(25px,7vh,55px))}
+}
+@media(max-width:360px){
+ .shell.is-home .primary-nav{gap:1px;overflow:visible;justify-content:space-between}
+ .shell.is-home .primary-nav button{font-size:9px;padding:5px 5px}
+ .shell.is-home .nav-help-dot{display:none}
+}
+
+/* Mobile game header: reserve a genuine second row for all three HUD values.
+   Prevents score cards from overlapping the location/progress strip. */
+@media(max-width:740px){
+ .shell:not(.is-home) .topbar{height:104px;flex-basis:104px;min-height:104px;display:flex;flex-wrap:wrap;justify-content:space-between;align-content:center;row-gap:5px;padding:5px 10px 6px}
+ .shell:not(.is-home) .brand{order:0;flex:0 1 auto}
+ .shell:not(.is-home) .toolbar{order:1;flex:0 0 auto;margin-left:auto}
+ .shell:not(.is-home) .top-stats{order:2;display:flex;flex:1 1 100%;width:100%;margin:0!important;gap:5px}
+ .shell:not(.is-home) .top-stat{height:39px!important;min-width:0!important;flex:1 1 0;padding:3px 6px;overflow:hidden;border-radius:10px}
+ .shell:not(.is-home) .top-stat:first-child{flex:1.4 1 0;min-width:0!important}
+ .shell:not(.is-home) .top-stat:nth-child(3){display:flex!important}
+ .shell:not(.is-home) .top-stat strong{font-size:clamp(9px,2.65vw,12px);white-space:nowrap}
+ .shell:not(.is-home) .top-stat .stat-symbol{width:22px;height:24px;flex:0 0 22px}
+ .shell:not(.is-home) .top-stat .stat-symbol img{max-width:21px;max-height:23px}
+ .shell:not(.is-home) .subbar{height:31px;flex-basis:31px;min-height:31px}
+ .shell:not(.is-home) .area-pill{font-size:8px}
+ .shell:not(.is-home) .progress-wrap{min-width:84px}
+}
+@media(max-width:355px){
+ .shell:not(.is-home) .top-stat:nth-child(3) .stat-symbol{display:none!important}
+ .shell:not(.is-home) .top-stat{padding:3px 4px}
+ .shell:not(.is-home) .top-stat strong{font-size:9px}
+}
+
+/* Keep large photographic device cutouts INSIDE practice workbenches. */
+@media(min-width:741px){
+ .practice-workspace .practice-art{max-height:202px;min-height:0;overflow:hidden;justify-content:center;gap:2px;padding:5px 6px}
+ .practice-workspace .practice-art .practice-device{height:48px;max-height:48px;min-height:0;flex:0 0 48px;width:110px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+ .practice-workspace .practice-art .practice-device .device-img{height:46px!important;max-height:46px!important;width:100%!important;object-fit:contain}
+ .practice-workspace .practice-art .practice-link{line-height:10px;font-size:10px;flex:0 0 auto;margin:0}
+}
+@media(max-width:740px){
+ .practice-workspace .practice-art{overflow:hidden}
+ .practice-workspace .practice-device{overflow:hidden}
+ .practice-workspace .practice-device .device-img{height:44px!important;max-height:44px!important;width:100%;object-fit:contain}
+}
+
+
+/* V7.1 — Maskot 2D: proporsi konsisten dan tepat menginjak tanah. */
+.player{
+  width:clamp(74px,11.8dvh,98px);
+  height:clamp(132px,24dvh,185px);
+  transform-origin:50% 100%;
+  pointer-events:none;
+  filter:drop-shadow(0 8px 5px rgba(8,38,48,.33));
+}
+.player img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:50% 100%;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+/* Proporsi maskot di beranda: lebih kompak dan tidak menabrak tombol mulai. */
+.hero-art{align-items:flex-end;justify-content:center}
+.hero-art>img{
+  height:84%;
+  max-height:560px;
+  max-width:89%;
+  object-fit:contain;
+  object-position:center bottom;
+  filter:drop-shadow(0 16px 24px rgba(3,24,38,.45));
+}
+@media (max-width:740px){
+  .player{width:clamp(61px,9.8dvh,76px);height:clamp(105px,20dvh,136px)}
+  .hero-art>img{height:94%;max-height:94%;max-width:100%}
+}
+@media (max-height:540px){
+  .player{width:57px;height:101px}
+}
+@media (prefers-reduced-motion:reduce){
+  .player.running img{animation:none!important}
+}

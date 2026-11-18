@@ -7,27 +7,30 @@
   <meta name="description" content="Tukang WiFi Naik Haji: petualangan teknisi jaringan dengan 16 tantangan interaktif dan profil aktivitas VARK." />
   <title>Tukang WiFi Naik Haji | Petualangan Jaringan</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="preload" href="assets/tech-idle.webp" as="image" />
+  <link rel="preload" href="assets/v6/tech-idle.webp" as="image" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles-v4.css" />
+  <link rel="stylesheet" href="styles-v6.css" />
+  <link rel="stylesheet" href="styles-v7-2.css" />
   <script defer src="src/app.js"></script>
 </head>
 <body>
-<div class="shell" id="shell">
+<div class="shell is-home" id="shell">
   <header class="topbar">
     <button class="brand" id="go-home" aria-label="Kembali ke beranda">
-      <span class="brand-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="10" width="18" height="9" rx="2"/><path d="M7 10V6m10 4V6M7 15h.01M11 15h.01M15 15h.01M8 3l2 2m6-2-2 2"/></svg></span>
-      <span><strong>TUKANG <em>WIFI</em></strong><small>NAIK HAJI <b>•</b> NETWORK ADVENTURE</small></span>
+      <span class="brand-icon"><img src="assets/v6/hud-wifi.webp" alt="" /></span>
+      <span><strong>TUKANG <em>WIFI</em></strong><small>NAIK HAJI <b>•</b> PETUALANGAN JARINGAN</small></span>
     </button>
+    <nav class="primary-nav" aria-label="Menu informasi"><button type="button" data-info="siswa" class="nav-guide"><span class="nav-help-dot">?</span> Cara bermain</button><button type="button" data-info="tujuan" class="nav-secondary">Tujuan</button><button type="button" data-info="peta" class="nav-secondary">Materi</button><button type="button" data-info="guru" class="nav-secondary">Guru</button></nav>
     <div class="top-stats" id="stats" aria-live="polite">
-      <div class="top-stat"><span class="stat-symbol"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 10h18M16 15h3M7 6V4a2 2 0 0 1 2-2h9"/></svg></span><div><small>TABUNGAN HAJI</small><strong id="money-stat">Rp 0</strong></div></div>
-      <div class="top-stat"><span class="stat-symbol"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4m0 1c4-3 7 3 13 0v11c-6 3-9-3-13 0"/></svg></span><div><small>MISI SELESAI</small><strong id="mission-stat">0 / 16</strong></div></div>
-      <div class="top-stat"><span class="stat-symbol"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></span><div><small>ENERGI</small><strong id="health-stat">♥ ♥ ♥</strong></div></div>
+      <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-money.webp" alt="" /></span><div><small>TABUNGAN HAJI</small><strong id="money-stat">Rp 0</strong></div></div>
+      <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-flag.webp" alt="" /></span><div><small>MISI SELESAI</small><strong id="mission-stat">0 / 16</strong></div></div>
+      <div class="top-stat"><span class="stat-symbol"><img src="assets/v6/hud-heart.webp" alt="" /></span><div><small>ENERGI</small><strong id="health-stat">♥ ♥ ♥</strong></div></div>
     </div>
     <div class="toolbar">
-      <button class="icon-btn" id="sound-toggle" title="Aktifkan/matikan suara" aria-label="Aktifkan/matikan suara"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-3v13M9 8l12-3"/><ellipse cx="6" cy="19" rx="3" ry="2"/><ellipse cx="18" cy="16" rx="3" ry="2"/></svg></button>
-      <button class="icon-btn" id="open-guide" title="Panduan" aria-label="Buka panduan"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 5M12 17h.01"/></svg></button>
-      <button class="icon-btn" id="pause-toggle" title="Jeda" aria-label="Jeda permainan"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg></button>
+      <button class="icon-btn" id="sound-toggle" title="Aktifkan/matikan suara" aria-label="Aktifkan/matikan suara"><img src="assets/v6/hud-volume.webp" alt="" /></button>
+      <button class="icon-btn" id="open-guide" title="Panduan" aria-label="Buka panduan"><img src="assets/v6/hud-help.webp" alt="" /></button>
+      <button class="icon-btn" id="pause-toggle" title="Jeda" aria-label="Jeda permainan"><img src="assets/v6/btn-pause.webp" alt="" /></button>
     </div>
   </header>
   <div class="subbar" id="subbar">
@@ -37,22 +40,20 @@
   </div>
   <main class="stage" id="stage">
     <div class="world" id="world" aria-hidden="true"></div>
-    <div class="player" id="player" aria-hidden="true"><img src="assets/tech-idle.webp" alt="" draggable="false" decoding="async" /></div>
+    <div class="player" id="player" aria-hidden="true"><img src="assets/v6/tech-idle.webp" alt="" draggable="false" decoding="async" /></div>
     <div class="corner-caption" id="corner-caption">TAP / PANAH UNTUK BERGERAK</div>
     <div class="toast" id="toast" aria-live="polite"></div>
     <section class="welcome" id="home-screen" aria-label="Beranda">
       <div class="welcome-inner">
         <div class="home-copy">
-          <span class="eyebrow">✦ PETUALANGAN EDUKASI JARINGAN</span>
-          <h1>TUKANG WIFI<br/><span>NAIK HAJI</span></h1>
-          <p>Mulai dari kampung, bantu warga memperbaiki jaringan, dan kumpulkan upah pekerjaan untuk mewujudkan impian berangkat haji.</p>
-          <div class="mini-highlights"><span>16 misi warga</span><span>Suara perangkat</span><span>Praktik interaktif</span></div>
-          <div class="start-form"><label for="player-name">NAMA TEKNISI</label><input id="player-name" maxlength="32" placeholder="Tulis namamu di sini..." autocomplete="off" /><button id="start-btn" class="btn btn-accent">Mulai perjalanan <span>↗</span></button></div>
-          <div class="home-links"><button data-info="tujuan">Tujuan belajar</button><button data-info="peta">Peta konsep</button><button data-info="siswa">Cara bermain</button><button data-info="guru">Panduan guru</button><button data-info="referensi">Sumber</button></div>
+          <span class="eyebrow">PETUALANGAN TEKNISI JARINGAN</span>
+          <h1>TUKANG WIFI <span>NAIK HAJI</span></h1>
+          <p>Bantu warga memperbaiki jaringan, kumpulkan upah, dan wujudkan impian perjalanan haji.</p>
+          <div class="start-form"><label for="player-name">NAMA PEMAIN</label><div class="home-form-row"><input id="player-name" maxlength="32" placeholder="Masukkan namamu" autocomplete="off" /><button id="start-btn" class="btn btn-accent" aria-label="Mulai perjalanan">Mulai bermain <span>↗</span></button></div></div>
+          <div class="home-small-note"><span class="home-note-dot"></span> 16 pekerjaan • 4 kawasan • Hasil belajar dapat diunduh</div>
         </div>
-        <div class="hero-art"><div class="hero-ring"></div><div class="hero-glow"></div><img src="assets/tech-idle.webp" alt="Maskot teknisi WiFi profesional memakai seragam biru, kopiah, dan tas perkakas" /><div class="hero-bubble">✦ Setiap misi, selangkah lebih dekat ke impian.</div><div class="hero-label"><b>NETWORK ADVENTURE</b><span>16 MISI • 4 KAWASAN</span></div></div>
+        <div class="hero-art"><div class="hero-ring"></div><div class="hero-glow"></div><img src="assets/v6/tech-idle.webp" alt="Maskot teknisi jaringan profesional berseragam kerja" /></div>
       </div>
-      <div class="welcome-footer">16 tantangan acak <span>·</span> Tidak perlu login <span>·</span> Hasil bisa diunduh PNG/JPG <span>·</span> Data disimpan di browser <span>·</span> Pengembang: Kelompok Praktikum Multimedia</div>
     </section>
     <section class="result-screen hidden" id="result-screen" aria-label="Hasil akhir"></section>
     <div class="dialog-layer hidden" id="dialog-layer" role="presentation"><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Informasi permainan"></div></div>
@@ -60,8 +61,8 @@
     <div class="game-over hidden" id="game-over"><div class="game-over-card"><span class="game-over-icon">↻</span><h2>Istirahat sebentar!</h2><p>Energi teknisi habis. Semua pekerjaan yang telah dikerjakan tetap tersimpan.</p><button class="btn btn-accent" id="retry-btn">Lanjut dari pos terakhir</button></div></div>
   </main>
   <footer class="bottom-bar">
-    <div class="controller"><span class="controls-label">KENDALI</span><button id="left-btn" class="ctrl" aria-label="Jalan ke kiri"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 5-7 7 7 7M7 12h14"/></svg></button><button id="right-btn" class="ctrl" aria-label="Jalan ke kanan"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 5 7 7-7 7M17 12H3"/></svg></button><button id="jump-btn" class="ctrl jump" aria-label="Lompat"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 7-7 7 7M12 6v14"/></svg> <small>LOMPAT</small></button></div>
-    <div class="footer-note"><b>← → / A D</b> untuk bergerak <span>•</span> <b>SPASI</b> untuk melompat <span>•</span> lepaskan tombol untuk berhenti</div>
+    <div class="controller"><span class="controls-label">KENDALI</span><button id="left-btn" class="ctrl" aria-label="Jalan ke kiri"><img src="assets/v6/btn-left.webp" alt="" /></button><button id="right-btn" class="ctrl" aria-label="Jalan ke kanan"><img src="assets/v6/btn-right.webp" alt="" /></button><button id="jump-btn" class="ctrl jump" aria-label="Lompat"><img src="assets/v6/btn-jump.webp" alt="" /><small>LOMPAT</small></button></div>
+    
     <button class="secondary-action" id="discussion-btn"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.3 7.7L22 12l-7.7 2.3L12 22l-2.3-7.7L2 12l7.7-2.3Z"/></svg> <span>Refleksi</span></button>
   </footer>
 </div>

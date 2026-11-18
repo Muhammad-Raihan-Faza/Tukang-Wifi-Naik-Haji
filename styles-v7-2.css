@@ -1,0 +1,240 @@
+/* V7.2 — audit rapi teks, tombol, dialog dan tata letak.
+   Seluruh aturan di bawah mengatasi overflow tanpa mengubah logika game. */
+:root{font-synthesis:none}
+button, input, textarea{max-width:100%;letter-spacing:normal}
+button{line-height:1.3;overflow-wrap:break-word;word-break:normal}
+button img,button svg{flex-shrink:0}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-width:0;min-height:40px;line-height:1.3;text-align:center;white-space:normal!important;padding-block:9px;overflow-wrap:anywhere}
+.btn span{margin:0!important;flex-shrink:0}
+.icon-btn{flex:0 0 auto;overflow:hidden}
+.brand{min-width:0;max-width:min(330px,40vw)}
+.brand>span:last-child{min-width:0}
+.brand strong{display:block;line-height:1.08}
+.brand small{display:block;line-height:1.2;overflow-wrap:anywhere}
+.primary-nav{flex-shrink:0}
+.primary-nav button{max-width:100%;line-height:1.2}
+.top-stats,.top-stat,.toolbar{min-width:0}
+.top-stat{min-width:0;overflow:hidden}
+.top-stat>div:last-child{min-width:0}
+.top-stat small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-stat strong{display:block;min-width:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.subbar{min-width:0}
+.area-pill,.area-pill span,.mission-tip,.progress-wrap{min-width:0}
+.mission-tip{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.welcome,.welcome-inner,.home-copy{min-width:0}
+.home-copy h1{overflow-wrap:normal;word-break:keep-all}
+.home-copy>p{overflow-wrap:break-word}
+.start-form,.home-form-row{min-width:0}
+.home-form-row .btn{flex-shrink:0;white-space:normal!important}
+.home-small-note{line-height:1.4;overflow-wrap:anywhere}
+.hero-art>img{object-fit:contain}
+
+/* Shared popup structure */
+.mission-layer,.dialog-layer,.game-over{padding:clamp(6px,1.6vw,20px)}
+.mission-card,.dialog,.game-over-card{min-width:0;max-width:100%;box-sizing:border-box}
+.mission-card{max-height:min(98%,800px);overscroll-behavior:contain;scrollbar-gutter:stable;overflow-y:auto;overflow-x:hidden}
+.mission-card *{box-sizing:border-box}
+.mission-vista,.mission-head,.mission-body,.mission-footer{min-width:0;max-width:100%}
+.mission-vista-left,.mission-agent,.mission-agent>div{min-width:0}
+.mission-vista-location,.mission-vista-tag{overflow-wrap:break-word;line-height:1.28}
+.mission-agent b,.mission-agent small{display:block;overflow-wrap:anywhere;line-height:1.32}
+.mission-head .job-reward{flex-shrink:0;min-width:0}
+.job-reward b{display:block;white-space:nowrap;line-height:1.2}
+.mission-body h2{overflow-wrap:break-word;line-height:1.22;hyphens:auto}
+.choice-grid,.choice-small,.sound-player,.typing-task-v4,.practice-workspace,.token-box,.slots{min-width:0;max-width:100%}
+.choice-card{min-width:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:7px}
+.choice-card strong{display:block;width:100%;text-align:center;white-space:normal;overflow-wrap:anywhere;line-height:1.25}
+.choice-card .device-frame{width:100%;min-width:0;flex:1}
+.choice-small button{min-width:0;min-height:43px;display:flex;align-items:center;gap:8px;text-align:left;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+.choice-small button .option-letter{flex:0 0 auto}
+.play-sound{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-width:0;min-height:44px;line-height:1.3;white-space:normal!important;overflow-wrap:anywhere}
+.sound-controls{min-width:0}
+.sound-controls small{overflow-wrap:break-word}
+.reading-paper,.reading-paper>div{min-width:0}
+.reading-paper p{overflow-wrap:break-word}
+.typing-task-v4,.type-answer-form,.typing-row{min-width:0}
+.typing-row input{min-width:0;flex:1}
+.typing-row .btn{flex:0 0 auto;max-width:50%}
+.token{min-width:0;min-height:44px;white-space:normal!important;overflow-wrap:anywhere;line-height:1.2;gap:4px}
+.token span:last-child{min-width:0;overflow-wrap:anywhere}
+.slot{min-width:0;overflow:hidden;min-height:58px;overflow-wrap:anywhere}
+.slot b,.slot small{display:block;min-width:0;overflow-wrap:anywhere;white-space:normal;line-height:1.18}
+.practice-submit{min-width:0;min-height:43px}
+.mission-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.one-try-note{max-width:60%;white-space:normal;overflow-wrap:anywhere;line-height:1.3}
+.hint-toggle{min-width:0;white-space:normal!important;line-height:1.2}
+.feedback{overflow-wrap:anywhere}
+.dialog{max-height:min(92dvh,720px);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+.dialog button{white-space:normal;overflow-wrap:anywhere}
+.dialog-head{min-width:0}
+.dialog-head h2{min-width:0;overflow-wrap:anywhere}
+.dialog .close-btn{flex:0 0 auto}
+.game-over-card{width:min(420px,94vw)}
+.game-over-card .btn{max-width:100%}
+
+/* Result cards */
+.result-shell,.result-top,.result-columns,.result-panel,.result-side{min-width:0;max-width:100%}
+.result-top h1{overflow-wrap:anywhere}
+.result-top .icon-btn{flex-shrink:0}
+.result-columns{overflow:visible}
+.result-panel{min-width:0;overflow:hidden}
+.result-dominant strong,.result-dominant p,.winner{overflow-wrap:anywhere}
+.result-meter>div:first-child{gap:8px}
+.result-meter>div:first-child>span{min-width:0;overflow-wrap:anywhere}
+.result-meter>div:first-child strong{flex-shrink:0}
+.result-metric-list>div{min-width:0}
+.result-metric-list b{overflow-wrap:anywhere;font-size:clamp(12px,1.7vw,18px)!important;line-height:1.2}
+.download-row,.result-footer{min-width:0}
+.download-row button,.result-footer button{min-width:0;flex:1 1 0;white-space:normal!important;padding-inline:6px;overflow-wrap:anywhere;text-align:center;line-height:1.25}
+
+@media(min-width:741px) and (max-width:1180px){
+  .topbar{gap:7px;padding-inline:12px}
+  .brand{max-width:210px;flex:0 1 auto}
+  .brand strong{font-size:clamp(13px,1.5vw,16px)}
+  .brand small{font-size:7px}
+  .top-stats{gap:4px;flex-shrink:1}
+  .top-stat{padding-inline:7px;gap:5px;flex:1 1 0}
+  .top-stat:first-child{min-width:0}
+  .top-stat strong{font-size:clamp(10px,1.22vw,13px)}
+  .toolbar{gap:4px}
+  .icon-btn{width:38px;height:38px}
+  .primary-nav button{padding:8px 7px;font-size:11px}
+  .home-copy h1{font-size:clamp(38px,4.7vw,60px)!important}
+}
+@media(min-width:741px) and (max-width:850px){
+  .brand{max-width:170px}
+  .top-stat .stat-symbol{display:none}
+  .top-stat{padding:5px}
+  .top-stat strong{font-size:10px}
+  .toolbar .icon-btn{width:34px;height:34px}
+}
+@media(max-width:740px){
+  .topbar{max-width:100%}
+  .brand{max-width:calc(100% - 105px)}
+  .shell:not(.is-home) .top-stat{overflow:hidden}
+  .shell:not(.is-home) .top-stat:nth-child(1){flex:1.3 1 0}
+  .shell:not(.is-home) .top-stat small{display:none}
+  .shell:not(.is-home) .top-stat strong{overflow:hidden;text-overflow:ellipsis;font-size:clamp(9px,2.5vw,12px)!important}
+  .toolbar .icon-btn{flex-shrink:0}
+  .welcome-inner{padding-inline:clamp(12px,4vw,19px)}
+  .home-copy h1{overflow-wrap:normal}
+  .home-form-row{width:100%}
+  .home-form-row input{width:100%;min-width:0}
+  .home-form-row .btn{min-width:0}
+  .mission-card{width:min(100%,600px);max-height:calc(100dvh - 12px);scrollbar-gutter:auto;border-radius:17px}
+  .mission-head .job-reward{padding:5px 6px;max-width:34%}
+  .job-reward b{font-size:clamp(9px,2.5vw,12px);white-space:normal;overflow-wrap:anywhere}
+  .mission-agent b{font-size:clamp(10px,2.55vw,13px)}
+  .mission-agent small{font-size:clamp(9px,2.25vw,11px)}
+  .choice-grid{gap:5px}
+  .choice-card{padding:5px 3px 8px!important;gap:4px}
+  .choice-card strong{font-size:clamp(9px,2.45vw,11px)}
+  .choice-small button{min-height:39px;font-size:clamp(10px,2.85vw,13px);padding:7px 9px!important}
+  .typing-row{gap:6px}
+  .typing-row input{font-size:12px}
+  .typing-row .btn{font-size:clamp(10px,2.7vw,12px);padding:8px 10px;max-width:45%}
+  .practice-workspace .token{flex:1 1 30%;font-size:clamp(9px,2.5vw,11px)!important;min-height:42px!important;flex-wrap:wrap;gap:2px}
+  .practice-workspace .token-img{max-width:30px}
+  .practice-workspace .slot{min-height:48px!important}
+  .slot b{font-size:clamp(9px,2.45vw,11px)}
+  .mission-footer{align-items:center}
+  .one-try-note{font-size:9px;max-width:56%}
+  .result-screen{overflow-y:auto}
+  .result-metric-list b{font-size:13px!important}
+  .result-dominant strong{font-size:clamp(16px,4.8vw,22px)}
+}
+@media(max-width:360px){
+ .brand strong{font-size:11px}
+ .brand small{font-size:6.5px}
+ .shell.is-home .primary-nav button{font-size:8.5px;padding:5px 4px}
+ .shell:not(.is-home) .top-stat .stat-symbol{display:none}
+ .top-stat strong{font-size:9px!important}
+ .typing-row .btn{font-size:10px;padding-inline:6px}
+ .mission-footer .hint-toggle{font-size:9px!important}
+}
+@media(max-height:600px){
+ .mission-layer{padding:3px}
+ .mission-card{max-height:calc(100dvh - 6px)}
+ .mission-vista{min-height:38px;height:38px}
+ .mission-head{min-height:38px;padding-block:5px}
+ .mission-body{padding-block:7px}
+ .mission-body h2{margin-bottom:6px}
+ .result-screen{overflow-y:auto}
+}
+
+/* Final adjustment from multi-viewport checks */
+.icon-btn img,.icon-btn svg{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;overflow:hidden}
+#result-home{line-height:1;font-size:21px;display:grid;place-items:center}
+.token{height:auto!important;min-height:60px!important;align-items:center!important;justify-content:center!important;overflow:hidden}
+.token-img{height:28px!important;width:32px!important;flex:0 0 32px!important;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.token-img img,.token-img .device-img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+.token>span:last-child{display:block;min-width:0;font-size:clamp(9px,.95vw,12px);text-align:center;line-height:1.18}
+.practice-workspace .token{min-height:60px!important;height:auto!important;flex-wrap:nowrap!important}
+@media(max-width:740px){
+ .practice-workspace .token{min-height:51px!important;flex-direction:column;gap:2px;justify-content:center}
+ .token-img{height:24px!important;width:27px!important;flex-basis:24px!important}
+ .token>span:last-child{font-size:clamp(9px,2.5vw,11px)}
+}
+@media(max-height:530px){.practice-workspace .token{min-height:48px!important}}
+
+/* Results: show actions without letting a tall analysis push them outside desktop view */
+@media(min-width:741px){
+ .result-screen{overflow:hidden;padding:clamp(10px,1.5vw,20px)}
+ .result-shell{height:100%;min-height:0}
+ .result-top{margin-bottom:9px}
+ .result-top h1{font-size:clamp(24px,2.4vw,34px);margin:2px 0 5px}
+ .result-top p{font-size:11px;line-height:1.3}
+ .result-columns{align-items:stretch;min-height:0;gap:12px;overflow:hidden}
+ .result-profile-panel{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(13px,1.5vw,19px)}
+ .result-dominant{padding:12px 14px;margin-bottom:11px;gap:4px}
+ .result-dominant strong{font-size:clamp(16px,1.6vw,21px)}
+ .result-dominant p{font-size:11px;line-height:1.4}
+ .result-meter{margin-bottom:9px}
+ .result-meter>div:first-child{margin-bottom:4px}
+ .result-side{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:9px;overflow:hidden}
+ .result-side>.result-panel{min-height:0;overflow:auto;padding:clamp(12px,1.3vw,18px)}
+ .result-download-card{flex:none!important;min-height:0;overflow:visible!important}
+ .result-download-card h2{margin:0 0 4px;font-size:18px}
+ .result-download-card .helper{margin:0 0 7px;font-size:10px;line-height:1.3}
+ .result-metric-list{gap:7px;margin-top:7px!important}
+ .result-metric-list>div{padding:8px}
+ .result-metric-list small{font-size:10px}
+ .result-metric-list b{font-size:clamp(12px,1.2vw,16px)!important}
+ .stat-big{gap:8px}
+ .stat-big .medal{font-size:33px}
+ .stat-big strong{font-size:clamp(18px,2vw,24px)}
+ .stat-big small{line-height:1.25}
+ .download-row{margin:0;gap:7px}
+ .download-row .btn{min-height:36px;padding:7px 4px}
+ .result-footer{margin-top:7px;gap:7px}
+ .result-footer .btn{min-height:36px;padding:7px 4px}
+}
+@media(max-width:740px){
+ .result-shell{height:auto;min-height:100%}
+ .result-panel{overflow:visible}
+ .result-side{overflow:visible;display:flex;flex-direction:column}
+ .result-screen{overflow-y:auto;overscroll-behavior:contain}
+}
+@media(max-width:740px) and (max-height:490px){
+ .shell.is-home .topbar{gap:5px;justify-content:space-between}
+ .shell.is-home .brand{flex:0 1 auto;width:auto;max-width:calc(100% - 58px);overflow:hidden}
+ .shell.is-home .brand>span:last-child{overflow:hidden}
+ .shell.is-home .brand strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .shell.is-home .brand small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .shell.is-home .toolbar{flex:0 0 auto;margin-left:0}
+ .shell.is-home .toolbar #sound-toggle{width:36px;height:36px}
+}
+
+/* Landscape phone header: prevent first row from slipping above viewport */
+@media(max-width:740px) and (max-height:490px){
+ .shell.is-home .topbar{display:grid!important;grid-template-columns:minmax(0,1fr) 38px;grid-template-rows:1fr;align-items:center!important;align-content:normal!important;justify-items:stretch;column-gap:7px;padding-block:5px!important}
+ .shell.is-home .brand{grid-column:1;grid-row:1;max-width:100%;width:100%;height:44px;min-height:0;align-self:center!important}
+ .shell.is-home .toolbar{grid-column:2;grid-row:1;display:flex;width:38px;align-self:center!important;justify-content:flex-end}
+ .shell.is-home .toolbar #sound-toggle{width:36px;height:36px;max-height:36px}
+ .shell.is-home .primary-nav,.shell.is-home .top-stats{display:none!important}
+}
+/* A deliberate inner scroll is preferable to content outside the viewport on small results */
+@media(min-width:741px) and (max-height:700px){
+ .result-profile-panel{overflow-y:auto}
+ .result-panel .bottom-note{font-size:10px}
+}

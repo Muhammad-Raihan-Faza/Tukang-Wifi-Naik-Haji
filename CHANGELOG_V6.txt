@@ -1,0 +1,15 @@
+TUKANG WIFI NAIK HAJI — V6 · Clean Adventure Edition
+
+1. Beranda dibersihkan: judul dan form singkat, menu Cara bermain/Tujuan/Materi/Guru di navbar.
+2. Tombol jalan dan lompat tidak muncul di beranda atau desktop; kontrol layar sentuh tetap tersedia saat bermain di HP.
+3. Tulisan dekoratif “01 · 16 CONNECTING DREAMS” DIHAPUS dari elemen hero CSS. Dunia dan label checkpoint juga tidak tembus ke beranda.
+4. 80 aset dari asset pack pengguna dipisah, diperkecil, dan digunakan sebagai file WebP transparan.
+5. Maskot menu awal dan pose gameplay memakai sprite baru; gambar perangkat seluruh soal menggunakan aset baru.
+6. HUD misi, tabungan, energi, tombol suara dan pause, item koin serta rintangan diganti/dirapikan.
+7. Tampilan ponsel memiliki HUD 2 baris dan tidak menabrak bar progres; kontrol besar di bawah saat bermain.
+8. Perbaikan panel praktik agar ilustrasi tidak keluar dari modal soal.
+9. Tetap mempertahankan 16 soal acak (4 tiap kategori V,A,R,K), audio, tabungan haji, hasil dominan dan ekspor PNG/JPG.
+10. Berkas CSS V6 dimasukkan ke output build untuk Vercel.
+
+PENGUJIAN: pemeriksaan JavaScript, build, pengujian browser otomatis di laptop/HP, popup 4 kategori, serta ekspor PNG dan JPG.
+Catatan: layar HP berukuran sangat pendek mungkin masih membutuhkan gulir di dalam panel soal praktik; halaman di belakangnya tidak bergulir.

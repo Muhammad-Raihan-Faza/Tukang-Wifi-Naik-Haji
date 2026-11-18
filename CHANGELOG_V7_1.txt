@@ -1,0 +1,1 @@
+V7.1 — Ukuran karakter disesuaikan dengan desktop/HP, posisi tengah dan arah wajah tidak bergeser, beranda lebih seimbang. Semua fitur VARK/PNG/JPG tetap digunakan.
