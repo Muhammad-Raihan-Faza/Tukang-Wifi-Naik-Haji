@@ -1,0 +1,11 @@
+V7.3 — Hasil VARK dan rapikan emblem
+- Kartu hasil 2 kolom dengan banner dominan, persentase, empat progress bar, pencapaian dan tombol unduh.
+- Persentase dominan berasal dari jawaban benar pada 4 soal kategori (0, 25, 50, 75, atau 100%).
+- Bila dua/lebih kategori seri, dinyatakan sebagai dominan campuran dengan persentase setara.
+- Saat semua jawaban salah, sistem tidak memaksakan kategori dominan.
+- Kartu PNG/JPG dibuat ulang dan teks dibatasi dalam area kartu.
+- Perbaikan tampilan header soal, kartu pilihan, panel bonus, slot praktik serta layar HP.
+
+- Semua soal pengenalan gambar tidak lagi memperlihatkan caption atau label nama perangkat.
+- Label kunci jawaban baru muncul setelah siswa menjawab, melalui umpan balik.
+- UI baru dengan dekorasi di luar area teks dan tanpa tumpang tindih pada emblem.

@@ -116,7 +116,7 @@ async function playDevice(sound){if(soundPlaying){soundPlaying.pause();soundPlay
 function haltGameForMission(){clearInput();state.jobActive=true;state.paused=false;}
 function openJob(){if(state.jobActive||state.results.length>=16)return;haltGameForMission();currentTask=CODE_INDEX.get(state.order[state.results.length]);taskSubmitted=false;chosenToken=null;dragInfo=null;ui.missionCard.dataset.region=String(Math.min(3,Math.floor(state.results.length/4)));renderJob();ui.mission.classList.remove('hidden');$('#corner-caption').textContent='BANTU WARGA · JAWAB LANGSUNG';soundEffect('click');}
 function renderJob(){const q=currentTask;if(!q)return;let body='';
- if(q.kind==='visual'){body=`<div class="job-section-label"><span class="section-dot"></span>Perhatikan ilustrasi, lalu pilih salah satu</div><div class="choice-grid">${q.options.map(([label,type],i)=>`<button class="choice-card" data-answer="${sanitize(label)}"><span class="choice-number">0${i+1}</span><span class="device-frame">${svgDevice(type)}</span><strong>${sanitize(label)}</strong></button>`).join('')}</div>`;}
+ if(q.kind==='visual'){body=`<div class="job-section-label"><span class="section-dot"></span>Amati gambar perangkat, lalu pilih jawabannya</div><div class="choice-grid choice-grid-unlabeled">${q.options.map(([label,type],i)=>`<button type="button" class="choice-card image-only-option" data-answer="${sanitize(label)}" aria-label="Pilih ilustrasi nomor ${i+1}"><span class="choice-number">0${i+1}</span><span class="device-frame" aria-hidden="true">${svgDevice(type).replace(/alt="[^"]*"/g,'alt=""')}</span></button>`).join('')}</div>`;}
  if(q.kind==='audio'){body=`<div class="sound-player"><div class="sound-display"><span class="sound-disc">${stationSymbol('audio')}</span><div class="audio-bars" aria-hidden="true">${Array.from({length:25},(_,i)=>`<i style="--i:${i};--h:${8+((i*23)%24)}px"></i>`).join('')}</div></div><div class="sound-controls"><button class="play-sound" id="play-device">${stationSymbol('audio')} Putar suara perangkat</button><small>Bunyi simulasi • boleh diputar ulang sebelum menjawab</small></div></div><div class="choice-small">${q.options.map((o,i)=>`<button data-answer="${sanitize(o)}"><span class="option-letter">${String.fromCharCode(65+i)}</span>${sanitize(o)}</button>`).join('')}</div>`;}
  if(q.kind==='read'){body=`<div class="reading reading-paper"><span class="read-icon">${stationSymbol('read')}</span><div><small>CATATAN DARI WARGA</small><p>${sanitize(q.passage)}</p></div></div><div class="choice-small">${q.options.map((o,i)=>`<button data-answer="${sanitize(o)}"><span class="option-letter">${String.fromCharCode(65+i)}</span>${sanitize(o)}</button>`).join('')}</div>`;}
  if(q.kind==='type'){body=`<div class="typing-task-v4"><div class="type-illustration"><div class="type-art-label">PERANGKAT DI LOKASI</div>${svgDevice(q.image)}</div><form id="type-form" class="type-answer-form"><label class="type-instruction" for="answer-text">Tulis nama perangkat menurutmu</label><div class="typing-row"><input id="answer-text" autocomplete="off" placeholder="Boleh menulis jawaban apa saja" maxlength="60" aria-label="Jawaban teks"/><button class="btn btn-dark" type="submit">Kirim jawaban ↗</button></div><p class="typing-hint">Boleh salah ketik atau salah jawab. Setelah dinilai, perjalanan tetap lanjut.</p></form></div>`;}
@@ -179,19 +179,96 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
 }
 
 function scores(){const out={V:0,A:0,R:0,K:0};for(const r of state.results){const q=CODE_INDEX.get(r.id);if(q&&r.correct)out[q.cat]+=25;}return out;}
-function showResults(){if(state.done)return;$('#shell').classList.add('is-result');state.done=true;state.mode='result';clearInput();ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.result.classList.remove('hidden');updateHUD();safelySave();soundEffect('success');const data=scores(),max=Math.max(...Object.values(data)),best=max===0?[]:Object.keys(data).filter(k=>data[k]===max),correct=state.results.filter(r=>r.correct).length,dominant=dominantText(best),dominantTitle=best.length===1?CATS[best[0]].name:(best.length?best.map(k=>CATS[k].name).join(' & '):'Belum terlihat');
- ui.result.innerHTML=`<div class="result-shell"><div class="result-top"><div><div class="result-tag">✦ PERJALANAN SELESAI • 16/16 PEKERJAAN</div><h1>Kerja bagus, ${sanitize(state.name||'Teknisi')}!</h1><p>Kamu berhasil membantu warga, mengumpulkan tabungan, dan menyelesaikan 16 tantangan jaringan interaktif.</p></div><button class="icon-btn" id="result-home" title="Beranda">⌂</button></div><div class="result-columns"><div class="result-panel result-profile-panel"><div class="result-dominant"><span class="result-dominant-label">PROFIL DOMINAN</span><strong>${sanitize(dominantTitle)}</strong><p>${sanitize(dominant)}</p></div><h2>Profil aktivitas belajarmu</h2><p class="helper">Nilai berikut dihitung dari empat tugas pada setiap bentuk aktivitas. Hasil ini menggambarkan kecenderungan performa siswa di dalam media ini.</p>${Object.entries(CATS).map(([key,c])=>`<div class="result-meter"><div><span>${c.name} <small style="color:#7a949a">• ${c.desc}</small></span><strong>${data[key]} / 100</strong></div><div class="result-rail"><span style="width:${data[key]}%;background:${c.color}"></span></div></div>`).join('')}<div class="winner">${best.length?`✧ Siswa ini paling menonjol pada aktivitas <b>${best.map(k=>CATS[k].name).join(' dan ')}</b>.`:'✧ Semua skor masih 0. Ajak siswa mencoba lagi agar profil aktivitas terbaca lebih jelas.'}</div><p class="bottom-note">Catatan: profil dominan ini bersifat deskriptif dari performa pada media pembelajaran ini, bukan diagnosis gaya belajar tetap.</p></div><div class="result-side"><div class="result-panel result-score-card"><div class="stat-big"><span class="medal">🏅</span><div><small>SIMULASI TABUNGAN NAIK HAJI</small><strong>${rupiah(state.money)}</strong><small>Upah dan koin di game • bukan biaya haji nyata</small></div></div><div class="result-metric-list" style="margin-top:13px"><div><b>${correct}/16</b><small>Jawaban benar</small></div><div><b>${state.results.length}/16</b><small>Pekerjaan selesai</small></div><div><b>${dominantTitle}</b><small>Aktivitas dominan</small></div><div><b>${Math.round((correct/16)*100)}%</b><small>Ketuntasan jawaban</small></div></div></div><div class="result-panel result-download-card" style="display:flex;flex-direction:column;flex:1"><h2>Bagikan hasil belajarmu</h2><p class="helper">Unduh kartu hasil dalam format gambar untuk dokumentasi penilaian atau dibagikan kepada guru.</p><div class="download-row"><button class="btn btn-dark" id="save-png">↓ PNG</button><button class="btn btn-dark" id="save-jpg">↓ JPG</button></div><div class="result-footer"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></div></div></div></div>`;
- $('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));$('#back-home').addEventListener('click',home);$('#result-home').addEventListener('click',home);$('#replay').addEventListener('click',()=>{home();$('#player-name').value=state.name;newGame();});
+function scoreProfile(){
+ const scoresByCat=scores(),highest=Math.max(...Object.values(scoresByCat)),correct=state.results.filter(r=>r.correct).length;
+ const leaders=highest>0?Object.keys(scoresByCat).filter(k=>scoresByCat[k]===highest):[];
+ const label=leaders.length===0?'Belum ada dominasi':leaders.length===1?CATS[leaders[0]].name:`Seimbang: ${leaders.map(k=>CATS[k].name).join(' & ')}`;
+ const description=leaders.length===0?'Belum ada jawaban benar. Coba lagi dan jelajahi semua bentuk aktivitas.':leaders.length===1?DOMINANT_HELP[leaders[0]]:`Skor tertinggi diperoleh secara setara pada ${leaders.map(k=>CATS[k].name).join(', ')}.`;
+ return {scoresByCat,highest,leaders,correct,label,description};
 }
-function downloadResult(format){const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');if(!ctx){showToast('Gagal membuat gambar di browser ini.');return;}canvas.width=1200;canvas.height=760;const grd=ctx.createLinearGradient(0,0,1200,760);grd.addColorStop(0,'#082a45');grd.addColorStop(.52,'#135365');grd.addColorStop(1,'#1a7d77');ctx.fillStyle=grd;ctx.fillRect(0,0,1200,760);
- const sc=scores(),max=Math.max(...Object.values(sc)),best=max===0?[]:Object.keys(sc).filter(k=>sc[k]===max),dominantTitle=best.length===1?CATS[best[0]].name:(best.length?best.map(k=>CATS[k].name).join(' & '):'Belum terlihat');
- ctx.fillStyle='#f4c973';ctx.fillRect(72,68,10,118);ctx.fillStyle='#ecf8f7';ctx.font='800 28px Arial';ctx.fillText('TUKANG WIFI NAIK HAJI',102,108);ctx.font='bold 48px Arial';ctx.fillText('KARTU HASIL SISWA',102,164);ctx.fillStyle='#b6dbe0';ctx.font='22px Arial';ctx.fillText(`Nama siswa: ${state.name||'Teknisi WiFi'}`,76,225);ctx.fillText(`Pekerjaan selesai: 16/16    •    Jawaban benar: ${state.results.filter(r=>r.correct).length}/16`,76,257);ctx.fillText(`Dominan aktivitas: ${dominantTitle}`,76,289);ctx.fillText(`Tabungan simulasi: ${rupiah(state.money)}`,76,321);
- ctx.fillStyle='#f9fbf8';ctx.beginPath();ctx.roundRect(60,348,1080,294,25);ctx.fill();ctx.fillStyle='#173a50';ctx.font='bold 29px Arial';ctx.fillText('Performa pada empat aktivitas',94,393);
- ['V','A','R','K'].forEach((key,i)=>{const cat=CATS[key],y=432+i*49;ctx.fillStyle='#284657';ctx.font='bold 20px Arial';ctx.fillText(cat.name,94,y+8);ctx.fillStyle='#e3edef';ctx.beginPath();ctx.roundRect(330,y-9,690,18,9);ctx.fill();ctx.fillStyle=cat.color;ctx.beginPath();ctx.roundRect(330,y-9,Math.max(.01,690*sc[key]/100),18,9);ctx.fill();ctx.fillStyle='#29485a';ctx.fillText(`${sc[key]}/100`,1040,y+8);});
- ctx.fillStyle='#fff4dc';ctx.beginPath();ctx.roundRect(73,660,1055,54,18);ctx.fill();ctx.fillStyle='#194453';ctx.font='bold 20px Arial';ctx.fillText(`Keterangan: ${dominantText(best)}`,93,695);
- ctx.fillStyle='#d7ebed';ctx.font='16px Arial';ctx.fillText('Profil dominan menggambarkan performa siswa pada media ini, bukan diagnosis gaya belajar tetap.',75,735);
- canvas.toBlob(blob=>{if(!blob){showToast('Unduh gagal; coba browser lain.');return;}const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`hasil-petualangan-${(state.name||'teknisi').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-')}.${format}`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);},format==='jpg'?'image/jpeg':'image/png',.95);
+function showResults(){
+ if(state.done)return;
+ $('#shell').classList.add('is-result');state.done=true;state.mode='result';clearInput();
+ ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.result.classList.remove('hidden');
+ updateHUD();safelySave();soundEffect('success');
+ const profile=scoreProfile(),highest=profile.highest,leaders=profile.leaders;
+ const percentDescription=leaders.length>1?`Masing-masing ${highest}%`:`${highest}%`;
+ ui.result.innerHTML=`<div class="result-shell result-shell-v73">
+  <div class="result-top result-top-v73"><div><div class="result-tag">✦ LAPORAN PERJALANAN • 16 PEKERJAAN SELESAI</div><h1>Perjalanan hebat, ${sanitize(state.name||'Teknisi')}!</h1><p>Ini hasil tantangan jaringan yang sudah kamu selesaikan.</p></div><button class="icon-btn" id="result-home" title="Kembali ke beranda" aria-label="Kembali ke beranda">⌂</button></div>
+  <div class="result-columns result-columns-v73"><section class="result-panel result-profile-panel v73-profile">
+   <div class="v73-feature"><div class="v73-feature-copy"><span class="v73-kicker">AKTIVITAS PALING MENONJOL</span><h2>${sanitize(profile.label)}</h2><p>${sanitize(profile.description)}</p><div class="v73-feature-help">${leaders.length===0?'Belum ada nilai kategori':leaders.length>1?'Beberapa aktivitas memperoleh nilai sama':'Terbaik dari empat tantangan aktivitas'}</div></div>
+   <div class="v73-gauge" style="--gauge:${highest}%" role="img" aria-label="Persentase tertinggi ${highest} persen"><div class="v73-gauge-inner"><strong>${highest}%</strong><small>${leaders.length>1?'masing-masing':'tertinggi'}</small></div></div></div>
+   <div class="v73-chart-head"><div><h2>Profil aktivitas belajarmu</h2><p>Persentase jawaban benar dari 4 soal di setiap kategori.</p></div><span class="v73-chart-icon" aria-hidden="true">▥</span></div>
+   <div class="v73-meters">${Object.entries(CATS).map(([key,c])=>`<div class="v73-meter"><div class="v73-meter-line"><span class="v73-meter-name"><i style="background:${c.color}"></i>${sanitize(c.name)}</span><span class="v73-meter-meta"><small>${profile.scoresByCat[key]/25}/4 benar</small><strong>${profile.scoresByCat[key]}%</strong></span></div><div class="v73-meter-track"><div style="width:${profile.scoresByCat[key]}%;background:${c.color}"></div></div></div>`).join('')}</div>
+   <div class="v73-summary"><span aria-hidden="true">✦</span><p><b>Perjalanan tuntas!</b> Semua aktivitas telah dicoba. Gunakan hasilnya untuk berdiskusi dengan guru tentang cara belajar yang paling membantu.</p></div><p class="v73-caveat">*Persentase menunjukkan performa menjawab pada game ini, bukan ukuran atau diagnosis gaya belajar yang permanen.</p>
+  </section>
+  <aside class="result-side v73-side"><section class="result-panel v73-journey"><span class="v73-side-kicker">PENCAPAIAN PETUALANGAN</span><div class="v73-savings"><span class="v73-savings-icon" aria-hidden="true">✦</span><div><small>Tabungan simulasi</small><strong>${rupiah(state.money)}</strong></div></div><div class="v73-metric-grid"><div><b>${profile.correct}/16</b><span>Jawaban benar</span></div><div><b>16/16</b><span>Misi selesai</span></div><div><b>${Math.round(profile.correct/16*100)}%</b><span>Nilai keseluruhan</span></div><div><b>${percentDescription}</b><span>Aktivitas tertinggi</span></div></div><div class="v73-route"><span>01 Kampung</span><span>02 Oasis</span><span>03 Kota</span><span>04 Gerbang</span></div></section>
+   <section class="result-panel v73-download"><h2>Simpan kartu hasil</h2><p>Unduh sertifikat hasil untuk diberikan kepada guru atau disimpan.</p><div class="v73-actions"><button class="btn btn-dark" id="save-png">↓ Unduh PNG</button><button class="btn btn-dark" id="save-jpg">↓ Unduh JPG</button></div><div class="v73-actions v73-actions-secondary"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></section>
+  </aside></div></div>`;
+ $('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));
+ $('#back-home').addEventListener('click',home);$('#result-home').addEventListener('click',home);
+ $('#replay').addEventListener('click',()=>{home();$('#player-name').value=state.name;newGame();});
 }
+function downloadResult(format){
+ const canvas=document.createElement('canvas');const ctx=canvas.getContext('2d');
+ if(!ctx){showToast('Browser tidak dapat membuat gambar hasil.');return;}
+ canvas.width=1400;canvas.height=980;
+ const profile=scoreProfile();const W=1400,H=980;
+ const gradient=ctx.createLinearGradient(0,0,W,H);gradient.addColorStop(0,'#071d32');gradient.addColorStop(.62,'#0c4558');gradient.addColorStop(1,'#0b6b67');
+ ctx.fillStyle=gradient;ctx.fillRect(0,0,W,H);
+ const rounded=(x,y,w,h,r,color)=>{ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();};
+ const text=(value,x,y,font,color,maxWidth)=>{ctx.font=font;ctx.fillStyle=color;ctx.fillText(String(value),x,y,maxWidth||W);};
+ const wrap=(value,width,font)=>{
+  ctx.font=font;const words=String(value).split(/\s+/).filter(Boolean);const out=[];let line='';
+  for(const word of words){const next=line?`${line} ${word}`:word;if(line&&ctx.measureText(next).width>width){out.push(line);line=word;}else{line=next;}}
+  if(line)out.push(line);return out;
+ };
+ const lines=(value,x,y,width,font,color,spacing=28,maxLines=3)=>{
+  let parts=wrap(value,width,font);const count=Math.min(parts.length,maxLines);
+  for(let i=0;i<count;i++){let label=parts[i];if(i===maxLines-1&&parts.length>maxLines)label=label.replace(/\s+\S+$/,'')+'…';text(label,x,y+i*spacing,font,color,width);}
+  return count;
+ };
+ // Background decoration stays separate from all type areas.
+ ctx.lineWidth=4;ctx.strokeStyle='rgba(154,233,209,.13)';
+ for(let radius=220;radius<500;radius+=95){ctx.beginPath();ctx.arc(1325,70,radius,0,2*Math.PI);ctx.stroke();}
+ rounded(64,47,1272,91,23,'#123d50');rounded(67,49,9,87,5,'#f2c36b');
+ text('TUKANG WIFI NAIK HAJI',96,105,'bold 32px Arial','#f7fbfb',570);
+ ctx.textAlign='right';text('KARTU HASIL SISWA',1302,102,'bold 21px Arial','#f7d78d',480);ctx.textAlign='left';
+ text('PERJALANAN SELESAI',70,190,'bold 19px Arial','#a0e6d5');
+ lines(state.name||'Teknisi WiFi',70,242,1180,'bold 44px Arial','#fff',47,1);
+ text(`16 misi selesai  •  ${profile.correct} jawaban benar`,70,290,'23px Arial','#c5dfe5');
+ // Gold signature panel. No font is ever layered over an emblem.
+ rounded(64,320,1272,240,25,'#fff3d8');rounded(86,346,9,187,5,'#c79543');
+ text('AKTIVITAS PALING MENONJOL',119,377,'bold 20px Arial','#986a25');
+ const chartNames=profile.leaders.map(k=>CATS[k].name);
+ const shortTitle=profile.leaders.length>1?`Dominan campuran (${profile.leaders.length} aktivitas)`:profile.label;
+ lines(shortTitle,119,424,860,'bold 37px Arial','#133d50',42,2);
+ const explanation=profile.leaders.length>1?`Skor tertinggi sama pada: ${chartNames.join(', ')}.`:profile.description;
+ lines(explanation,119,482,860,'19px Arial','#486778',27,2);
+ rounded(1095,362,210,161,24,'#143d51');
+ ctx.textAlign='center';text(`${profile.highest}%`,1200,434,'bold 55px Arial','#ffd58a',165);
+ lines(profile.leaders.length>1?'masing-masing':'per kategori',1200,468,160,'18px Arial','#dcefe9',23,1);ctx.textAlign='left';
+ // Bar chart: 4 visibly separated rows, footnote safely below final row.
+ rounded(64,584,1272,295,25,'#f8fcf9');
+ text('PERFORMA PADA EMPAT AKTIVITAS',97,628,'bold 25px Arial','#153d51');
+ ['V','A','R','K'].forEach((key,i)=>{
+  const cat=CATS[key],score=profile.scoresByCat[key],y=673+i*48;
+  text(cat.name,99,y,'bold 20px Arial','#254a5b',245);
+  rounded(397,y-18,726,17,8,'#e0ebec');if(score>0)rounded(397,y-18,726*score/100,17,8,cat.color);
+  ctx.textAlign='right';text(`${score}%`,1286,y,'bold 22px Arial','#173e4f',104);ctx.textAlign='left';
+ });
+ text('Skor tiap kategori: jumlah benar dari 4 tugas × 25%.',99,858,'17px Arial','#6d8890',980);
+ text('TABUNGAN HAJI (SIMULASI)',74,916,'bold 18px Arial','#b0dbd7');
+ text(rupiah(state.money),74,951,'bold 32px Arial','#ffcf79',495);
+ lines('Persentase ini hanya menunjukkan performa dalam permainan, bukan diagnosis gaya belajar permanen.',685,925,633,'17px Arial','#d2e7e6',23,2);
+ canvas.toBlob(blob=>{
+  if(!blob){showToast('Unduh gagal. Coba kembali dari browser lain.');return;}
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;
+  a.download=`hasil-petualangan-${(state.name||'teknisi').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-')}.${format}`;
+  document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+ },format==='jpg'?'image/jpeg':'image/png',.95);
+}
+
 function infoHtml(kind){const common='<p>Gunakan menu ini untuk memahami cara bermain serta materi sebelum atau sesudah mengerjakan misi. Tidak ada soal yang harus dibuka melalui menu ini.</p>';
  const pieces={
  tujuan:`<div class="mini-card"><b>Tujuan pembelajaran</b><p>Setelah bermain, siswa mampu mengenali gambar perangkat jaringan dasar, memahami fungsi utamanya, mengenali contoh bunyi terkait perangkat, membaca informasi singkat, dan menyusun koneksi sederhana.</p></div><div class="mini-card"><b>Ruang lingkup</b><p>Router, switch, kabel Ethernet, konektor RJ45, koneksi WiFi, perangkat komputer, dan simulasi bunyi dasar.</p></div><p>Media ini berfungsi sebagai pengenalan awal, bukan ujian sertifikasi teknisi.</p>`,
