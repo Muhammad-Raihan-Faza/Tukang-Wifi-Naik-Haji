@@ -96,3 +96,65 @@
 @media (prefers-reduced-motion: reduce){
   .departure-technician,.departure-plane-mark,.travel-plane{animation:none!important}
 }
+
+
+/* V8.2 fixes: cover final-world blank strip + polish departure/travel plane and Ka'bah. */
+.world-region-final{background-position:center right;background-size:cover}
+.world-region-final::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 82%,rgba(162,225,245,.08) 92%,rgba(162,225,245,.12) 100%)}
+.departure-plane-mark{width:134px;height:96px;display:block;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.2),transparent 52%),linear-gradient(180deg,rgba(13,65,91,.28),rgba(8,33,50,.08));border:1px solid rgba(255,244,213,.28);border-radius:999px;backdrop-filter:blur(3px);box-shadow:0 20px 40px rgba(4,16,22,.16)}
+.departure-plane-mark .plane-body,.travel-plane{position:relative;display:block}
+.departure-plane-mark .plane-body{position:absolute;left:28px;top:42px;width:60px;height:12px;background:linear-gradient(180deg,#fff7ea,#dfe8ee);border-radius:999px;box-shadow:0 1px 0 rgba(14,34,44,.18) inset}
+.departure-plane-mark .plane-nose{position:absolute;left:82px;top:42px;width:16px;height:12px;background:linear-gradient(180deg,#fff7ea,#dfe8ee);clip-path:polygon(0 0,100% 50%,0 100%)}
+.departure-plane-mark .plane-tail{position:absolute;left:23px;top:35px;width:14px;height:18px;background:linear-gradient(180deg,#fff7ea,#dfe8ee);clip-path:polygon(100% 100%,0 100%,24% 0)}
+.departure-plane-mark .plane-wing{position:absolute;background:linear-gradient(180deg,#f5f8fb,#d8e4eb);border-radius:999px}
+.departure-plane-mark .wing-left{left:46px;top:27px;width:34px;height:10px;transform:rotate(-24deg)}
+.departure-plane-mark .wing-right{left:43px;top:52px;width:38px;height:12px;transform:rotate(23deg)}
+.travel-plane{position:absolute;left:10%;top:50%;width:150px;height:92px;animation:planeAcross 5.1s cubic-bezier(.25,.53,.22,1) infinite;filter:drop-shadow(0 16px 22px rgba(8,28,40,.24))}
+.travel-plane::before{content:"";position:absolute;left:22px;top:34px;width:88px;height:22px;border-radius:999px 20px 20px 999px;background:linear-gradient(180deg,#fefefe,#dde8ef);box-shadow:0 0 0 2px rgba(255,255,255,.22) inset,0 6px 14px rgba(10,31,43,.12)}
+.travel-plane::after{content:"";position:absolute;left:104px;top:34px;width:24px;height:22px;background:linear-gradient(180deg,#fbfeff,#dce7ee);clip-path:polygon(0 0,100% 50%,0 100%)}
+.travel-plane .plane-window{position:absolute;top:41px;width:8px;height:8px;border-radius:50%;background:#5fb2d4;box-shadow:0 0 0 2px rgba(244,249,252,.85)}
+.travel-plane .window-1{left:40px}.travel-plane .window-2{left:53px}.travel-plane .window-3{left:66px}.travel-plane .window-4{left:79px}.travel-plane .window-5{left:92px}
+.travel-plane .plane-wing,.travel-plane .plane-tail-fin,.travel-plane .plane-engine{position:absolute;background:linear-gradient(180deg,#f7fafc,#dae5ec)}
+.travel-plane .wing-main{left:58px;top:22px;width:48px;height:15px;border-radius:999px;transform:rotate(-23deg)}
+.travel-plane .wing-back{left:55px;top:52px;width:44px;height:16px;border-radius:999px;transform:rotate(18deg)}
+.travel-plane .plane-tail-fin{left:20px;top:22px;width:16px;height:24px;clip-path:polygon(100% 100%,0 100%,28% 0);border-radius:6px}
+.travel-plane .engine-1{left:66px;top:34px;width:10px;height:18px;border-radius:0 0 6px 6px;transform:rotate(-22deg)}
+.travel-plane .engine-2{left:87px;top:45px;width:10px;height:18px;border-radius:0 0 6px 6px;transform:rotate(16deg)}
+.travel-destination{gap:14px}
+.kaaba-mini{width:112px;height:96px;border-radius:10px 10px 8px 8px;background:linear-gradient(180deg,#101113 0%,#050607 62%,#252628 100%);box-shadow:0 18px 32px rgba(6,17,26,.34);overflow:visible}
+.kaaba-mini::before{content:"";position:absolute;left:-18px;right:-18px;top:22px;height:12px;border-radius:10px;background:linear-gradient(90deg,#aa7a1c,#e7bf5d,#ffdf86,#d2a443,#8e6316)}
+.kaaba-mini::after{content:"";position:absolute;inset:auto 8px 8px 8px;height:12px;border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,0))}
+.kaaba-roof{position:absolute;left:8px;right:8px;top:6px;height:8px;border-radius:6px;background:linear-gradient(90deg,#37393c,#121416,#404245)}
+.kaaba-band{position:absolute;left:10px;right:10px;top:28px;height:10px;border-radius:999px;background:linear-gradient(90deg,#9f731d,#ffd978,#ba8524)}
+.kaaba-door{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:18px;height:30px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#a9771c,#f3ca73 48%,#bf8a2b);box-shadow:0 0 0 2px rgba(31,20,2,.38) inset}
+.kaaba-base{position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:126px;height:18px;border-radius:999px;background:radial-gradient(ellipse at center,rgba(255,255,255,.35) 0%,rgba(255,255,255,.16) 48%,transparent 73%);filter:blur(2px)}
+.kaaba-crescent{position:absolute;right:8px;top:-11px;width:18px;height:18px;border-radius:50%;box-shadow:-5px 0 0 0 #f4cf72;transform:rotate(22deg)}
+@media (max-width:760px){
+  .world-region-final{background-position:74% center}
+  .departure-plane-mark{width:96px;height:72px;right:10%;top:21%}
+  .departure-plane-mark .plane-body{left:20px;top:31px;width:42px;height:9px}
+  .departure-plane-mark .plane-nose{left:60px;top:31px;width:12px;height:9px}
+  .departure-plane-mark .plane-tail{left:16px;top:26px;width:11px;height:14px}
+  .departure-plane-mark .wing-left{left:32px;top:20px;width:24px;height:7px}
+  .departure-plane-mark .wing-right{left:31px;top:38px;width:27px;height:8px}
+  .travel-plane{width:104px;height:64px;left:7%;top:58%}
+  .travel-plane::before{left:14px;top:23px;width:62px;height:15px}
+  .travel-plane::after{left:74px;top:23px;width:16px;height:15px}
+  .travel-plane .plane-window{top:28px;width:5px;height:5px;box-shadow:0 0 0 1px rgba(244,249,252,.85)}
+  .travel-plane .window-1{left:27px}.travel-plane .window-2{left:36px}.travel-plane .window-3{left:45px}.travel-plane .window-4{left:54px}.travel-plane .window-5{left:63px}
+  .travel-plane .wing-main{left:39px;top:15px;width:30px;height:10px}
+  .travel-plane .wing-back{left:37px;top:36px;width:28px;height:10px}
+  .travel-plane .plane-tail-fin{left:12px;top:14px;width:11px;height:16px}
+  .travel-plane .engine-1{left:45px;top:23px;width:8px;height:12px}
+  .travel-plane .engine-2{left:58px;top:31px;width:8px;height:12px}
+  .kaaba-mini{width:84px;height:72px}
+  .kaaba-mini::before{left:-12px;right:-12px;top:16px;height:9px}
+  .kaaba-band{left:8px;right:8px;top:22px;height:8px}
+  .kaaba-door{width:14px;height:22px;bottom:14px}
+  .kaaba-crescent{right:6px;top:-8px;width:14px;height:14px;box-shadow:-4px 0 0 0 #f4cf72}
+}
+@media (max-width:380px){
+  .world-region-final{background-position:78% center}
+  .travel-plane{top:60%}
+  .kaaba-mini{width:72px;height:60px}
+}
