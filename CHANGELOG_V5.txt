@@ -1,0 +1,10 @@
+Tukang WiFi Naik Haji — V5 Design Refresh
+
+Pembaruan utama:
+1. Tampilan beranda dirapikan dengan tipografi baru yang lebih profesional.
+2. Ilustrasi perangkat pada seluruh soal dibuat lebih realistis dan elegan.
+3. Panel soal diperhalus agar tampak lebih rapi dan nyaman di desktop maupun HP.
+4. Ditambahkan backsound looping (assets/backsound-loop.wav) yang mengikuti tombol sound.
+5. Kartu hasil dibuat lebih menarik dan menampilkan aktivitas/gaya belajar dominan siswa.
+6. Hasil unduhan PNG/JPG ikut menampilkan keterangan aktivitas dominan.
+7. Penyempurnaan visual umum pada HUD, tombol, kartu pilihan, dan panel hasil.
