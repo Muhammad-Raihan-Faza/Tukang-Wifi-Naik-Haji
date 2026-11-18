@@ -1,0 +1,5 @@
+V8.3 — 18 November 2026
+- Memasukkan dua aset baru pesawat dan Ka’bah (WebP transparan).
+- Mengganti ikon/shape pesawat di scene keberangkatan dan terbang.
+- Mengganti Ka’bah kecil di scene penerbangan dan menambahkan Ka’bah baru pada adegan kedatangan.
+- Menambah CSS animasi serta tata letak responsif.
