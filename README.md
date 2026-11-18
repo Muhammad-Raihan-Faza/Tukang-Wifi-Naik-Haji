@@ -1,6 +1,16 @@
-# Tukang WiFi Naik Haji — V7.6
+# Tukang WiFi Naik Haji — V7.8
 
 Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi jaringan. Satu perjalanan dengan **16 misi yang diacak**, masing-masing 4 kegiatan Visual, Auditory, Read/Write, dan Kinesthetic (label kategori disembunyikan ketika siswa bermain).
+
+## Pembaruan V7.8 — Identitas logo baru
+
+- Logo horizontal “Tukang WiFi Naik Haji” dari aset terbaru menjadi identitas utama pada beranda.
+- Emblem kompak mengganti ikon WiFi generik di navbar serta digunakan pada header soal, popup feedback, epilog Ka’bah, dan kartu hasil.
+- Ikon tab browser/favicon diperbarui dengan emblem yang sama.
+- Kartu hasil PNG/JPG juga memasukkan emblem saat file logo sudah dimuat di browser.
+- Beranda dipusatkan pada logo resmi, dengan form nama dan tombol bermain yang tetap mudah digunakan pada laptop/HP.
+- Logo hasil optimasi WebP berada di `assets/brand-logo.webp` dan `assets/brand-badge-small.webp`; sumber resolusi penuh ada di `assets/branding-source/`.
+- Gameplay, suara, 16 misi, target uang Rp100 juta, skor VARK, dan adegan penutup tetap sama seperti V7.7.
 
 ## Perubahan V7.6
 
@@ -24,7 +34,7 @@ Game media pembelajaran jaringan komputer untuk pengenalan perangkat dan koneksi
 ## Menjalankan di Windows
 
 1. Ekstrak file ZIP.
-2. Buka folder `Tukang_WiFi_Naik_Haji_V7_6_Popup_Kabah_100Juta`.
+2. Buka folder `Tukang_WiFi_Naik_Haji_V7_8_Logo_Baru`.
 3. Klik dua kali `START_WINDOWS.bat`, atau jalankan `npm run dev` di VS Code.
 4. Buka alamat lokal yang ditampilkan (umumnya `http://localhost:3000`).
 
@@ -57,8 +67,8 @@ Persentase tersebut adalah **performa berdasarkan aktivitas dalam game**, bukan 
 
 - `index.html` — halaman dan menu
 - `src/app.js` — gameplay, 16 misi, suara, VARK dan ekspor kartu hasil
-- `styles.css` dan `styles-v*.css` — UI permainan, popup, serta adegan penutup
-- `assets/` — karakter, gambar soal, latar kawasan, ilustrasi Ka'bah, MP3 simulasi, backsound
+- `styles.css` dan `styles-v*.css` — UI permainan, popup, logo, serta adegan penutup
+- `assets/` — logo baru, karakter, gambar soal, latar kawasan, ilustrasi Ka'bah, MP3 simulasi, backsound
 - `tools/` — server lokal, build, pemeriksaan statis
 - `vercel.json` — hosting Vercel
 

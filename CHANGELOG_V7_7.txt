@@ -1,0 +1,1 @@
+V7.7: menghapus aset landmark seperti Bengkel WiFi dan label Pekerjaan Warga agar tampilan jalur game lebih bersih dan fokus pada misi.

@@ -1,0 +1,9 @@
+TUKANG WIFI NAIK HAJI — V7.8 BRAND IDENTITY
+
+- Logo horizontal resmi tampil di beranda sebagai identitas utama.
+- Badge baru menggantikan ikon WiFi umum pada navbar, dan digunakan di popup soal, popup hasil jawaban, hasil VARK, serta adegan epilog di Ka'bah.
+- Favicon dan ikon aplikasi ikut menggunakan badge baru.
+- Logo yang sama dicantumkan pada header ekspor kartu hasil PNG/JPG saat tersedia di browser.
+- Tampilan beranda disederhanakan, menghindari duplikasi karakter.
+- File sumber PNG dan versi WebP teroptimasi disertakan di assets/.
+- Semua mekanisme 16 soal, skor VARK, tabungan Rp100 juta, audio dan ending tetap dipertahankan.

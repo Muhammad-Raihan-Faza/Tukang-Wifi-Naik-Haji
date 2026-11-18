@@ -1,0 +1,82 @@
+/* V7.8 — New branded identity across the game.
+   Full logo: welcome screen; compact badge: HUD, questions, feedback, finale, results.
+   Scales responsively without covering game controls. */
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* Navigation mark replaces the generic Wi-Fi symbol. */
+.brand-icon,.shell.is-home .brand-icon{background:transparent!important;border:0!important;box-shadow:none!important;width:46px;height:46px;flex:0 0 46px;border-radius:0}
+.brand-icon img,.shell.is-home .brand-icon img{display:block;width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
+.brand{min-width:0;align-items:center;gap:7px}
+.brand strong{font-size:clamp(13px,1.08vw,18px);letter-spacing:-.02em}
+.brand small{letter-spacing:.05em}
+
+/* A clear logo splash replaces the repeated large title and second mascot. */
+.shell.is-home .welcome-inner{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;height:100%!important;min-height:0!important;padding:clamp(7px,1.7vh,18px) clamp(12px,3vw,46px)!important}
+.shell.is-home .home-copy{transform:none!important;position:relative;z-index:4;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;align-self:center!important;width:min(790px,100%)!important;max-width:100%!important;height:auto!important;min-height:0!important;padding:0!important;gap:0!important}
+.shell.is-home .home-copy .eyebrow{display:none!important}
+.shell.is-home .hero-art{display:none!important}
+.home-brand-logo{display:block;width:min(720px,100%);height:auto;max-height:clamp(140px,44vh,346px);object-fit:contain;object-position:center;filter:drop-shadow(0 10px 18px rgba(3,21,31,.28));margin:0 auto 0;flex-shrink:1}
+.shell.is-home .home-copy>p{color:#e3f1f1!important;line-height:1.5!important;margin:0 auto clamp(9px,1.8vh,17px)!important;max-width:640px!important;font-size:clamp(11px,.95vw,14px)!important;text-wrap:balance}
+.shell.is-home .start-form{margin:0 auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;width:min(510px,100%)!important;min-width:0!important;gap:5px!important}
+.shell.is-home .start-form label{align-self:flex-start;font-size:10px;letter-spacing:.12em;color:#d3f4f0;margin-left:3px}
+.shell.is-home .home-form-row{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:10px!important;width:100%!important;margin:0!important;min-width:0!important}
+.shell.is-home .home-form-row input{min-width:0!important;flex:1 1 auto!important;height:47px!important;min-height:47px!important;width:100%!important;margin:0!important;background:#fffefa!important;color:#153e50!important}
+.shell.is-home .home-form-row .btn{min-width:0!important;min-height:47px!important;height:47px!important;flex:0 0 auto!important;padding:9px 20px!important;margin:0!important;white-space:nowrap!important;font-size:12px!important}
+.shell.is-home .home-small-note{color:#c9dedf;font-size:10px;margin:clamp(7px,1.3vh,12px) auto 0;justify-content:center;text-align:center;max-width:540px}
+.shell.is-home .home-small-note .home-note-dot{display:none}
+.shell.is-home .welcome::before{opacity:.75!important;background:linear-gradient(115deg,rgba(4,24,39,.92),rgba(10,49,66,.70)),url('assets/bg-kampung.webp') center center/cover no-repeat!important}
+
+/* Game mission and feedback brand marks, sized to stay clear of labels. */
+.mission-vista-mark.mission-brandmark{background:rgba(11,42,58,.65)!important;border:1px solid rgba(255,237,199,.55)!important;display:grid!important;place-items:center!important;padding:2px!important;border-radius:12px!important;box-shadow:0 6px 14px rgba(4,23,35,.18);overflow:hidden}
+.mission-brandmark img{display:block;width:100%;height:100%;max-width:44px;max-height:44px;object-fit:contain}
+.answer-card{position:relative}
+.answer-brandmark{position:absolute;top:13px;right:14px;width:39px;height:39px;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(13,48,59,.16));pointer-events:none}
+.result-ident{display:flex;align-items:center;gap:10px;min-width:0;margin-bottom:5px}
+.result-brandmark{display:block;width:33px;height:33px;object-fit:contain;flex:0 0 33px}
+.result-ident .result-tag{margin:0!important;min-width:0;line-height:1.45;overflow-wrap:anywhere}
+.finale-brandmark{width:24px;height:24px;flex:0 0 24px;object-fit:contain;filter:drop-shadow(0 2px 3px #041b2b66)}
+.finale-chapter{gap:6px}
+.gameover-brandmark{display:block;margin:0 auto 6px;width:42px;height:42px;object-fit:contain}
+
+@media(max-width:740px){
+ .brand-icon,.shell.is-home .brand-icon{width:35px;height:35px;flex-basis:35px}
+ .brand-icon img,.shell.is-home .brand-icon img{width:35px;height:35px}
+ .shell.is-home .welcome-inner{padding:8px 12px!important}
+ .home-brand-logo{width:min(560px,100%)!important;max-height:min(34vh,240px)!important}
+ .shell.is-home .home-copy>p{max-width:440px!important;font-size:clamp(10px,2.8vw,12px)!important;margin-bottom:10px!important}
+ .shell.is-home .start-form{width:min(410px,100%)!important}
+ .shell.is-home .home-form-row .btn{padding:8px 12px!important;font-size:11px!important}
+ .shell.is-home .home-form-row input{height:42px!important;min-height:42px!important}
+ .shell.is-home .home-form-row .btn{height:42px!important;min-height:42px!important}
+ .shell.is-home .home-small-note{display:block!important;font-size:9px;margin-top:9px}
+ .mission-brandmark img{max-width:36px;max-height:36px}
+ .answer-brandmark{width:27px;height:27px;top:10px;right:11px}
+ .result-brandmark{width:25px;height:25px;flex-basis:25px}
+ .result-ident{gap:6px}
+ .finale-brandmark{width:20px;height:20px;flex-basis:20px}
+}
+@media(max-width:400px){
+ .brand-icon,.shell.is-home .brand-icon{width:30px;height:30px;flex-basis:30px}
+ .brand-icon img,.shell.is-home .brand-icon img{width:30px;height:30px}
+ .shell.is-home .home-copy>p{font-size:10px!important}
+ .home-brand-logo{max-height:31vh!important}
+ .shell.is-home .home-form-row{gap:6px!important}
+ .shell.is-home .home-form-row .btn{font-size:10px!important;padding:6px 9px!important}
+ .shell.is-home .home-form-row input{font-size:11px!important}
+ .shell.is-home .home-small-note{font-size:8px}
+}
+@media(max-height:620px){
+ .home-brand-logo{max-height:29vh!important}
+ .shell.is-home .home-copy>p{margin-bottom:7px!important}
+ .shell.is-home .home-small-note{margin-top:6px!important}
+}
+@media(max-width:740px) and (max-height:580px){
+ .home-brand-logo{max-height:25vh!important}
+ .shell.is-home .home-copy>p{display:none!important}
+ .shell.is-home .home-small-note{display:none!important}
+}
+@media(max-height:450px) and (min-width:741px){
+ .home-brand-logo{max-height:24vh!important}
+ .shell.is-home .home-copy>p{display:none!important}
+ .shell.is-home .home-small-note{display:none!important}
+}

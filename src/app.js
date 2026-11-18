@@ -93,13 +93,10 @@ function updateHUD(){const finished=state.results.length;$('#money-stat').textCo
 function renderWorld(){ui.world.innerHTML='';ui.world.style.width=`${WORLD_WIDTH}px`;stageHazards=[];stageCoins=[];flags=[];
  for(let i=0;i<4;i++){const section=el('div','world-region');section.style.left=`${i*REGION_WIDTH-(i?140:0)}px`;section.style.width=`${REGION_WIDTH+(i?140:0)}px`;if(i)section.classList.add("region-blend");section.style.backgroundImage=`url("assets/${REGIONS[i].image}")`;section.innerHTML=`<div class="world-zone-title">${REGIONS[i].small}</div>`;ui.world.append(section);}
  for(let i=0;i<16;i++){
-  const x=FLAG_START+i*FLAG_GAP,flag=el('div','checkpoint');flag.style.left=`${x}px`;flag.innerHTML=`<span class="station-label">${i===15?'POS TERAKHIR':'PEKERJAAN WARGA'}</span><div class="pole"></div><div class="flag">✦</div><span class="base">${String(i+1).padStart(2,'0')}</span>`;ui.world.append(flag);flags.push(flag);
+  const x=FLAG_START+i*FLAG_GAP,flag=el('div','checkpoint');flag.style.left=`${x}px`;flag.innerHTML=`<div class="pole"></div><div class="flag">✦</div><span class="base">${String(i+1).padStart(2,'0')}</span>`;ui.world.append(flag);flags.push(flag);
   const coinX=x-182,coin=el('div','pickup','<img class="pickup-art" src="assets/v6/gold-coin.webp" alt="" />');coin.style.left=`${coinX}px`;if(state.coins.has(i))coin.style.display='none';ui.world.append(coin);stageCoins.push({i,x:coinX,node:coin});
   if(i!==0&&i!==4&&i!==8&&i!==12){const xh=x-118;const kind=i%4===0?'puddle':i%4===1?'mite':'spark';const h=el('div',`hazard ${kind}`,`<img class="hazard-art" src="assets/v6/${kind==='mite'?'enemy-virus':kind==='puddle'?'puddle':'spark'}.webp" alt="" />`);h.style.left=`${xh}px`;ui.world.append(h);stageHazards.push({x:xh,kind,node:h,phase:i*2});}
  }
- [
-  [80,'⌂','BENGKEL WIFI'],[1470,'⌁','POS SINYAL'],[3000,'▣','RUANG KONEKSI'],[4470,'✦','PUSAT SERVIS']
- ].forEach(([x,icon,name])=>{const n=el('div','landmark',`<div class="landmark-icon">${icon}</div><b>${name}</b>`);n.style.left=`${x}px`;ui.world.append(n);});
  const finish=el('div','finish','<img src="assets/v6/finish.webp" alt="Garis finis" />');finish.style.left=`${FINISH_X}px`;ui.world.append(finish);
  const ground=el('div','world-ground');ui.world.append(ground);updateFlags();}
 function updateFlags(){flags.forEach((f,i)=>{f.classList.toggle('completed',i<state.results.length);f.querySelector('.flag').textContent=i<state.results.length?'✓':i===state.results.length?'⚑':'✦';});}
@@ -124,7 +121,7 @@ function renderJob(){const q=currentTask;if(!q)return;let body='';
  const region=REGIONS[Math.min(3,Math.floor(state.results.length/4))];
  const idx=String(state.results.length+1).padStart(2,'0');
  const clientName=sanitize(q.client),place=sanitize(q.place);
- ui.missionCard.innerHTML=`<div class="mission-vista" style="--mission-bg:url('assets/${region.image}')"><div class="mission-vista-left"><span class="mission-vista-tag">MISI ${idx} / 16</span><span class="mission-vista-location">${sanitize(region.title)} • ${place}</span></div><span class="mission-vista-mark">${stationSymbol(q.kind)}</span></div><div class="mission-head"><div class="mission-agent"><span class="client-avatar">${stationSymbol('visual')}</span><div><b>${clientName} membutuhkan bantuanmu</b><small>${sanitize(q.story)}</small></div></div><div class="job-reward"><small>UPAH MISI</small><b>+ ${rupiah(PAY_PER_JOB)}</b></div></div><div class="mission-body"><h2>${sanitize(q.ask)}</h2>${body}<div class="mission-footer"><button class="hint-toggle" id="hint-toggle" type="button">✧ Butuh petunjuk?</button><span class="one-try-note">Satu jawaban • salah tetap lanjut</span></div><p class="reading hidden" id="hint-box">${sanitize(q.tip)}</p><div id="answer-feedback" aria-live="polite"></div></div>`;
+ ui.missionCard.innerHTML=`<div class="mission-vista" style="--mission-bg:url('assets/${region.image}')"><div class="mission-vista-left"><span class="mission-vista-tag">MISI ${idx} / 16</span><span class="mission-vista-location">${sanitize(region.title)} • ${place}</span></div><span class="mission-vista-mark mission-brandmark"><img src="assets/brand-badge-small.webp" alt="" /></span></div><div class="mission-head"><div class="mission-agent"><span class="client-avatar">${stationSymbol('visual')}</span><div><b>${clientName} membutuhkan bantuanmu</b><small>${sanitize(q.story)}</small></div></div><div class="job-reward"><small>UPAH MISI</small><b>+ ${rupiah(PAY_PER_JOB)}</b></div></div><div class="mission-body"><h2>${sanitize(q.ask)}</h2>${body}<div class="mission-footer"><button class="hint-toggle" id="hint-toggle" type="button">✧ Butuh petunjuk?</button><span class="one-try-note">Satu jawaban • salah tetap lanjut</span></div><p class="reading hidden" id="hint-box">${sanitize(q.tip)}</p><div id="answer-feedback" aria-live="polite"></div></div>`;
  ui.missionCard.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{ui.missionCard.querySelectorAll('[data-answer]').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');answerJob(b.dataset.answer===q.answer); }));
  $('#hint-toggle').addEventListener('click',()=>$('#hint-box').classList.toggle('hidden'));
  if(q.kind==='audio')$('#play-device').addEventListener('click',()=>{const visual=ui.missionCard.querySelector('.sound-player');visual?.classList.add('is-playing');setTimeout(()=>visual?.classList.remove('is-playing'),1800);playDevice(q.sound);});
@@ -164,7 +161,7 @@ function showAnswerOverlay(correct,task,earned){
  const total=Math.round(state.money/TARGET*100);
  ui.answerCard.className=`answer-card ${correct?'is-correct':'is-wrong'}`;
  ui.answerCard.innerHTML=`
-  <div class="answer-result-symbol" aria-hidden="true">${correct?'✓':'!'}</div>
+  <img class="answer-brandmark" src="assets/brand-badge-small.webp" alt="" /><div class="answer-result-symbol" aria-hidden="true">${correct?'✓':'!'}</div>
   <div class="answer-result-kicker">${correct?'MISI BERHASIL':'MISI TETAP SELESAI'}</div>
   <h2 id="answer-title">${correct?'Jawaban benar!':'Belum tepat, tetap semangat!'}</h2>
   <p class="answer-subtitle">${correct?'Kamu berhasil membantu jaringan warga.':'Belajar dari kesalahan juga bagian dari perjalanan.'}</p>
@@ -264,7 +261,7 @@ function showResults(force=false){
  const profile=scoreProfile(),highest=profile.highest,leaders=profile.leaders;
  const percentDescription=leaders.length>1?`Masing-masing ${highest}%`:`${highest}%`;
  ui.result.innerHTML=`<div class="result-shell result-shell-v73">
-  <div class="result-top result-top-v73"><div><div class="result-tag">✦ LAPORAN PERJALANAN • 16 PEKERJAAN SELESAI</div><h1>Perjalanan hebat, ${sanitize(state.name||'Teknisi')}!</h1><p>Ini hasil tantangan jaringan yang sudah kamu selesaikan.</p></div><button class="icon-btn" id="result-home" title="Kembali ke beranda" aria-label="Kembali ke beranda">⌂</button></div>
+  <div class="result-top result-top-v73"><div><div class="result-ident"><img src="assets/brand-badge-small.webp" class="result-brandmark" alt="" /><div class="result-tag">✦ LAPORAN PERJALANAN • 16 PEKERJAAN SELESAI</div></div><h1>Perjalanan hebat, ${sanitize(state.name||'Teknisi')}!</h1><p>Ini hasil tantangan jaringan yang sudah kamu selesaikan.</p></div><button class="icon-btn" id="result-home" title="Kembali ke beranda" aria-label="Kembali ke beranda">⌂</button></div>
   <div class="result-columns result-columns-v73"><section class="result-panel result-profile-panel v73-profile">
    <div class="v73-feature"><div class="v73-feature-copy"><span class="v73-kicker">AKTIVITAS PALING MENONJOL</span><h2>${sanitize(profile.label)}</h2><p>${sanitize(profile.description)}</p><div class="v73-feature-help">${leaders.length===0?'Belum ada nilai kategori':leaders.length>1?'Beberapa aktivitas memperoleh nilai sama':'Terbaik dari empat tantangan aktivitas'}</div></div>
    <div class="v73-gauge" style="--gauge:${highest}%" role="img" aria-label="Persentase tertinggi ${highest} persen"><div class="v73-gauge-inner"><strong>${highest}%</strong><small>${leaders.length>1?'masing-masing':'tertinggi'}</small></div></div></div>
@@ -279,6 +276,7 @@ function showResults(force=false){
  $('#back-home').addEventListener('click',home);$('#result-home').addEventListener('click',home);
  $('#replay').addEventListener('click',()=>{home();$('#player-name').value=state.name;newGame();});
 }
+const BRAND_BADGE_IMAGE=new Image();BRAND_BADGE_IMAGE.src='assets/brand-badge-small.webp';
 function downloadResult(format){
  const canvas=document.createElement('canvas');const ctx=canvas.getContext('2d');
  if(!ctx){showToast('Browser tidak dapat membuat gambar hasil.');return;}
@@ -302,7 +300,8 @@ function downloadResult(format){
  ctx.lineWidth=4;ctx.strokeStyle='rgba(154,233,209,.13)';
  for(let radius=220;radius<500;radius+=95){ctx.beginPath();ctx.arc(1325,70,radius,0,2*Math.PI);ctx.stroke();}
  rounded(64,47,1272,91,23,'#123d50');rounded(67,49,9,87,5,'#f2c36b');
- text('TUKANG WIFI NAIK HAJI',96,105,'bold 32px Arial','#f7fbfb',570);
+ if(BRAND_BADGE_IMAGE.complete&&BRAND_BADGE_IMAGE.naturalWidth)ctx.drawImage(BRAND_BADGE_IMAGE,84,58,64,64);
+ text('TUKANG WIFI NAIK HAJI',165,105,'bold 31px Arial','#f7fbfb',495);
  ctx.textAlign='right';text('KARTU HASIL SISWA',1302,102,'bold 21px Arial','#f7d78d',480);ctx.textAlign='left';
  text('PERJALANAN SELESAI',70,190,'bold 19px Arial','#a0e6d5');
  lines(state.name||'Teknisi WiFi',70,242,1180,'bold 44px Arial','#fff',47,1);

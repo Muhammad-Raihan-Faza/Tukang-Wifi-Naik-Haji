@@ -6,7 +6,9 @@
   <meta name="theme-color" content="#0b2538" />
   <meta name="description" content="Tukang WiFi Naik Haji: petualangan teknisi jaringan dengan 16 tantangan interaktif dan profil aktivitas VARK." />
   <title>Tukang WiFi Naik Haji | Petualangan Jaringan</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/app-icon.png" />
+  <link rel="preload" href="assets/brand-logo.webp" as="image" />
   <link rel="preload" href="assets/v6/tech-idle.webp" as="image" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles-v4.css" />
@@ -16,13 +18,14 @@
   <link rel="stylesheet" href="styles-v7-4.css" />
   <link rel="stylesheet" href="styles-v7-5.css" />
   <link rel="stylesheet" href="styles-v7-6.css" />
+  <link rel="stylesheet" href="styles-v7-8.css" />
   <script defer src="src/app.js"></script>
 </head>
 <body>
 <div class="shell is-home" id="shell">
   <header class="topbar">
     <button class="brand" id="go-home" aria-label="Kembali ke beranda">
-      <span class="brand-icon"><img src="assets/v6/hud-wifi.webp" alt="" /></span>
+      <span class="brand-icon"><img src="assets/brand-badge-small.webp" alt="" /></span>
       <span><strong>TUKANG <em>WIFI</em></strong><small>NAIK HAJI <b>•</b> PETUALANGAN JARINGAN</small></span>
     </button>
     <nav class="primary-nav" aria-label="Menu informasi"><button type="button" data-info="siswa" class="nav-guide"><span class="nav-help-dot">?</span> Cara bermain</button><button type="button" data-info="tujuan" class="nav-secondary">Tujuan</button><button type="button" data-info="peta" class="nav-secondary">Materi</button><button type="button" data-info="guru" class="nav-secondary">Guru</button></nav>
@@ -51,7 +54,7 @@
       <div class="welcome-inner">
         <div class="home-copy">
           <span class="eyebrow">PETUALANGAN TEKNISI JARINGAN</span>
-          <h1>TUKANG WIFI <span>NAIK HAJI</span></h1>
+          <h1 class="visually-hidden">Tukang WiFi Naik Haji</h1><img class="home-brand-logo" src="assets/brand-logo.webp" alt="Logo Tukang WiFi Naik Haji — Network Adventure" decoding="async" />
           <p>Bantu warga memperbaiki jaringan, kumpulkan upah, dan wujudkan impian perjalanan haji.</p>
           <div class="start-form"><label for="player-name">NAMA PEMAIN</label><div class="home-form-row"><input id="player-name" maxlength="32" placeholder="Masukkan namamu" autocomplete="off" /><button id="start-btn" class="btn btn-accent" aria-label="Mulai perjalanan">Mulai bermain <span>↗</span></button></div></div>
           <div class="home-small-note"><span class="home-note-dot"></span> 16 pekerjaan • 4 kawasan • Hasil belajar dapat diunduh</div>
@@ -63,7 +66,7 @@
       <div class="finale-scene-bg" aria-hidden="true"></div>
       <div class="finale-sparkles" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div>
       <div class="finale-story">
-        <div class="finale-chapter"><span class="finale-chapter-dot"></span> EPILOG • MISI 16/16 TUNTAS</div>
+        <div class="finale-chapter"><img src="assets/brand-badge-small.webp" class="finale-brandmark" alt="" /> EPILOG • MISI 16/16 TUNTAS</div>
         <h2>Perjalanan penuh makna.<br/><em>Sampai di hadapan Ka'bah.</em></h2>
         <p>Setelah membantu banyak warga, sang teknisi tiba di akhir petualangannya. Setiap pekerjaan membawanya selangkah lebih dekat pada cita-cita.</p>
         <div class="finale-balance"><span>Tabungan haji dalam game</span><strong id="finale-balance">Rp 0</strong><small id="finale-goal-text">Target simulasi Rp100.000.000</small><div class="finale-money-track"><span id="finale-money-fill"></span></div></div>
@@ -77,7 +80,7 @@
     <div class="dialog-layer hidden" id="dialog-layer" role="presentation"><div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Informasi permainan"></div></div>
     <div class="answer-layer hidden" id="answer-layer" role="presentation"><section class="answer-card" id="answer-card" role="alertdialog" aria-modal="true" aria-labelledby="answer-title" aria-label="Hasil jawaban"></section></div>
     <div class="mission-layer hidden" id="mission-layer" role="presentation"><div class="mission-card" id="mission-card" role="dialog" aria-modal="true" aria-label="Pekerjaan jaringan"></div></div>
-    <div class="game-over hidden" id="game-over"><div class="game-over-card"><span class="game-over-icon">↻</span><h2>Istirahat sebentar!</h2><p>Energi teknisi habis. Semua pekerjaan yang telah dikerjakan tetap tersimpan.</p><button class="btn btn-accent" id="retry-btn">Lanjut dari pos terakhir</button></div></div>
+    <div class="game-over hidden" id="game-over"><div class="game-over-card"><img class="gameover-brandmark" src="assets/brand-badge-small.webp" alt="" /><span class="game-over-icon">↻</span><h2>Istirahat sebentar!</h2><p>Energi teknisi habis. Semua pekerjaan yang telah dikerjakan tetap tersimpan.</p><button class="btn btn-accent" id="retry-btn">Lanjut dari pos terakhir</button></div></div>
   </main>
   <footer class="bottom-bar">
     <div class="controller"><span class="controls-label">KENDALI</span><button id="left-btn" class="ctrl" aria-label="Jalan ke kiri"><img src="assets/v6/btn-left.webp" alt="" /></button><button id="right-btn" class="ctrl" aria-label="Jalan ke kanan"><img src="assets/v6/btn-right.webp" alt="" /></button><button id="jump-btn" class="ctrl jump" aria-label="Lompat"><img src="assets/v6/btn-jump.webp" alt="" /><small>LOMPAT</small></button></div>
