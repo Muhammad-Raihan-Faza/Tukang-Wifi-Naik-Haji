@@ -85,3 +85,7 @@ Persentase tersebut adalah **performa berdasarkan aktivitas dalam game**, bukan 
 ## Pengujian
 
 Pemeriksaan otomatis: `npm test` dan `npm run build`. Pengujian browser dilakukan pada laptop dan beberapa ukuran HP, mencakup 16 jenis soal, hasil dominan tunggal/seri/nol, serta unduhan PNG/JPG. Tetap uji pada perangkat siswa sebelum kegiatan penilaian ahli media.
+
+
+### Update V8.0
+HUD lebih ringkas agar area permainan lebih luas. `styles-v8.css` harus disertakan saat upload ke GitHub.

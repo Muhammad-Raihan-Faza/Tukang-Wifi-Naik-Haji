@@ -1,0 +1,7 @@
+V8.0 Compact HUD (18 November 2026)
+- Tinggi topbar permainan disederhanakan menjadi 52px desktop / 78px HP.
+- Bar kawasan/progres diringkas menjadi 27px desktop / 25px HP.
+- Ringkas logo, kartu tabungan, misi, energi dan tombol tanpa mengubah kegunaan.
+- Keterangan misi dipersingkat supaya tidak memenuhi area HUD.
+- Topbar beranda HP diringkas, header adegan Ka'bah dan kartu hasil HP disederhanakan.
+- Seluruh 16 misi, suara, tabungan dan hasil VARK tetap dipertahankan.

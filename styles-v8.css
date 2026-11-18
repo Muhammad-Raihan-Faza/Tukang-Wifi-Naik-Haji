@@ -1,0 +1,161 @@
+/* V8.0 — Compact game HUD. Gives vertical space back to gameplay. */
+:root { --hud-top: 52px; --hud-progress: 27px; }
+
+/* Desktop / laptop: one slim line for navigation, one understated progress rail. */
+@media (min-width: 741px) {
+  .shell .topbar {
+    height: var(--hud-top) !important;
+    min-height: var(--hud-top) !important;
+    flex: 0 0 var(--hud-top) !important;
+    padding: 3px clamp(10px, 1.6vw, 27px) !important;
+    gap: clamp(6px, 1vw, 13px) !important;
+    box-sizing: border-box;
+  }
+  .shell .brand { gap: 6px !important; flex: 0 1 auto; min-width: 0; }
+  .shell .brand-icon, .shell.is-home .brand-icon {
+    width: 36px !important; height: 36px !important; flex: 0 0 36px !important;
+  }
+  .shell .brand-icon img, .shell.is-home .brand-icon img {
+    width: 36px !important; height: 36px !important;
+  }
+  .shell .brand strong { font-size: clamp(13px, 1.08vw, 16px) !important; line-height: 1.08; }
+  .shell .brand small { font-size: 7.5px !important; letter-spacing: .035em; margin-top: 3px; }
+  .shell .primary-nav { gap: 2px !important; }
+  .shell .primary-nav button { padding: 7px 9px !important; font-size: 10px !important; }
+  .shell .top-stats { margin-left: auto; display: flex; gap: 6px !important; min-width: 0; }
+  .shell .top-stat {
+    height: 38px !important; min-height: 38px !important; min-width: 105px !important;
+    padding: 4px 9px !important; gap: 6px !important; border-radius: 11px !important;
+    box-shadow: 0 2px 9px rgba(3, 18, 28, .15);
+    box-sizing: border-box;
+  }
+  .shell .top-stat:first-child { min-width: 178px !important; }
+  .shell .top-stat .stat-symbol {
+    width: 25px !important; height: 25px !important; flex: 0 0 25px !important;
+    padding: 2px !important; border-radius: 7px;
+  }
+  .shell .top-stat .stat-symbol img { max-width: 24px !important; max-height: 24px !important; }
+  .shell .top-stat small { display: block; font-size: 8px !important; letter-spacing: .07em; line-height: 1.1; }
+  .shell .top-stat strong { font-size: clamp(12px, .95vw, 16px) !important; line-height: 1.05; white-space: nowrap; }
+  .shell .top-stat .savings-goal { font-size: 7px !important; line-height: 1; }
+  .shell .toolbar { gap: 5px !important; margin-left: 0 !important; flex: 0 0 auto; }
+  .shell .toolbar .icon-btn { width: 33px !important; height: 33px !important; min-width: 33px !important; padding: 4px !important; border-radius: 10px; }
+  .shell .toolbar .icon-btn img { width: 25px !important; height: 25px !important; object-fit: contain; }
+  .shell .subbar {
+    height: var(--hud-progress) !important; min-height: var(--hud-progress) !important;
+    flex: 0 0 var(--hud-progress) !important; padding: 0 clamp(10px, 1.6vw, 27px) !important;
+    gap: 14px; box-sizing: border-box;
+  }
+  .shell .area-pill { font-size: 10px !important; white-space: nowrap; }
+  .shell .pulse-dot { width: 7px !important; height: 7px !important; }
+  .shell .mission-tip { flex: 1; font-size: 10px !important; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .shell .progress-wrap { min-width: 142px !important; width: 142px; gap: 9px !important; font-size: 10px !important; flex: 0 0 142px; }
+  .shell .track { height: 6px !important; }
+  .shell.is-home .top-stats { display: none !important; }
+}
+
+@media (min-width: 741px) and (max-width: 1100px) {
+  .shell .topbar { gap: 5px !important; padding-inline: 10px !important; }
+  .shell:not(.is-home) .brand small { display: none; }
+  .shell:not(.is-home) .brand strong { font-size: 12px !important; }
+  .shell:not(.is-home) .brand-icon, .shell:not(.is-home) .brand-icon img { width: 30px !important; height: 30px !important; }
+  .shell:not(.is-home) .brand-icon { flex-basis: 30px !important; }
+  .shell .top-stat { min-width: 85px !important; padding-inline: 5px !important; }
+  .shell .top-stat:first-child { min-width: 145px !important; }
+  .shell .top-stat .stat-symbol { width: 21px !important; height: 21px !important; flex-basis: 21px !important; }
+  .shell .top-stat .stat-symbol img { max-width: 20px !important; max-height: 20px !important; }
+  .shell .top-stat strong { font-size: 12px !important; }
+  .shell .toolbar .icon-btn { width: 29px !important; height: 29px !important; min-width: 29px !important; }
+  .shell .toolbar .icon-btn img { width: 21px !important; height: 21px !important; }
+  .shell .mission-tip { font-size: 9px !important; }
+}
+
+/* Phones: logo and three actions on row 1, tiny readable score chips on row 2. */
+@media (max-width: 740px) {
+  .shell:not(.is-home):not(.is-result):not(.is-finale) .topbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: 34px 33px !important;
+    align-content: center !important;
+    align-items: center !important;
+    height: 78px !important;
+    min-height: 78px !important;
+    flex: 0 0 78px !important;
+    padding: 3px 8px !important;
+    gap: 3px 5px !important;
+    overflow: hidden !important;
+    box-sizing: border-box;
+  }
+  .shell:not(.is-home) .brand { grid-row: 1; grid-column: 1; order: 0 !important; flex: none !important; max-width: 100%; width: 100%; gap: 4px !important; }
+  .shell:not(.is-home) .brand-icon { width: 27px !important; height: 27px !important; flex: 0 0 27px !important; }
+  .shell:not(.is-home) .brand-icon img { width: 27px !important; height: 27px !important; }
+  .shell:not(.is-home) .brand strong { font-size: 11px !important; letter-spacing: -.025em !important; }
+  .shell:not(.is-home) .brand small { display: none !important; }
+  .shell:not(.is-home) .toolbar { grid-row: 1; grid-column: 2; order: 0 !important; margin-left: 0 !important; display: flex; gap: 3px !important; }
+  .shell:not(.is-home) .toolbar .icon-btn { width: 32px !important; height: 32px !important; min-width: 32px !important; border-radius: 9px; padding: 4px !important; }
+  .shell:not(.is-home) .toolbar .icon-btn img { width: 25px !important; height: 25px !important; max-width: 100%; }
+  .shell:not(.is-home) .top-stats {
+    grid-row: 2; grid-column: 1 / -1; order: 0 !important;
+    width: 100% !important; flex: none !important; margin: 0 !important;
+    display: grid !important; grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) minmax(0, .82fr) !important;
+    gap: 4px !important; min-width: 0;
+  }
+  .shell:not(.is-home) .top-stat {
+    width: 100% !important; height: 32px !important; min-height: 32px !important; min-width: 0 !important;
+    padding: 3px 7px !important; border-radius: 9px !important;
+    gap: 3px !important; box-shadow: none !important;
+    overflow: hidden !important; box-sizing: border-box;
+  }
+  .shell:not(.is-home) .top-stat:first-child { min-width: 0 !important; }
+  .shell:not(.is-home) .top-stat .stat-symbol { display: none !important; }
+  .shell:not(.is-home) .top-stat > div { min-width: 0 !important; }
+  .shell:not(.is-home) .top-stat small { display: block !important; font-size: 7px !important; letter-spacing: .035em !important; line-height: 1 !important; }
+  .shell:not(.is-home) .top-stat strong { font-size: clamp(9.5px, 2.75vw, 12px) !important; line-height: 1.15 !important; }
+  .shell:not(.is-home) .top-stat .savings-goal { display: none !important; }
+  .shell:not(.is-home) .top-stat:nth-child(3) { display: flex !important; }
+  .shell:not(.is-home) .subbar {
+    height: 25px !important; min-height: 25px !important; flex: 0 0 25px !important;
+    padding: 0 8px !important; gap: 5px !important; box-sizing: border-box;
+  }
+  .shell:not(.is-home) .subbar .area-pill { font-size: 8px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 98px); }
+  .shell:not(.is-home) .subbar .mission-tip { display: none !important; }
+  .shell:not(.is-home) .subbar .progress-wrap { min-width: 94px !important; width: 94px !important; flex: 0 0 94px; font-size: 9px; gap: 5px !important; }
+  .shell:not(.is-home) .subbar .track { height: 5px !important; }
+  /* Keep the home navigation usable; its tabs require two short rows on phones. */
+  .shell.is-home .topbar { row-gap: 2px !important; padding-block: 4px !important; }
+}
+
+@media (max-width: 360px) {
+  .shell:not(.is-home) .brand strong { font-size: 10px !important; }
+  .shell:not(.is-home) .toolbar .icon-btn { width: 29px !important; height: 29px !important; min-width: 29px !important; }
+  .shell:not(.is-home) .toolbar .icon-btn img { width: 23px !important; height: 23px !important; }
+  .shell:not(.is-home) .top-stat { padding-inline: 4px !important; }
+  .shell:not(.is-home) .top-stat small { font-size: 6.5px !important; }
+  .shell:not(.is-home) .top-stat strong { font-size: 9.5px !important; }
+}
+
+/* Landscape phones: a single very short HUD row allows maximum playable height. */
+@media (pointer:coarse) and (min-width: 741px) and (max-height: 550px) {
+  .shell:not(.is-home):not(.is-result):not(.is-finale) .topbar { height: 44px !important; min-height: 44px !important; flex-basis: 44px !important; }
+  .shell:not(.is-home) .subbar { height: 22px !important; min-height: 22px !important; flex-basis: 22px !important; }
+  .shell:not(.is-home) .top-stat { height: 32px !important; min-height: 32px !important; }
+  .shell:not(.is-home) .top-stat .savings-goal { display: none !important; }
+}
+
+/* Home, results and epilogue have no need for tall game status bars. */
+@media (max-width: 740px) {
+  .shell.is-home .topbar {
+    height: 85px !important; min-height: 85px !important; flex: 0 0 85px !important;
+    padding: 4px 8px !important; row-gap: 2px !important; align-content: center !important;
+    box-sizing: border-box;
+  }
+  .shell.is-home .primary-nav { gap: 2px !important; }
+  .shell.is-home .primary-nav button { padding: 5px 7px !important; font-size: 9px !important; }
+  .shell.is-result .topbar, .shell.is-finale .topbar {
+    height: 46px !important; min-height: 46px !important; flex: 0 0 46px !important;
+    display: flex !important; flex-wrap: nowrap !important; align-content: center !important;
+    align-items: center !important; padding: 4px 9px !important; gap: 7px !important;
+  }
+  .shell.is-result .top-stats, .shell.is-finale .top-stats { display: none !important; }
+  .shell.is-result .toolbar, .shell.is-finale .toolbar { margin-left: auto !important; }
+}
