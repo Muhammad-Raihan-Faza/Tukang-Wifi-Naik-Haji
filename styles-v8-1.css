@@ -1,0 +1,98 @@
+/* V8.1 ending sequence: departure scene + flight scene before Ka'bah finale. */
+.departure-screen,.travel-screen{position:absolute;inset:0;z-index:31;overflow:hidden;isolation:isolate;color:#fff;background:#0c2436}
+.departure-screen.hidden,.travel-screen.hidden{display:none!important}
+.departure-bg,.travel-bg{position:absolute;inset:0;z-index:-3}
+.departure-bg{background:url('assets/bg-gerbang.webp') center center/cover no-repeat;transform:scale(1.05);filter:saturate(1.08)}
+.departure-overlay{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(6,24,39,.88) 0%,rgba(8,33,50,.73) 35%,rgba(7,29,44,.18) 75%,rgba(8,29,44,.06) 100%)}
+.travel-bg{background:
+ radial-gradient(circle at 15% 20%,rgba(255,255,255,.25) 0 6%,transparent 7%),
+ radial-gradient(circle at 72% 24%,rgba(255,248,210,.16) 0 10%,transparent 11%),
+ linear-gradient(180deg,#0a2d47 0%,#124e7a 45%,#6ec0dd 100%)}
+.departure-story,.travel-story{position:absolute;left:clamp(18px,5vw,78px);top:50%;transform:translateY(-50%);width:min(510px,46vw);z-index:3}
+.ending-kicker{display:inline-flex;align-items:center;gap:10px;padding:8px 13px;border-radius:999px;background:rgba(17,104,118,.42);border:1px solid rgba(176,236,224,.52);font:800 10px 'Sora',system-ui,sans-serif;letter-spacing:.14em;color:#d7fff4}
+.ending-kicker-logo{width:18px;height:18px;object-fit:contain}
+.departure-story h2,.travel-story h2{font:800 clamp(28px,3.9vw,54px)/1.08 'Sora',system-ui,sans-serif;letter-spacing:-.05em;margin:16px 0 12px;color:#fff7ea;text-wrap:balance}
+.departure-story h2 em,.travel-story h2 em{font-style:normal;color:#ffd98a}
+.departure-story p,.travel-story p{margin:0;max-width:460px;font-size:clamp(12px,1.08vw,16px);line-height:1.7;color:#dcecf1}
+.ending-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.ending-primary-btn,.ending-secondary-btn{min-height:44px;border-radius:14px;padding:11px 16px;font:800 12px/1.25 'Sora',system-ui,sans-serif;cursor:pointer;transition:transform .2s ease,filter .2s ease}
+.ending-primary-btn{background:linear-gradient(135deg,#ffe4aa,#f5bf67);border:1px solid #fff0ca;color:#163a4b;box-shadow:0 4px 0 #a97a36}
+.ending-secondary-btn{background:rgba(12,59,72,.56);border:1px solid rgba(139,189,198,.82);color:#eaf8f9}
+.ending-primary-btn:hover,.ending-secondary-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.ending-primary-btn:active,.ending-secondary-btn:active{transform:translateY(2px)}
+.ending-scene-label{position:absolute;right:16px;bottom:14px;z-index:4;padding:8px 11px;border-radius:10px;background:rgba(6,30,43,.56);font-size:9px;letter-spacing:.14em;color:#fff2d4;font-weight:800;max-width:42%;text-align:right}
+
+.departure-visual{position:absolute;right:3.5%;bottom:0;top:0;width:min(43%,560px);z-index:2;pointer-events:none}
+.departure-technician{position:absolute;right:14%;bottom:7%;height:min(68%,540px);max-width:48%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(7,28,42,.45));animation:departFloat 3.2s ease-in-out infinite}
+.departure-plane-mark{position:absolute;right:8%;top:18%;font-size:clamp(42px,7vw,96px);opacity:.9;color:#fff6da;filter:drop-shadow(0 8px 16px rgba(9,20,30,.28));animation:departPlane 4.6s ease-in-out infinite}
+.departure-luggage{position:absolute;left:10%;bottom:11%;display:flex;align-items:flex-end;gap:14px}
+.luggage-piece{display:block;position:relative;border-radius:16px 16px 10px 10px;background:linear-gradient(180deg,#3153a2,#223b78);border:3px solid #f1cb7d;box-shadow:0 10px 24px rgba(13,32,47,.35)}
+.luggage-piece.large{width:116px;height:146px}
+.luggage-piece.small{width:78px;height:90px;background:linear-gradient(180deg,#7a4a20,#5e3414);margin-bottom:8px}
+.luggage-piece:before{content:"";position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:42%;height:20px;border:5px solid #d9bf8a;border-bottom:0;border-radius:14px 14px 0 0}
+.luggage-piece:after{content:"";position:absolute;inset:16px 11px auto;bottom:16px;border-radius:10px;border:2px solid rgba(255,255,255,.17);height:calc(100% - 32px)}
+
+.travel-cloud{position:absolute;border-radius:999px;background:rgba(255,255,255,.85);filter:blur(0.2px);opacity:.88;z-index:1}
+.travel-cloud:before,.travel-cloud:after{content:"";position:absolute;background:inherit;border-radius:inherit}
+.cloud-a{width:180px;height:44px;left:11%;top:17%}
+.cloud-a:before{width:72px;height:72px;left:14px;top:-28px}.cloud-a:after{width:90px;height:70px;right:18px;top:-24px}
+.cloud-b{width:138px;height:36px;right:16%;top:22%;opacity:.66}.cloud-b:before{width:58px;height:58px;left:12px;top:-24px}.cloud-b:after{width:62px;height:48px;right:13px;top:-16px}
+.cloud-c{width:120px;height:32px;left:42%;top:30%;opacity:.52}.cloud-c:before{width:44px;height:44px;left:14px;top:-16px}.cloud-c:after{width:54px;height:38px;right:10px;top:-11px}
+.travel-visual{position:absolute;right:5%;top:16%;width:min(42%,530px);height:62%;z-index:2;pointer-events:none}
+.travel-path{position:absolute;left:8%;right:12%;top:47%;height:0;border-top:3px dashed rgba(255,240,182,.92);transform:rotate(-12deg);transform-origin:left center;opacity:.85}
+.travel-plane{position:absolute;left:10%;top:52%;font-size:clamp(38px,6vw,78px);line-height:1;color:#fff7e2;filter:drop-shadow(0 10px 14px rgba(8,28,40,.3));animation:planeAcross 4.8s cubic-bezier(.25,.53,.22,1) infinite}
+.travel-destination{position:absolute;right:4%;bottom:8%;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff8e1;font-weight:800;letter-spacing:.08em;font-size:13px;text-transform:uppercase}
+.kaaba-mini{width:90px;height:82px;position:relative;background:linear-gradient(180deg,#191919,#060606 62%,#2b2b2b);border-radius:8px 8px 4px 4px;box-shadow:0 14px 24px rgba(6,17,26,.35)}
+.kaaba-mini:before{content:"";position:absolute;left:-14px;right:-14px;top:22px;height:11px;border-radius:8px;background:linear-gradient(90deg,#d5ac49,#ffd56b,#b4852a)}
+.kaaba-mini:after{content:"";position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);width:110px;height:14px;border-radius:999px;background:rgba(255,255,255,.25);filter:blur(5px)}
+.travel-scene-label{max-width:48%}
+
+@keyframes departPlane{0%,100%{transform:translate(0,0) rotate(7deg);opacity:.78}50%{transform:translate(-22px,12px) rotate(11deg);opacity:1}}
+@keyframes departFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes planeAcross{0%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(110px,-80px) rotate(-2deg)}100%{transform:translate(215px,-150px) rotate(6deg)}}
+
+/* Make Ka'bah finale feel cleaner after added transition scenes. */
+.finale-screen{z-index:32}
+
+@media (max-width: 980px){
+  .departure-story,.travel-story{left:18px;width:min(92vw,520px)}
+  .departure-visual,.travel-visual{right:1.5%;width:45%}
+  .departure-technician{right:7%;height:60%}
+  .travel-plane{animation-duration:4.4s}
+}
+@media (max-width: 760px){
+  .departure-overlay{background:linear-gradient(180deg,rgba(6,24,39,.88) 0%,rgba(7,32,48,.64) 46%,rgba(9,32,46,.32) 100%)}
+  .departure-story,.travel-story{top:18px;transform:none;width:calc(100% - 36px)}
+  .departure-story h2,.travel-story h2{font-size:clamp(24px,7vw,34px);max-width:95%;margin:11px 0 8px}
+  .departure-story p,.travel-story p{font-size:11px;line-height:1.5;max-width:95%}
+  .ending-kicker{font-size:8px;padding:6px 9px;gap:7px}
+  .ending-kicker-logo{width:15px;height:15px}
+  .ending-actions{margin-top:12px;gap:7px}
+  .ending-primary-btn,.ending-secondary-btn{min-height:39px;padding:8px 11px;font-size:10px;border-radius:12px}
+  .departure-visual{top:auto;bottom:0;height:44%;width:100%;right:0}
+  .departure-technician{height:86%;right:6%;bottom:0;max-width:42%}
+  .departure-luggage{left:8%;bottom:7%;gap:9px}
+  .luggage-piece.large{width:82px;height:102px}.luggage-piece.small{width:56px;height:70px}
+  .luggage-piece:before{top:-14px;height:15px}
+  .departure-plane-mark{font-size:40px;right:12%;top:18%}
+  .travel-cloud{transform:scale(.78);transform-origin:top left}
+  .travel-visual{width:100%;height:48%;right:0;top:auto;bottom:0}
+  .travel-path{left:8%;right:13%;top:53%}
+  .travel-plane{font-size:34px;left:8%;top:56%}
+  .travel-destination{right:6%;bottom:6%;font-size:11px}
+  .kaaba-mini{width:70px;height:64px}.kaaba-mini:before{left:-10px;right:-10px;top:17px;height:8px}
+  .ending-scene-label{display:none}
+}
+@media (max-width: 380px){
+  .departure-story,.travel-story{top:12px;width:calc(100% - 24px);left:12px}
+  .departure-story h2,.travel-story h2{font-size:20px;line-height:1.1}
+  .departure-story p,.travel-story p{font-size:10px;line-height:1.42}
+  .ending-primary-btn,.ending-secondary-btn{font-size:9px;min-height:34px;padding:7px 9px}
+  .luggage-piece.large{width:70px;height:89px}.luggage-piece.small{width:47px;height:58px}
+  .departure-plane-mark{font-size:34px}
+  .travel-destination{gap:7px}
+  .kaaba-mini{width:62px;height:56px}
+}
+@media (prefers-reduced-motion: reduce){
+  .departure-technician,.departure-plane-mark,.travel-plane{animation:none!important}
+}

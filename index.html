@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="styles-v7-8.css" />
   <link rel="stylesheet" href="styles-v7-9.css" />
   <link rel="stylesheet" href="styles-v8.css" />
+  <link rel="stylesheet" href="styles-v8-1.css" />
   <script defer src="src/app.js"></script>
 </head>
 <body>
@@ -63,6 +64,46 @@
         </div>
         <div class="hero-art"><div class="hero-ring"></div><div class="hero-glow"></div><img src="assets/v6/tech-idle.webp" alt="Maskot teknisi jaringan profesional berseragam kerja" /></div>
       </div>
+    </section>
+    <section class="departure-screen hidden" id="departure-screen" aria-label="Adegan keberangkatan menuju Tanah Suci">
+      <div class="departure-bg" aria-hidden="true"></div>
+      <div class="departure-overlay" aria-hidden="true"></div>
+      <div class="departure-story">
+        <div class="ending-kicker"><img src="assets/brand-badge-small.webp" alt="" class="ending-kicker-logo" /> SCENE 1 • KEBERANGKATAN</div>
+        <h2>Langkah terakhir di kampung.<br/><em>Kini saatnya berangkat.</em></h2>
+        <p>Setelah menuntaskan semua misi, sang teknisi bersiap memulai perjalanan impiannya. Dari gerbang harapan, ia melangkah menuju bandara untuk terbang ke Tanah Suci.</p>
+        <div class="ending-actions"><button id="departure-next" type="button" class="ending-primary-btn">Lanjut ke perjalanan <span aria-hidden="true">→</span></button><button id="departure-skip" type="button" class="ending-secondary-btn">Lewati animasi</button></div>
+      </div>
+      <div class="departure-visual">
+        <div class="departure-luggage">
+          <span class="luggage-piece large"></span>
+          <span class="luggage-piece small"></span>
+        </div>
+        <img class="departure-technician" src="assets/v6/tech-idle.webp" alt="Maskot teknisi bersiap menuju bandara" draggable="false" />
+        <div class="departure-plane-mark" aria-hidden="true">✈</div>
+      </div>
+      <div class="ending-scene-label">TUKANG WIFI NAIK HAJI • MENUJU BANDARA</div>
+    </section>
+    <section class="travel-screen hidden" id="travel-screen" aria-label="Adegan pesawat menuju Ka'bah">
+      <div class="travel-bg" aria-hidden="true"></div>
+      <div class="travel-cloud cloud-a" aria-hidden="true"></div>
+      <div class="travel-cloud cloud-b" aria-hidden="true"></div>
+      <div class="travel-cloud cloud-c" aria-hidden="true"></div>
+      <div class="travel-story">
+        <div class="ending-kicker"><img src="assets/brand-badge-small.webp" alt="" class="ending-kicker-logo" /> SCENE 2 • DALAM PERJALANAN</div>
+        <h2>Pesawat melaju tinggi.<br/><em>Impian terasa semakin dekat.</em></h2>
+        <p>Di langit yang tenang, perjalanan menuju Ka'bah terus berlanjut. Setiap usaha baik yang dilakukan selama permainan menjadi bagian dari cerita belajar yang bermakna.</p>
+        <div class="ending-actions"><button id="travel-next" type="button" class="ending-primary-btn">Lihat tujuan akhir <span aria-hidden="true">→</span></button><button id="travel-skip" type="button" class="ending-secondary-btn">Lewati animasi</button></div>
+      </div>
+      <div class="travel-visual" aria-hidden="true">
+        <div class="travel-path"></div>
+        <div class="travel-plane">✈</div>
+        <div class="travel-destination">
+          <div class="kaaba-mini"></div>
+          <span>Ka'bah</span>
+        </div>
+      </div>
+      <div class="ending-scene-label travel-scene-label">TUKANG WIFI NAIK HAJI • TERBANG MENUJU TANAH SUCI</div>
     </section>
     <section class="finale-screen hidden" id="finale-screen" aria-label="Adegan penutup petualangan di Ka'bah">
       <div class="finale-scene-bg" aria-hidden="true"></div>

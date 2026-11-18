@@ -1,0 +1,5 @@
+V8.1
+- Menambahkan scene keberangkatan menuju bandara sebelum epilog Ka'bah.
+- Menambahkan scene pesawat terbang menuju Ka'bah sebelum scene akhir.
+- Merapikan alur ending agar tidak terasa terpotong di ujung kanan layar.
+- Menggeser titik finish sedikit ke kiri dan memperbarui penyimpanan progres versi 5.

@@ -30,7 +30,7 @@ const CODE_INDEX=new Map(JOBS.map(job=>[job.id,job]));
 const SOUND_FILES={post:'assets/01_post_beep_simulasi.mp3',ups:'assets/02_ups_alarm_simulasi.mp3',disconnect:'assets/04_notifikasi_koneksi_putus_simulasi.mp3',click:'assets/03_konektor_rj45_klik_simulasi.mp3'};
 const CATS={V:{name:'Visual',color:'#1693d3',desc:'pengamatan gambar'},A:{name:'Auditory',color:'#8c74d9',desc:'mendengarkan bunyi'},R:{name:'Read / Write',color:'#d88f3d',desc:'membaca dan menulis'},K:{name:'Kinesthetic',color:'#19a988',desc:'menyusun objek'}};
 const REGIONS=[{title:'Kampung Koneksi',small:'KAMPUNG KONEKSI',image:'bg-kampung.webp',emoji:'🏘️'},{title:'Oasis Digital',small:'OASIS DIGITAL',image:'bg-oasis.webp',emoji:'🌴'},{title:'Kota Jaringan',small:'KOTA JARINGAN',image:'bg-kota.webp',emoji:'🏙️'},{title:'Gerbang Harapan',small:'GERBANG HARAPAN',image:'bg-gerbang.webp',emoji:'🕌'}];
-const FLAG_START=340,FLAG_GAP=370,REGION_WIDTH=1650,WORLD_WIDTH=REGION_WIDTH*4+80,FINISH_X=FLAG_START+16*FLAG_GAP+130,SAVE_KEY='tw-naik-haji-v4-progress';
+const FLAG_START=340,FLAG_GAP=370,REGION_WIDTH=1650,WORLD_WIDTH=REGION_WIDTH*4+260,FINISH_X=FLAG_START+16*FLAG_GAP+40,SAVE_KEY='tw-naik-haji-v5-progress';
 const PAY_PER_JOB=5000000,BONUS_CORRECT=1000000,COIN_MONEY=250000,TARGET=100000000;
 const $=(s)=>document.querySelector(s);
 const el=(tag,cls,html)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;};
@@ -45,10 +45,10 @@ const checkTyped=(value,accepted)=>{const t=normalize(value);return t.length>0&&
 const DOMINANT_HELP={V:'Kamu paling kuat saat memahami gambar, ikon, dan tampilan perangkat jaringan.',A:'Kamu paling kuat saat menyimak penjelasan lisan atau contoh bunyi perangkat.',R:'Kamu paling kuat saat membaca informasi singkat dan menuliskan kembali jawaban.',K:'Kamu paling kuat saat praktik langsung, mencoba, dan menyusun komponen.'};
 function dominantText(best){if(!best.length)return 'Belum terlihat kecenderungan dominan karena semua skor masih 0.';const names=best.map(k=>CATS[k].name);const title=best.length===1?`Dominan ${names[0]}`:`Dominan campuran: ${names.join(' & ')}`;const detail=best.map(k=>DOMINANT_HELP[k]).join(' ');return `${title}. ${detail}`;}
 
-const ui={world:$('#world'),player:$('#player'),stage:$('#stage'),home:$('#home-screen'),result:$('#result-screen'),modal:$('#dialog-layer'),modalContent:$('#dialog'),mission:$('#mission-layer'),missionCard:$('#mission-card'),answerLayer:$('#answer-layer'),answerCard:$('#answer-card'),finale:$('#finale-screen'),gameover:$('#game-over'),toast:$('#toast')};
+const ui={world:$('#world'),player:$('#player'),stage:$('#stage'),home:$('#home-screen'),result:$('#result-screen'),modal:$('#dialog-layer'),modalContent:$('#dialog'),mission:$('#mission-layer'),missionCard:$('#mission-card'),answerLayer:$('#answer-layer'),answerCard:$('#answer-card'),departure:$('#departure-screen'),travel:$('#travel-screen'),finale:$('#finale-screen'),gameover:$('#game-over'),toast:$('#toast')};
 const state={mode:'home',name:'',order:[],results:[],money:0,health:3,coins:new Set(),x:60,y:0,vy:0,invulnerable:0,camera:0,paused:false,jobActive:false,modalActive:false,muted:false,volume:.55,done:false,sceneWidth:1280,sceneHeight:600,facing:1};
 const input={left:false,right:false,jump:false};
-let stageHazards=[],stageCoins=[],flags=[],audioContext=null,musicTimer=null,lastFrame=0,soundPlaying=null,feedbackTimer=0,toastTimer=0,bgMusic=null,answerOverlayOpen=false;
+let stageHazards=[],stageCoins=[],flags=[],audioContext=null,musicTimer=null,lastFrame=0,soundPlaying=null,feedbackTimer=0,toastTimer=0,bgMusic=null,answerOverlayOpen=false,endingTimer=0;
 let currentTask=null,taskSubmitted=false,chosenToken=null,dragInfo=null;
 
 function svgDevice(type){
@@ -79,14 +79,14 @@ const OBJECT_SYMBOLS={router:'router',switch:'switch',pc:'pc',komputer:'pc',RJ45
 function tokenVisual(name){const key=String(name).toLowerCase();return key.includes('lan')?svgDevice('ethernet'):key.includes('router')?svgDevice('router'):key.includes('switch')?svgDevice('switch'):key.includes('komputer')?svgDevice('pc'):key.includes('hdmi')?svgDevice('hdmi'):key.includes('usb')?svgDevice('usb'):key.includes('rj45')?svgDevice('rj45'):'';}
 function stationSymbol(kind){const shapes={visual:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',audio:'<path d="M4 10v4h4l5 4V6l-5 4H4ZM16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/>',read:'<path d="M12 6c-3-2-7-2-10-1v14c3-1 7-1 10 1 3-2 7-2 10-1V5c-3-1-7-1-10 1ZM12 6v14"/>',type:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M11 9h.01M15 9h.01M7 12h10M8 16h8"/>',practice:'<path d="M8 3 3 8l4 4 5-5-4-4ZM16 12l-5 5 5 5 5-5-5-5ZM11 11l3 3"/>'};return `<svg viewBox="0 0 24 24" class="job-icon-svg" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${shapes[kind]||shapes.visual}</svg>`;}
 function showToast(message){clearTimeout(toastTimer);ui.toast.textContent=message;ui.toast.classList.add('visible');toastTimer=setTimeout(()=>ui.toast.classList.remove('visible'),1800);}
-function safelySave(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({version:4,name:state.name,order:state.order,results:state.results,money:state.money,health:state.health,coins:[...state.coins],x:state.x,y:state.y,mode:state.mode==='home'&&state.results.length>0?'game':state.mode}));}catch(err){console.warn('Penyimpanan lokal tidak tersedia:',err);}}
-function tryRestore(){try{const p=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(p&&[3,4].includes(p.version)&&Array.isArray(p.order)&&p.order.length===16&&new Set(p.order).size===16&&p.order.every(id=>CODE_INDEX.has(id))&&Array.isArray(p.results)&&p.results.length<=16&&p.mode!=='home'){
+function safelySave(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({version:5,name:state.name,order:state.order,results:state.results,money:state.money,health:state.health,coins:[...state.coins],x:state.x,y:state.y,mode:state.mode==='home'&&state.results.length>0?'game':state.mode}));}catch(err){console.warn('Penyimpanan lokal tidak tersedia:',err);}}
+function tryRestore(){try{const p=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(p&&[3,4,5].includes(p.version)&&Array.isArray(p.order)&&p.order.length===16&&new Set(p.order).size===16&&p.order.every(id=>CODE_INDEX.has(id))&&Array.isArray(p.results)&&p.results.length<=16&&p.mode!=='home'){
  state.name=String(p.name||'Teknisi');state.order=p.order;state.results=p.results.filter(r=>CODE_INDEX.has(r.id));state.health=clamp(Number(p.health)||3,1,3);state.coins=new Set((Array.isArray(p.coins)?p.coins:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<16));state.money=p.version===3?Math.min(TARGET,state.results.reduce((sum,r)=>sum+PAY_PER_JOB+(r.correct?BONUS_CORRECT:0),0)+state.coins.size*COIN_MONEY):clamp(Number(p.money)||0,0,TARGET);state.x=clamp(Number(p.x)||60,60,WORLD_WIDTH-80);state.y=0;
- const resume=el('button','btn btn-ghost','↻ Lanjutkan progres');resume.addEventListener('click',()=>{const resumeType=state.results.length===16&&(p.mode==='result'||p.mode==='finale')?p.mode:'game';state.mode='game';hideHome();renderWorld();updateHUD();if(resumeType==='result')showResults(true);else if(resumeType==='finale')showFinale();else{state.x=Math.min(state.x,FLAG_START+state.results.length*FLAG_GAP-66);showToast('Progres dilanjutkan. Cari pos pekerjaan berikutnya!');}});$('.start-form').append(resume);$('#player-name').value=state.name;
+ const resume=el('button','btn btn-ghost','↻ Lanjutkan progres');resume.addEventListener('click',()=>{const endingModes=['result','departure','travel','finale'];const resumeType=state.results.length===16&&endingModes.includes(p.mode)?p.mode:'game';state.mode='game';hideHome();hideEndingScreens();renderWorld();updateHUD();if(resumeType==='result')showResults(true);else if(resumeType==='departure')showDeparture();else if(resumeType==='travel')showTravel();else if(resumeType==='finale')showFinale();else{state.x=Math.min(state.x,FLAG_START+state.results.length*FLAG_GAP-66);showToast('Progres dilanjutkan. Cari pos pekerjaan berikutnya!');}});$('.start-form').append(resume);$('#player-name').value=state.name;
  }}catch(err){console.warn('Save tidak terbaca:',err);}}
-function newGame(){hideAnswerOverlay();if(ui.finale)ui.finale.classList.add('hidden');$('#shell').classList.remove('is-result','is-finale');state.mode='game';state.name=($('#player-name').value||'Teknisi WiFi').trim().slice(0,32);state.order=randomOrder();state.results=[];state.money=0;state.health=3;state.coins=new Set();state.x=65;state.y=0;state.vy=0;state.invulnerable=0;state.camera=0;state.paused=false;state.jobActive=false;state.modalActive=false;state.done=false;clearInput();renderWorld();hideHome();updateHUD();unlockAudio();soundEffect('start');showToast('Selamat bertugas! Cari bendera pekerjaan pertama.');safelySave();}
+function newGame(){hideAnswerOverlay();hideEndingScreens();$('#shell').classList.remove('is-result','is-finale');state.mode='game';state.name=($('#player-name').value||'Teknisi WiFi').trim().slice(0,32);state.order=randomOrder();state.results=[];state.money=0;state.health=3;state.coins=new Set();state.x=65;state.y=0;state.vy=0;state.invulnerable=0;state.camera=0;state.paused=false;state.jobActive=false;state.modalActive=false;state.done=false;clearInput();renderWorld();hideHome();updateHUD();unlockAudio();soundEffect('start');showToast('Selamat bertugas! Cari bendera pekerjaan pertama.');safelySave();}
 function hideHome(){$('#shell').classList.remove('is-home');ui.home.classList.add('hidden');ui.result.classList.add('hidden');ui.gameover.classList.add('hidden');$('#pause-toggle').innerHTML=ICON_PAUSE;}
-function home(){hideAnswerOverlay();if(ui.finale)ui.finale.classList.add('hidden');$('#shell').classList.add('is-home');$('#shell').classList.remove('is-result','is-finale');state.mode='home';state.jobActive=false;state.paused=false;clearInput();ui.home.classList.remove('hidden');ui.result.classList.add('hidden');ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.modal.classList.add('hidden');if(!state.muted)syncBgMusic();}
+function home(){hideAnswerOverlay();hideEndingScreens();$('#shell').classList.add('is-home');$('#shell').classList.remove('is-result','is-finale');state.mode='home';state.jobActive=false;state.paused=false;clearInput();ui.home.classList.remove('hidden');ui.result.classList.add('hidden');ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.modal.classList.add('hidden');if(!state.muted)syncBgMusic();}
 function clearInput(){input.left=false;input.right=false;input.jump=false;for(const s of ['#left-btn','#right-btn','#jump-btn'])$(s)?.classList.remove('pressed');}
 function updateHUD(){const finished=state.results.length;$('#money-stat').textContent=rupiah(state.money);const goal=$('#savings-goal');if(goal)goal.textContent=`Target ${rupiah(TARGET)}`;$('#mission-stat').textContent=`${finished} / 16`;$('#health-stat').textContent='♥ '.repeat(state.health).trim();const region=Math.min(3,Math.floor(state.x/REGION_WIDTH));$('#area-name').textContent=REGIONS[region].small;$('#progress-number').textContent=`${Math.round(finished/16*100)}%`;$('#progress-fill').style.width=`${finished/16*100}%`;$('#mission-tip').textContent=finished===16?'Pekerjaan selesai! Pergilah ke gerbang untuk melihat hasil belajar.':`Berikutnya: ${REGIONS[Math.min(3,Math.floor(finished/4))].title}`;}
 
@@ -202,7 +202,7 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
   for(const o of stageCoins){if(!state.coins.has(o.i)&&Math.abs(state.x-o.x)<27&&state.y<105){state.coins.add(o.i);o.node.style.display='none';state.money=Math.min(TARGET,state.money+COIN_MONEY);soundEffect('coin');updateHUD();safelySave();}}
   for(const h of stageHazards){const hx=h.x+(h.kind==='mite'?Math.sin(time*.002+h.phase)*18:0);h.node.style.left=`${hx}px`;if(Math.abs(state.x-hx)<33&&state.y<43){hitHazard();break;}}
   const next=state.results.length;if(next<16&&Math.abs(state.x-(FLAG_START+next*FLAG_GAP))<27&&state.y<65)openJob();
-  if(next===16&&state.x>=FINISH_X-35)showFinale();
+  if(next===16&&state.x>=FINISH_X-35)showDeparture();
   if(Math.abs(prevX-state.x)>.05&&Math.floor(prevX/REGION_WIDTH)!==Math.floor(state.x/REGION_WIDTH)){updateHUD();showToast(`Memasuki ${REGIONS[Math.min(3,Math.floor(state.x/REGION_WIDTH))].title}`);}
   ui.player.classList.toggle('running',Math.abs(velocity)>0&&state.y===0);ui.player.classList.toggle('jumping',state.y>0);
   const pose=state.y>0?'jump':Math.abs(velocity)>0?'run':'idle';
@@ -218,6 +218,14 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
  requestAnimationFrame(tick);
 }
 
+function clearEndingTimer(){if(endingTimer){clearTimeout(endingTimer);endingTimer=0;}}
+function hideEndingScreens(){clearEndingTimer();if(ui.departure)ui.departure.classList.add('hidden');if(ui.travel)ui.travel.classList.add('hidden');if(ui.finale)ui.finale.classList.add('hidden');}
+function showEndingShell(){ui.mission.classList.add('hidden');ui.result.classList.add('hidden');ui.home.classList.add('hidden');ui.gameover.classList.add('hidden');$('#shell').classList.remove('is-home','is-result');$('#shell').classList.add('is-finale');clearInput();hideAnswerOverlay();state.jobActive=false;state.paused=false;}
+function restartDepartureAnimation(){if(!ui.departure)return;ui.departure.classList.remove('departure-animate');void ui.departure.offsetWidth;ui.departure.classList.add('departure-animate');}
+function restartTravelAnimation(){if(!ui.travel)return;ui.travel.classList.remove('travel-animate');void ui.travel.offsetWidth;ui.travel.classList.add('travel-animate');}
+function showDeparture(){if(state.results.length!==16)return;clearEndingTimer();showEndingShell();state.mode='departure';if(ui.travel)ui.travel.classList.add('hidden');if(ui.finale)ui.finale.classList.add('hidden');ui.departure.classList.remove('hidden');restartDepartureAnimation();if(!state.muted){unlockAudio();tone(392,.28,'triangle',.055);tone(523,.32,'sine',.065,.18);tone(659,.42,'sine',.06,.4);}endingTimer=setTimeout(()=>{if(state.mode==='departure')showTravel();},4400);safelySave();}
+function showTravel(){if(state.results.length!==16)return;clearEndingTimer();showEndingShell();state.mode='travel';if(ui.departure)ui.departure.classList.add('hidden');if(ui.finale)ui.finale.classList.add('hidden');ui.travel.classList.remove('hidden');restartTravelAnimation();if(!state.muted){unlockAudio();tone(330,.24,'sine',.04);tone(440,.28,'sine',.05,.14);tone(659,.5,'triangle',.045,.34);}endingTimer=setTimeout(()=>{if(state.mode==='travel')showFinale();},4700);safelySave();}
+
 function restartFinaleAnimation(){
  if(!ui.finale)return;
  ui.finale.classList.remove('finale-animate');
@@ -227,10 +235,9 @@ function restartFinaleAnimation(){
 }
 function showFinale(){
  if(state.results.length!==16)return;
- clearInput();hideAnswerOverlay();
- state.mode='finale';state.jobActive=false;state.paused=false;
- ui.mission.classList.add('hidden');ui.result.classList.add('hidden');ui.home.classList.add('hidden');ui.gameover.classList.add('hidden');
- $('#shell').classList.remove('is-home','is-result');$('#shell').classList.add('is-finale');
+ clearEndingTimer();showEndingShell();
+ state.mode='finale';
+ if(ui.departure)ui.departure.classList.add('hidden');if(ui.travel)ui.travel.classList.add('hidden');
  $('#finale-balance').textContent=rupiah(state.money);
  const goalPct=Math.round(state.money/TARGET*100);
  $('#finale-goal-text').textContent=state.money>=TARGET?'Target simulasi Rp100 juta tercapai!':`${goalPct}% dari target simulasi ${rupiah(TARGET)}`;
@@ -242,7 +249,7 @@ function showFinale(){
 }
 function finishFinale(){
  if(state.mode!=='finale')return;
- ui.finale.classList.add('hidden');
+ hideEndingScreens();
  showResults(true);
 }
 function scores(){const out={V:0,A:0,R:0,K:0};for(const r of state.results){const q=CODE_INDEX.get(r.id);if(q&&r.correct)out[q.cat]+=25;}return out;}
@@ -255,7 +262,7 @@ function scoreProfile(){
 }
 function showResults(force=false){
  if(state.done&&!force)return;
- $('#shell').classList.add('is-result');$('#shell').classList.remove('is-finale');ui.finale.classList.add('hidden');state.done=true;state.mode='result';clearInput();
+ hideEndingScreens();$('#shell').classList.add('is-result');$('#shell').classList.remove('is-finale');ui.finale.classList.add('hidden');state.done=true;state.mode='result';clearInput();
  hideAnswerOverlay();ui.mission.classList.add('hidden');ui.gameover.classList.add('hidden');ui.result.classList.remove('hidden');
  updateHUD();safelySave();soundEffect('success');
  const profile=scoreProfile(),highest=profile.highest,leaders=profile.leaders;
@@ -270,9 +277,9 @@ function showResults(force=false){
    <div class="v73-summary"><span aria-hidden="true">✦</span><p><b>Perjalanan tuntas!</b> Semua aktivitas telah dicoba. Gunakan hasilnya untuk berdiskusi dengan guru tentang cara belajar yang paling membantu.</p></div><p class="v73-caveat">*Persentase menunjukkan performa menjawab pada game ini, bukan ukuran atau diagnosis gaya belajar yang permanen.</p>
   </section>
   <aside class="result-side v73-side"><section class="result-panel v73-journey"><span class="v73-side-kicker">PENCAPAIAN PETUALANGAN</span><div class="v73-savings"><span class="v73-savings-icon" aria-hidden="true">✦</span><div><small>Tabungan simulasi · Target Rp100 juta</small><strong>${rupiah(state.money)}</strong><span class="v75-goal-percent">${Math.round(state.money/TARGET*100)}% target tercapai</span></div></div><div class="v73-metric-grid"><div><b>${profile.correct}/16</b><span>Jawaban benar</span></div><div><b>16/16</b><span>Misi selesai</span></div><div><b>${Math.round(profile.correct/16*100)}%</b><span>Nilai keseluruhan</span></div><div><b>${percentDescription}</b><span>Aktivitas tertinggi</span></div></div><div class="v73-route"><span>01 Kampung</span><span>02 Oasis</span><span>03 Kota</span><span>04 Gerbang</span></div></section>
-   <section class="result-panel v73-download"><h2>Simpan kartu hasil</h2><p>Unduh sertifikat hasil untuk diberikan kepada guru atau disimpan.</p><button class="finale-result-rewatch" id="revisit-finale" type="button">✧ Tonton lagi adegan Ka'bah</button><div class="v73-actions"><button class="btn btn-dark" id="save-png">↓ Unduh PNG</button><button class="btn btn-dark" id="save-jpg">↓ Unduh JPG</button></div><div class="v73-actions v73-actions-secondary"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></section>
+   <section class="result-panel v73-download"><h2>Simpan kartu hasil</h2><p>Unduh sertifikat hasil untuk diberikan kepada guru atau disimpan.</p><button class="finale-result-rewatch" id="revisit-finale" type="button">✧ Tonton lagi adegan penutup</button><div class="v73-actions"><button class="btn btn-dark" id="save-png">↓ Unduh PNG</button><button class="btn btn-dark" id="save-jpg">↓ Unduh JPG</button></div><div class="v73-actions v73-actions-secondary"><button class="btn btn-ghost" id="back-home">⌂ Beranda</button><button class="btn btn-accent" id="replay">↻ Main lagi</button></div></section>
   </aside></div></div>`;
- $('#revisit-finale').addEventListener('click',showFinale);$('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));
+ $('#revisit-finale').addEventListener('click',showDeparture);$('#save-png').addEventListener('click',()=>downloadResult('png'));$('#save-jpg').addEventListener('click',()=>downloadResult('jpg'));
  $('#back-home').addEventListener('click',home);$('#result-home').addEventListener('click',home);
  $('#replay').addEventListener('click',()=>{home();$('#player-name').value=state.name;newGame();});
 }
@@ -382,5 +389,5 @@ function installMissionScrollHint(){
  ui.missionCard.addEventListener('scroll',refreshMissionScrollHint,{passive:true});
  window.addEventListener('resize',refreshMissionScrollHint);
 }
-function wireApp(){installMissionScrollHint();$('#finale-to-result').addEventListener('click',finishFinale);$('#finale-rewatch').addEventListener('click',restartFinaleAnimation);ui.answerLayer.addEventListener('click',e=>{if(e.target.closest('#answer-continue'))finishAnsweredJob();});ui.answerLayer.addEventListener('keydown',e=>{if(e.code==='Escape'&&answerOverlayOpen){e.preventDefault();finishAnsweredJob();}});$('#start-btn').addEventListener('click',newGame);$('#go-home').addEventListener('click',()=>{if(state.jobActive)return;home();});$('#open-guide').addEventListener('click',()=>openInfo('siswa'));$('#sound-toggle').addEventListener('click',toggleSound);$('#pause-toggle').addEventListener('click',pauseGame);$('#discussion-btn').addEventListener('click',()=>openInfo('diskusi'));$('#retry-btn').addEventListener('click',retry);document.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',()=>openInfo(b.dataset.info)));ui.modal.addEventListener('click',e=>{if(e.target===ui.modal)closeInfo();});$('#player-name').addEventListener('keydown',e=>{if(e.key==='Enter')newGame();});attachControls();window.addEventListener('beforeunload',safelySave);setInterval(()=>{if(state.mode==='game'&&!state.jobActive&&!state.modalActive)safelySave();},3500);}
+function wireApp(){installMissionScrollHint();$('#departure-next').addEventListener('click',showTravel);$('#departure-skip').addEventListener('click',showTravel);$('#travel-next').addEventListener('click',showFinale);$('#travel-skip').addEventListener('click',showFinale);$('#finale-to-result').addEventListener('click',finishFinale);$('#finale-rewatch').addEventListener('click',restartFinaleAnimation);ui.answerLayer.addEventListener('click',e=>{if(e.target.closest('#answer-continue'))finishAnsweredJob();});ui.answerLayer.addEventListener('keydown',e=>{if(e.code==='Escape'&&answerOverlayOpen){e.preventDefault();finishAnsweredJob();}});$('#start-btn').addEventListener('click',newGame);$('#go-home').addEventListener('click',()=>{if(state.jobActive)return;home();});$('#open-guide').addEventListener('click',()=>openInfo('siswa'));$('#sound-toggle').addEventListener('click',toggleSound);$('#pause-toggle').addEventListener('click',pauseGame);$('#discussion-btn').addEventListener('click',()=>openInfo('diskusi'));$('#retry-btn').addEventListener('click',retry);document.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',()=>openInfo(b.dataset.info)));ui.modal.addEventListener('click',e=>{if(e.target===ui.modal)closeInfo();});$('#player-name').addEventListener('keydown',e=>{if(e.key==='Enter')newGame();});attachControls();window.addEventListener('beforeunload',safelySave);setInterval(()=>{if(state.mode==='game'&&!state.jobActive&&!state.modalActive)safelySave();},3500);}
 wireApp();renderWorld();updateHUD();tryRestore();requestAnimationFrame(tick);
