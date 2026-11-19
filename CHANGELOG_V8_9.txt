@@ -1,0 +1,1 @@
+V8.9: Popup hasil benar/salah dipindah keluar dari area panggung yang memotong konten. Layout dipadatkan agar seluruh isi terlihat pada laptop. Pada HP pendek, scroll hanya berlaku di dalam popup. Aset koper bandara baru tetap disertakan.
