@@ -1,0 +1,73 @@
+/* V8.5: epilogue is intentionally composed from the original scenic background,
+   the technician sprite, and the story panel. No foreground Ka'bah cutout. */
+#finale-screen .finale-kaaba-new,
+#finale-screen .travel-kaaba-asset,
+#finale-screen img[src*="ending-kaaba"] {display:none!important;visibility:hidden!important}
+#finale-screen .finale-scene-bg {
+  background-image:url('assets/finale-kabah.webp')!important;
+  background-position:64% center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  transform:none!important;
+  filter:saturate(1.04);
+}
+#finale-screen.finale-animate .finale-scene-bg {animation:none!important}
+#finale-screen::before {
+  background:linear-gradient(90deg,rgba(4,24,37,.95) 0%,rgba(6,30,42,.9) 27%,rgba(7,34,48,.7) 45%,rgba(5,27,39,.18) 65%,rgba(6,23,33,.03) 95%)!important;
+}
+#finale-screen::after {background:linear-gradient(0deg,rgba(4,24,37,.45),transparent 27%)!important}
+#finale-screen .finale-story {
+  left:clamp(20px,4.8vw,92px);
+  width:min(640px,42vw);
+  max-width:calc(100% - 36px);
+  z-index:5;
+}
+#finale-screen .finale-technician {
+  z-index:6;
+  left:55%;
+  right:auto;
+  bottom:2%;
+  height:min(67%,650px);
+  max-width:26%;
+  width:auto;
+  object-fit:contain;
+  object-position:bottom center;
+  pointer-events:none;
+}
+#finale-screen .finale-scene-label {z-index:7}
+@media (max-width:1024px) and (min-width:761px) {
+  #finale-screen .finale-story{width:min(470px,49vw);left:20px}
+  #finale-screen .finale-technician{left:53%;height:61%;max-width:28%}
+}
+@media (max-width:760px) {
+  #finale-screen .finale-scene-bg {background-position:65% center!important}
+  #finale-screen::before {background:linear-gradient(180deg,rgba(4,26,38,.93) 0%,rgba(4,26,38,.81) 42%,rgba(4,24,36,.30) 76%,rgba(4,24,36,.09) 100%)!important}
+  #finale-screen .finale-story{
+     position:absolute;
+     left:14px!important;right:14px!important;top:12px!important;
+     width:auto!important;max-width:none!important;
+     transform:none;
+     padding:0 0 6px;
+     max-height:60%!important;overflow-y:auto!important;
+     scrollbar-width:thin;
+  }
+  #finale-screen .finale-story h2{font-size:clamp(21px,6.5vw,30px);max-width:100%}
+  #finale-screen .finale-story>p{font-size:11px;line-height:1.4;max-width:100%}
+  #finale-screen .finale-balance{max-width:95%}
+  #finale-screen .finale-actions{max-width:100%}
+  #finale-screen .finale-technician{
+    left:auto!important;right:2%!important;bottom:0!important;
+    width:auto;height:35%!important;max-width:43%;opacity:1!important;
+    filter:drop-shadow(0 10px 10px rgba(5,15,20,.35));
+  }
+}
+@media (max-width:380px) {
+  #finale-screen .finale-story{left:10px!important;right:10px!important;top:8px!important;max-height:270px!important}
+  #finale-screen .finale-story h2{font-size:20px}
+  #finale-screen .finale-story>p{font-size:10px}
+  #finale-screen .finale-technician{height:32%!important;max-width:45%;opacity:1!important}
+}
+@media (max-height:650px) and (min-width:761px) {
+  #finale-screen .finale-story{max-height:calc(100% - 20px)}
+  #finale-screen .finale-technician{height:62%}
+}

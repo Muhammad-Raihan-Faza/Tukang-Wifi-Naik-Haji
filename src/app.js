@@ -235,6 +235,9 @@ function restartFinaleAnimation(){
 }
 function showFinale(){
  if(state.results.length!==16)return;
+ // Defensive cleanup for accidental remnants from older deployments.
+ // Only the original scene background and technician belong in the final epilogue.
+ ui.finale?.querySelectorAll('.finale-kaaba-new,.travel-kaaba-asset,img[src*="ending-kaaba"]').forEach(node=>node.remove());
  clearEndingTimer();showEndingShell();
  state.mode='finale';
  if(ui.departure)ui.departure.classList.add('hidden');if(ui.travel)ui.travel.classList.add('hidden');
