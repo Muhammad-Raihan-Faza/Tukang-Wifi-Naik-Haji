@@ -214,7 +214,7 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
  }
  state.sceneWidth=ui.stage.clientWidth||1000;
  const cam=clamp(state.x-state.sceneWidth*.35,0,Math.max(0,WORLD_WIDTH-state.sceneWidth));state.camera=cam;ui.world.style.transform=`translate3d(${-cam}px,0,0)`;
- ui.player.style.left=`${state.x-cam}px`;ui.player.style.bottom=`${76+state.y}px`;
+ ui.player.style.left=`${state.x-cam}px`;const groundBase=window.matchMedia('(max-width:740px)').matches?31:40;ui.player.style.bottom=`${groundBase+state.y}px`;
  requestAnimationFrame(tick);
 }
 

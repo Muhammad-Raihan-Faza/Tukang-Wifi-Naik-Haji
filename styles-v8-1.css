@@ -39,7 +39,7 @@
 .cloud-b{width:138px;height:36px;right:16%;top:22%;opacity:.66}.cloud-b:before{width:58px;height:58px;left:12px;top:-24px}.cloud-b:after{width:62px;height:48px;right:13px;top:-16px}
 .cloud-c{width:120px;height:32px;left:42%;top:30%;opacity:.52}.cloud-c:before{width:44px;height:44px;left:14px;top:-16px}.cloud-c:after{width:54px;height:38px;right:10px;top:-11px}
 .travel-visual{position:absolute;right:5%;top:16%;width:min(42%,530px);height:62%;z-index:2;pointer-events:none}
-.travel-path{position:absolute;left:8%;right:12%;top:47%;height:0;border-top:3px dashed rgba(255,240,182,.92);transform:rotate(-12deg);transform-origin:left center;opacity:.85}
+.travel-path{display:none!important}
 .travel-plane{position:absolute;left:10%;top:52%;font-size:clamp(38px,6vw,78px);line-height:1;color:#fff7e2;filter:drop-shadow(0 10px 14px rgba(8,28,40,.3));animation:planeAcross 4.8s cubic-bezier(.25,.53,.22,1) infinite}
 .travel-destination{position:absolute;right:4%;bottom:8%;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff8e1;font-weight:800;letter-spacing:.08em;font-size:13px;text-transform:uppercase}
 .kaaba-mini{width:90px;height:82px;position:relative;background:linear-gradient(180deg,#191919,#060606 62%,#2b2b2b);border-radius:8px 8px 4px 4px;box-shadow:0 14px 24px rgba(6,17,26,.35)}
