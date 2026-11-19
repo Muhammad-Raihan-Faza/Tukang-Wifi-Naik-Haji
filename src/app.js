@@ -201,7 +201,7 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
   state.invulnerable=Math.max(0,state.invulnerable-delta);
   for(const o of stageCoins){if(!state.coins.has(o.i)&&Math.abs(state.x-o.x)<27&&state.y<105){state.coins.add(o.i);o.node.style.display='none';state.money=Math.min(TARGET,state.money+COIN_MONEY);soundEffect('coin');updateHUD();safelySave();}}
   for(const h of stageHazards){const hx=h.x+(h.kind==='mite'?Math.sin(time*.002+h.phase)*18:0);h.node.style.left=`${hx}px`;if(Math.abs(state.x-hx)<33&&state.y<43){hitHazard();break;}}
-  const next=state.results.length;if(next<16&&Math.abs(state.x-(FLAG_START+next*FLAG_GAP))<27&&state.y<65)openJob();
+  const next=state.results.length;if(next<16&&state.x>=FLAG_START+next*FLAG_GAP-30&&state.y<65)openJob();
   if(next===16&&state.x>=FINISH_X-35)showDeparture();
   if(Math.abs(prevX-state.x)>.05&&Math.floor(prevX/REGION_WIDTH)!==Math.floor(state.x/REGION_WIDTH)){updateHUD();showToast(`Memasuki ${REGIONS[Math.min(3,Math.floor(state.x/REGION_WIDTH))].title}`);}
   ui.player.classList.toggle('running',Math.abs(velocity)>0&&state.y===0);ui.player.classList.toggle('jumping',state.y>0);
@@ -214,7 +214,7 @@ function tick(time){const delta=Math.min(.038,(time-lastFrame)/1000||.016);lastF
  }
  state.sceneWidth=ui.stage.clientWidth||1000;
  const cam=clamp(state.x-state.sceneWidth*.35,0,Math.max(0,WORLD_WIDTH-state.sceneWidth));state.camera=cam;ui.world.style.transform=`translate3d(${-cam}px,0,0)`;
- ui.player.style.left=`${state.x-cam}px`;const groundBase=window.matchMedia('(max-width:740px)').matches?31:40;ui.player.style.bottom=`${groundBase+state.y}px`;
+ ui.player.style.left=`${state.x-cam}px`;ui.player.style.bottom=`calc(var(--ground-surface) + ${state.y}px)`;
  requestAnimationFrame(tick);
 }
 

@@ -1,0 +1,37 @@
+/* V8.7 — one physical ground reference for every world element.
+   This stylesheet is LAST and deliberately overrides legacy dimensions. */
+.stage{--ground-height:24px;--ground-surface:24px;}
+.stage .world-ground{height:24px!important;border-top:6px solid #65b37f!important;background:repeating-linear-gradient(130deg,#c59667 0 42px,#b98759 42px 84px)!important;box-shadow:inset 0 3px #e6c38e,0 -3px #8bd2a0!important}
+.stage .world-ground::after{top:-9px!important;height:5px!important;background:radial-gradient(ellipse at 7px 5px,#64b67f 0 4px,transparent 5px) 0 0/16px 5px repeat-x!important}
+.stage .world-region::after{bottom:24px!important;height:65px!important}
+.stage .checkpoint{bottom:var(--ground-surface)!important;height:122px!important;width:92px!important}
+.stage .checkpoint .pole{height:84px!important}
+.stage .checkpoint .flag{top:15px!important}
+.stage .hazard{bottom:var(--ground-surface)!important}
+.stage .hazard.puddle{bottom:calc(var(--ground-surface) - 4px)!important}
+.stage .pickup{bottom:calc(var(--ground-surface) + 83px)!important}
+.stage .landmark{bottom:var(--ground-surface)!important}
+.stage .finish{bottom:var(--ground-surface)!important;height:172px!important}
+.stage .player{width:clamp(112px,17dvh,144px)!important;height:clamp(198px,32dvh,252px)!important}
+.stage .player img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important}
+/* No dotted flight path */
+.travel-screen .travel-path{display:none!important}
+/* Make missions reliably visible even with old layout rules. */
+.stage .mission-layer:not(.hidden){display:flex!important;z-index:60!important;visibility:visible!important;opacity:1!important}
+.stage .mission-card{position:relative;z-index:61!important}
+.stage .answer-layer:not(.hidden){display:flex!important;z-index:70!important;visibility:visible!important;opacity:1!important}
+@media(max-width:740px){
+ .stage{--ground-height:20px;--ground-surface:20px}
+ .stage .world-ground{height:20px!important;border-top-width:5px!important}
+ .stage .world-ground::after{top:-8px!important;height:4px!important}
+ .stage .world-region::after{bottom:20px!important;height:46px!important}
+ .stage .checkpoint{height:111px!important;width:80px!important}
+ .stage .checkpoint .pole{height:77px!important}
+ .stage .checkpoint .flag{width:52px!important;height:34px!important}
+ .stage .hazard.mite{width:45px!important;height:37px!important}
+ .stage .finish{height:145px!important;width:110px!important}
+ .stage .player{width:clamp(85px,15dvh,114px)!important;height:clamp(150px,27dvh,202px)!important}
+}
+@media(max-width:380px){
+ .stage .player{width:clamp(78px,14dvh,103px)!important;height:clamp(139px,25dvh,186px)!important}
+}
