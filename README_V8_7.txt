@@ -1,3 +1,7 @@
+V8.8.1 update: popup hasil dipaksa center ke tengah viewport.
+
+V8.8 update: popup jawaban dipusatkan, ukuran diperhalus, dan asset koper keberangkatan diperbarui.
+
 V8.7 SOAL PULIH
 - Soal otomatis terpicu saat melewati bendera (tidak harus tepat satu titik).
 - Popup soal dan popup hasil dijaga tetap berada paling depan.

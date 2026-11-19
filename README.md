@@ -1,3 +1,5 @@
+V8.8.1 update: popup hasil dipaksa center ke tengah viewport.
+
 # Tukang WiFi Naik Haji — V8.4
 
 ## Revisi ending
